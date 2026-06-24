@@ -56,7 +56,7 @@ export default function Footer() {
             </svg>
           </a>
           <a 
-            href="mailto:hasyarayyan@email.com" 
+            href="mailto:hasyarayyanbm@gmail.com" 
             className="footer-social-link"
             aria-label="Email Contact"
             title="Email"

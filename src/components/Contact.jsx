@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+const CONTACT_EMAIL = 'hasyarayyanbm@gmail.com';
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
@@ -7,7 +9,7 @@ export default function Contact() {
     subject: '',
     message: ''
   });
-  
+
   const [status, setStatus] = useState({
     submitting: false,
     success: false,
@@ -24,7 +26,7 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // Basic Form validation
     if (!formData.name || !formData.email || !formData.message) {
       setStatus({
@@ -48,25 +50,24 @@ export default function Contact() {
 
     setStatus({ submitting: true, success: false, error: '' });
 
-    // Simulate sending message
+    // Build mailto link and open it
+    const subject = encodeURIComponent(
+      formData.subject || `Pesan dari ${formData.name}`
+    );
+    const body = encodeURIComponent(
+      `Nama: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
+    );
+    const mailtoLink = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+
+    // Small delay to show loading state, then open mail client
     setTimeout(() => {
-      setStatus({
-        submitting: false,
-        success: true,
-        error: ''
-      });
-      // Clear form
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
-      // Clear success notification after 5 seconds
+      window.location.href = mailtoLink;
+      setStatus({ submitting: false, success: true, error: '' });
+      setFormData({ name: '', email: '', subject: '', message: '' });
       setTimeout(() => {
         setStatus((prev) => ({ ...prev, success: false }));
       }, 5000);
-    }, 1500);
+    }, 800);
   };
 
   return (
@@ -86,7 +87,12 @@ export default function Contact() {
           </div>
 
           <div className="contact-cards">
-            <div className="card-glass contact-method-card">
+            {/* Clickable email card */}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="card-glass contact-method-card"
+              style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: '16px', padding: '20px' }}
+            >
               <div className="contact-method-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
@@ -95,9 +101,9 @@ export default function Contact() {
               </div>
               <div>
                 <div className="contact-method-title">Email</div>
-                <div className="contact-method-val">hasyarayyan@email.com</div>
+                <div className="contact-method-val">{CONTACT_EMAIL}</div>
               </div>
-            </div>
+            </a>
 
             <div className="card-glass contact-method-card">
               <div className="contact-method-icon">
@@ -119,41 +125,41 @@ export default function Contact() {
             <div className="form-group-row">
               <div className="form-group">
                 <label className="form-label" htmlFor="name">Nama Lengkap</label>
-                <input 
-                  type="text" 
-                  id="name" 
-                  name="name" 
-                  className="form-input" 
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  className="form-input"
                   placeholder="Nama Anda"
                   value={formData.name}
                   onChange={handleChange}
                   disabled={status.submitting}
-                  required 
+                  required
                 />
               </div>
               <div className="form-group">
-                <label className="form-label" htmlFor="email">Alamat Email</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  name="email" 
-                  className="form-input" 
+                <label className="form-label" htmlFor="email">Alamat Email Anda</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="form-input"
                   placeholder="email@example.com"
                   value={formData.email}
                   onChange={handleChange}
                   disabled={status.submitting}
-                  required 
+                  required
                 />
               </div>
             </div>
 
             <div className="form-group">
               <label className="form-label" htmlFor="subject">Subjek</label>
-              <input 
-                type="text" 
-                id="subject" 
-                name="subject" 
-                className="form-input" 
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                className="form-input"
                 placeholder="Judul Pesan"
                 value={formData.subject}
                 onChange={handleChange}
@@ -163,10 +169,10 @@ export default function Contact() {
 
             <div className="form-group">
               <label className="form-label" htmlFor="message">Pesan Anda</label>
-              <textarea 
-                id="message" 
-                name="message" 
-                className="form-input" 
+              <textarea
+                id="message"
+                name="message"
+                className="form-input"
                 placeholder="Tulis pesan detail di sini..."
                 value={formData.message}
                 onChange={handleChange}
@@ -175,13 +181,13 @@ export default function Contact() {
               ></textarea>
             </div>
 
-            <button 
-              type="submit" 
-              className="btn btn-primary" 
+            <button
+              type="submit"
+              className="btn btn-primary"
               style={{ width: '100%' }}
               disabled={status.submitting}
             >
-              {status.submitting ? 'Mengirim...' : 'Kirim Pesan'}
+              {status.submitting ? 'Membuka Email...' : `Kirim ke ${CONTACT_EMAIL}`}
               {!status.submitting && (
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <line x1="22" y1="2" x2="11" y2="13"></line>
@@ -189,6 +195,10 @@ export default function Contact() {
                 </svg>
               )}
             </button>
+
+            <p style={{ fontSize: '0.78rem', color: 'var(--text-light)', textAlign: 'center', marginTop: '8px' }}>
+              Pesan akan dikirim melalui aplikasi email Anda ke <strong>{CONTACT_EMAIL}</strong>
+            </p>
 
             {status.error && (
               <div className="submit-alert submit-alert-error">
@@ -207,7 +217,7 @@ export default function Contact() {
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                   <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
-                Pesan Anda berhasil dikirim! Terima kasih telah menghubungi saya.
+                Aplikasi email dibuka! Kirimkan pesan Anda ke {CONTACT_EMAIL}.
               </div>
             )}
           </form>
