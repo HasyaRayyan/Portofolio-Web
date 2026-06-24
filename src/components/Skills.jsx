@@ -1,152 +1,196 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+const skillsList = [
+  {
+    name: 'UI/UX Design',
+    desc: 'Merancang antarmuka pengguna yang intuitif, estetik, dan berorientasi pada pengalaman pengguna terbaik.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        <circle cx="9" cy="9" r="2"></circle>
+        <path d="M21 15l-3.086-3.086a2 2 0 00-2.828 0L6 21"></path>
+      </svg>
+    )
+  },
+  {
+    name: 'Laravel',
+    desc: 'Membangun aplikasi web backend yang terstruktur, aman, dan skalabel menggunakan framework Laravel.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+      </svg>
+    )
+  },
+  {
+    name: 'PHP',
+    desc: 'Pengembangan server-side dengan PHP murni maupun terintegrasi, menangani logika bisnis dan manajemen data.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="16 18 22 12 16 6"></polyline>
+        <polyline points="8 6 2 12 8 18"></polyline>
+        <line x1="12" y1="2" x2="12" y2="22" opacity="0.4"></line>
+      </svg>
+    )
+  },
+  {
+    name: 'React',
+    desc: 'Membangun antarmuka web yang dinamis dan reaktif menggunakan React dengan pendekatan berbasis komponen.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(0 12 12)"></ellipse>
+        <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"></ellipse>
+        <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"></ellipse>
+      </svg>
+    )
+  },
+  {
+    name: 'MySQL / SQL',
+    desc: 'Merancang skema database relasional, menulis query yang efisien, dan mengelola integritas data.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+        <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path>
+      </svg>
+    )
+  },
+  {
+    name: 'Angular',
+    desc: 'Mengembangkan aplikasi web skala besar dengan Angular, menggunakan arsitektur berbasis modul dan TypeScript.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="12 2 2 19 22 19"></polygon>
+        <line x1="12" y1="8" x2="8" y2="16"></line>
+        <line x1="12" y1="8" x2="16" y2="16"></line>
+        <line x1="9" y1="14" x2="15" y2="14"></line>
+      </svg>
+    )
+  },
+  {
+    name: 'Ionic Framework',
+    desc: 'Membangun aplikasi mobile cross-platform yang berjalan di Android dan iOS dari satu basis kode.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+        <line x1="12" y1="18" x2="12.01" y2="18"></line>
+      </svg>
+    )
+  },
+  {
+    name: 'Vite',
+    desc: 'Menggunakan Vite sebagai build tool modern untuk menghadirkan development environment yang cepat dan efisien.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+      </svg>
+    )
+  },
+  {
+    name: 'Figma',
+    desc: 'Menggunakan Figma untuk membuat wireframe, prototype interaktif, dan design system yang terstruktur.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z"></path>
+        <path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2z"></path>
+        <path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0z"></path>
+        <path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0z"></path>
+        <path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5z"></path>
+      </svg>
+    )
+  },
+  {
+    name: 'Git & GitHub',
+    desc: 'Mengelola versi kode secara profesional menggunakan Git dan berkolaborasi dalam tim melalui GitHub.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="18" cy="18" r="3"></circle>
+        <circle cx="6" cy="6" r="3"></circle>
+        <path d="M13 6h3a2 2 0 0 1 2 2v7"></path>
+        <line x1="6" y1="9" x2="6" y2="21"></line>
+      </svg>
+    )
+  }
+];
+
+const ITEMS_PER_PAGE = 5;
 
 export default function Skills() {
-  const skillCategories = [
-    {
-      title: 'Frontend & Web',
-      icon: (
-        <svg className="category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-          <polyline points="2 17 12 22 22 17"></polyline>
-          <polyline points="2 12 12 17 22 12"></polyline>
-        </svg>
-      ),
-      skills: [
-        { 
-          name: 'React', 
-          level: 90, 
-          icon: (
-            <svg className="skill-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ color: 'currentColor' }}>
-              <circle cx="50" cy="50" r="8" fill="currentColor"/>
-              <ellipse cx="50" cy="50" rx="38" ry="14" stroke="currentColor" strokeWidth="6" />
-              <ellipse cx="50" cy="50" rx="38" ry="14" stroke="currentColor" strokeWidth="6" transform="rotate(60 50 50)" />
-              <ellipse cx="50" cy="50" rx="38" ry="14" stroke="currentColor" strokeWidth="6" transform="rotate(120 50 50)" />
-            </svg>
-          )
-        },
-        { 
-          name: 'Angular', 
-          level: 80, 
-          icon: (
-            <svg className="skill-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ color: 'currentColor' }}>
-              <path d="M50 10 L85 22 L78 75 L50 90 L22 75 L15 22 Z" fill="currentColor" opacity="0.15" />
-              <path d="M50 10 L85 22 L78 75 L50 90 L22 75 L15 22 Z" stroke="currentColor" strokeWidth="6" strokeLinejoin="round" />
-              <path d="M50 20 L27 70 L37 70 L50 38 L63 70 L73 70 Z" fill="currentColor" />
-              <path d="M40 58 H60" stroke="var(--bg-surface)" strokeWidth="6" />
-            </svg>
-          )
-        },
-        { 
-          name: 'Vite', 
-          level: 85, 
-          icon: (
-            <svg className="skill-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ color: 'currentColor' }}>
-              <path d="M80 15 L50 90 L20 15 Z" fill="currentColor" opacity="0.15" />
-              <path d="M80 15 L50 90 L20 15 Z" stroke="currentColor" strokeWidth="6" strokeLinejoin="round" />
-              <path d="M52 10 L30 50 H55 L45 90 L75 42 H50 Z" fill="currentColor" />
-            </svg>
-          )
-        }
-      ]
-    },
-    {
-      title: 'Mobile Development',
-      icon: (
-        <svg className="category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-          <line x1="12" y1="18" x2="12.01" y2="18"></line>
-        </svg>
-      ),
-      skills: [
-        { 
-          name: 'Ionic Framework', 
-          level: 85, 
-          icon: (
-            <svg className="skill-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ color: 'currentColor' }}>
-              <circle cx="50" cy="50" r="35" stroke="currentColor" strokeWidth="6" fill="currentColor" opacity="0.15" />
-              <circle cx="50" cy="50" r="35" stroke="currentColor" strokeWidth="6" />
-              <circle cx="50" cy="50" r="12" fill="currentColor" />
-              <circle cx="70" cy="30" r="8" fill="currentColor" />
-            </svg>
-          )
-        }
-      ]
-    },
-    {
-      title: 'Backend & Database',
-      icon: (
-        <svg className="category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-          <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path>
-        </svg>
-      ),
-      skills: [
-        { 
-          name: 'Laravel', 
-          level: 85, 
-          icon: (
-            <svg className="skill-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ color: 'currentColor' }}>
-              <path d="M15 30 L50 12 L85 30 L85 70 L50 88 L15 70 Z" fill="currentColor" opacity="0.15" />
-              <path d="M15 30 L50 12 L85 30 L85 70 L50 88 L15 70 Z" stroke="currentColor" strokeWidth="6" strokeLinejoin="round" />
-              <path d="M50 12 L50 88" stroke="currentColor" strokeWidth="6" />
-              <path d="M15 30 L50 48 L85 30" stroke="currentColor" strokeWidth="6" strokeLinejoin="round" />
-            </svg>
-          )
-        },
-        { 
-          name: 'SQL (MySQL & PostgreSQL)', 
-          level: 90, 
-          icon: (
-            <svg className="skill-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ color: 'currentColor' }}>
-              <path d="M10 25 C10 10, 90 10, 90 25 C90 40, 10 40, 10 25 Z" fill="currentColor" opacity="0.15" />
-              <path d="M10 25 C10 15, 90 15, 90 25 M10 25 V75 C10 90, 90 90, 90 75 V25" stroke="currentColor" strokeWidth="6" strokeLinecap="round" />
-              <path d="M10 50 C10 65, 90 65, 90 50" stroke="currentColor" strokeWidth="6" strokeLinecap="round" />
-              <path d="M10 75 C10 90, 90 90, 90 75" stroke="currentColor" strokeWidth="6" strokeLinecap="round" />
-            </svg>
-          )
-        }
-      ]
-    }
-  ];
+  const [page, setPage] = useState(0);
+
+  const totalPages = Math.ceil(skillsList.length / ITEMS_PER_PAGE);
+  const startIdx = page * ITEMS_PER_PAGE;
+  const visibleSkills = skillsList.slice(startIdx, startIdx + ITEMS_PER_PAGE);
+
+  const handlePrev = () => setPage((p) => Math.max(0, p - 1));
+  const handleNext = () => setPage((p) => Math.min(totalPages - 1, p + 1));
 
   return (
     <section id="skills" className="section container" style={{ borderTop: '1px solid var(--border)' }}>
       <h2 className="section-title">Keahlian Saya</h2>
       <p className="section-subtitle">
-        Perangkat teknologi utama yang saya gunakan untuk mewujudkan konsep menjadi produk digital berkualitas tinggi.
+        Teknologi dan disiplin ilmu yang saya kuasai untuk menghadirkan solusi digital yang efektif dan berkualitas.
       </p>
 
-      <div className="skills-grid">
-        {skillCategories.map((category, idx) => (
-          <div key={idx} className="card-glass skills-category">
-            <h3 className="category-title">
-              {category.icon}
-              {category.title}
-            </h3>
-            <div className="skills-list">
-              {category.skills.map((skill, sIdx) => (
-                <div key={sIdx} className="skill-item">
-                  <div className="skill-info">
-                    <span className="skill-name">
-                      {skill.icon}
-                      {skill.name}
-                    </span>
-                    <span className="skill-percent">{skill.level}%</span>
-                  </div>
-                  <div className="skill-bar-bg">
-                    {/* Width animated using inline style directly for simplicity */}
-                    <div 
-                      className="skill-bar-fill" 
-                      style={{ width: `${skill.level}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
+      <div className="skills-simple-list">
+        {visibleSkills.map((skill, idx) => (
+          <div key={startIdx + idx} className="skill-list-item card-glass">
+            <div className="skill-list-icon">
+              {skill.icon}
             </div>
+            <div className="skill-list-body">
+              <h3 className="skill-list-name">{skill.name}</h3>
+              <p className="skill-list-desc">{skill.desc}</p>
+            </div>
+            <div className="skill-list-index">0{startIdx + idx + 1}</div>
           </div>
         ))}
       </div>
+
+      {/* Pagination */}
+      <div className="skills-pagination">
+        <button
+          className="skills-page-btn"
+          onClick={handlePrev}
+          disabled={page === 0}
+          aria-label="Keahlian sebelumnya"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          Sebelumnya
+        </button>
+
+        <div className="skills-page-dots">
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <button
+              key={i}
+              className={`skills-dot ${i === page ? 'active' : ''}`}
+              onClick={() => setPage(i)}
+              aria-label={`Halaman ${i + 1}`}
+            />
+          ))}
+        </div>
+
+        <button
+          className="skills-page-btn"
+          onClick={handleNext}
+          disabled={page === totalPages - 1}
+          aria-label="Keahlian berikutnya"
+        >
+          Berikutnya
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      {/* Info */}
+      <p className="skills-page-info">
+        Menampilkan {startIdx + 1}–{Math.min(startIdx + ITEMS_PER_PAGE, skillsList.length)} dari {skillsList.length} keahlian
+      </p>
     </section>
   );
 }

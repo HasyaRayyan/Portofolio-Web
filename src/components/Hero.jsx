@@ -1,5 +1,5 @@
 import React from 'react';
-import heroIllustration from '../assets/developer_hero_illustration.png';
+import hasyaRayyanPhoto from '../assets/hasya_rayyan.jpg';
 
 export default function Hero() {
   const handleScrollTo = (id) => {
@@ -17,13 +17,13 @@ export default function Hero() {
     <section id="home" className="section container">
       <div className="hero-wrapper">
         <div className="hero-content">
-          <span className="hero-tagline">Full-Stack & Mobile Specialist</span>
+          <span className="hero-tagline">Web &amp; UI/UX Specialist</span>
           <h1 className="hero-title">
             Halo, Saya <br />
             <span className="gradient-text">Hasya Rayyan</span>
           </h1>
           <p className="hero-desc">
-            Saya <strong>Bahaudin Mahardika</strong> (biasa dipanggil Rayyan). Seorang software developer yang berdedikasi membangun aplikasi web modern yang cepat dan aplikasi mobile berskala besar menggunakan kombinasi <strong>React, Vite, SQL, Laravel, Ionic, dan Angular</strong>.
+            Saya <strong>Bahaudin Mahardika</strong> (biasa dipanggil Rayyan). Seorang developer yang berdedikasi dalam merancang antarmuka pengguna yang intuitif dan estetik (<strong>UI/UX</strong>) serta membangun sistem backend web yang andal menggunakan <strong>PHP dan Laravel</strong>.
           </p>
           <div className="hero-actions">
             <button className="btn btn-primary" onClick={() => handleScrollTo('projects')}>
@@ -42,8 +42,8 @@ export default function Hero() {
         <div className="hero-visual">
           <div className="hero-image-container">
             <img 
-              src={heroIllustration} 
-              alt="Futuristic developer abstract 3D visual art illustration representing coding and creativity" 
+              src={hasyaRayyanPhoto} 
+              alt="Hasya Rayyan Bahaudin Mahardika Portrait" 
               className="hero-image"
             />
           </div>
@@ -51,16 +51,15 @@ export default function Hero() {
           {/* Floating Badges */}
           <div className="hero-badge-float badge-react">
             <div className="hero-badge-icon">
-              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', color: 'currentColor' }}>
-                <circle cx="50" cy="50" r="8" fill="currentColor"/>
-                <ellipse cx="50" cy="50" rx="38" ry="14" stroke="currentColor" strokeWidth="6" fill="none" />
-                <ellipse cx="50" cy="50" rx="38" ry="14" stroke="currentColor" strokeWidth="6" fill="none" transform="rotate(60 50 50)" />
-                <ellipse cx="50" cy="50" rx="38" ry="14" stroke="currentColor" strokeWidth="6" fill="none" transform="rotate(120 50 50)" />
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '100%', height: '100%', color: 'currentColor' }}>
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="9" cy="9" r="2"></circle>
+                <path d="M21 15l-3.086-3.086a2 2 0 00-2.828 0L6 21"></path>
               </svg>
             </div>
             <div className="hero-badge-text">
-              <div className="hero-badge-title">React & Angular</div>
-              <div className="hero-badge-sub">Frontend Frameworks</div>
+              <div className="hero-badge-title">UI/UX Design</div>
+              <div className="hero-badge-sub">Wireframes &amp; Prototypes</div>
             </div>
           </div>
 
@@ -73,8 +72,8 @@ export default function Hero() {
               </svg>
             </div>
             <div className="hero-badge-text">
-              <div className="hero-badge-title">Laravel & SQL</div>
-              <div className="hero-badge-sub">Backend & Database</div>
+              <div className="hero-badge-title">Laravel &amp; PHP</div>
+              <div className="hero-badge-sub">Backend Development</div>
             </div>
           </div>
         </div>

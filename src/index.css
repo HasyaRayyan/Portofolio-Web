@@ -519,83 +519,167 @@ button, .btn {
   letter-spacing: 1px;
 }
 
-/* Skills Section */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 32px;
-}
-
-.skills-category {
-  padding: 32px;
-  text-align: left;
-}
-
-.category-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.category-icon {
-  width: 24px;
-  height: 24px;
-  color: var(--primary);
-}
-
-.skills-list {
+/* Skills Section - Simple List */
+.skills-simple-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.skill-item {
-  position: relative;
-}
-
-.skill-info {
+.skill-list-item {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
+  align-items: center;
+  gap: 28px;
+  padding: 28px 32px;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
 }
 
-.skill-name {
+.skill-list-icon {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface-hover);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.skill-list-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.skill-list-item:hover .skill-list-icon {
+  background: var(--primary);
+  color: var(--text-primary-btn);
+  border-color: var(--primary);
+}
+
+.skill-list-body {
+  flex: 1;
+  text-align: left;
+}
+
+.skill-list-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
+}
+
+.skill-list-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.skill-list-index {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--border);
+  line-height: 1;
+  flex-shrink: 0;
+  letter-spacing: -2px;
+  transition: color var(--transition-fast);
+}
+
+.skill-list-item:hover .skill-list-index {
+  color: var(--text-light);
+}
+
+@media (max-width: 640px) {
+  .skill-list-item {
+    padding: 20px;
+    gap: 16px;
+  }
+  .skill-list-index {
+    display: none;
+  }
+}
+
+/* Skills Pagination */
+.skills-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 36px;
+}
+
+.skills-page-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.skills-page-btn:hover:not(:disabled) {
+  background: var(--primary);
+  color: var(--text-primary-btn);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.skills-page-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.skills-page-dots {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.skill-icon {
-  width: 20px;
-  height: 20px;
-}
-
-.skill-percent {
-  color: var(--text-muted);
-}
-
-.skill-bar-bg {
-  width: 100%;
+.skills-dot {
+  width: 8px;
   height: 8px;
+  border-radius: 50%;
   background: var(--border);
-  border-radius: var(--radius-full);
-  overflow: hidden;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all var(--transition-fast);
 }
 
-.skill-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  border-radius: var(--radius-full);
-  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 0; /* Animated dynamically with JS or class hook */
+.skills-dot.active {
+  background: var(--primary);
+  width: 24px;
+  border-radius: 4px;
+}
+
+.skills-dot:hover:not(.active) {
+  background: var(--text-light);
+}
+
+.skills-page-info {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-light);
+  margin-top: 12px;
 }
 
 /* Projects Section */
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
