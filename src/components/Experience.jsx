@@ -3,23 +3,24 @@ import React from 'react';
 export default function Experience() {
   const experiences = [
     {
-      date: '2024 - Sekarang',
-      title: 'Full Stack Web Developer',
-      org: 'Proyek Lepas (Freelance) & Portofolio Personal',
-      desc: 'Membangun aplikasi web responsif menggunakan React dan Laravel. Mengelola manajemen database SQL, integrasi webhook, keamanan API, dan mengoptimalkan performa bundler Vite.'
+      date: 'Aug 2026 - Present',
+      title: 'Teknik Informatika Student',
+      org: 'UIN Maulana Malik Ibrahim Malang',
+      desc: ''
     },
     {
-      date: '2023 - 2024',
-      title: 'Mobile Application Developer',
-      org: 'Kolaborasi Proyek & Eksperimen Mobile',
-      desc: 'Merancang dan mengembangkan aplikasi mobile cross-platform untuk Android dan iOS menggunakan Ionic Framework dan Angular. Berfokus pada performa memori, animasi UI yang mulus, dan integrasi dengan hardware lokal.'
+      date: 'Jan 2025 - Dec 2025',
+      title: 'Full-Stack Developer Intern',
+      org: 'PT Pringapus Digital Teknologi',
+      desc: 'Membangun aplikasi & web responsif menggunakan ionic angular, Wordpress, CodeIgniter. Bertanggung jawab atas manajemen database SQL, integrasi REST API, Backend & Frontend.'
     },
     {
-      date: '2022 - 2023',
-      title: 'Frontend Developer & SQL Administrator',
-      org: 'Studi Akademik & Pembelajaran Mandiri',
-      desc: 'Mengembangkan landasan pemrograman web dengan Angular dan HTML/CSS. Merancang diagram ERD kompleks, normalisasi skema data, dan menulis kueri SQL MySQL/PostgreSQL yang efisien.'
-    }
+      date: 'Jun 2023 - Mei 2026',
+      title: 'RPL (Rekayasa Perangkat Lunak) Student',
+      org: 'SMK PGRI 03 Malang',
+      desc: 'Mempelajari dan menguasai konsep rekayasa perangkat lunak, termasuk analisis kebutuhan, desain sistem, pengembangan perangkat lunak, pengujian.. Mengembangkan keterampilan dalam pemrograman, manajemen proyek, dan kolaborasi tim.'
+    },
+
   ];
 
   return (
