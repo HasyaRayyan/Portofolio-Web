@@ -48,34 +48,6 @@ export default function Hero() {
             />
           </div>
 
-          {/* Floating Badges */}
-          <div className="hero-badge-float badge-react">
-            <div className="hero-badge-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '100%', height: '100%', color: 'currentColor' }}>
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <circle cx="9" cy="9" r="2"></circle>
-                <path d="M21 15l-3.086-3.086a2 2 0 00-2.828 0L6 21"></path>
-              </svg>
-            </div>
-            <div className="hero-badge-text">
-              <div className="hero-badge-title">UI/UX Design</div>
-              <div className="hero-badge-sub">Wireframes &amp; Prototypes</div>
-            </div>
-          </div>
-
-          <div className="hero-badge-float badge-laravel">
-            <div className="hero-badge-icon">
-              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%', color: 'currentColor' }}>
-                <path d="M80 20 L50 35 L20 20 L20 50 L50 65 L80 50 Z" stroke="currentColor" strokeWidth="6" strokeLinejoin="round" fill="none"/>
-                <path d="M50 35 L50 90" stroke="currentColor" strokeWidth="6" />
-                <path d="M20 50 L50 65 L80 50" stroke="currentColor" strokeWidth="6" strokeLinejoin="round" fill="none" />
-              </svg>
-            </div>
-            <div className="hero-badge-text">
-              <div className="hero-badge-title">Laravel &amp; PHP</div>
-              <div className="hero-badge-sub">Backend Development</div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
