@@ -17,13 +17,13 @@ export default function Hero() {
     <section id="home" className="section container">
       <div className="hero-wrapper">
         <div className="hero-content">
-          <span className="hero-tagline">Web &amp; UI/UX Specialist</span>
+          <span className="hero-tagline">Software Engineer</span>
           <h1 className="hero-title">
-            Halo, Saya <br />
+            Halo, I'am <br />
             <span className="gradient-text">Hasya Rayyan</span>
           </h1>
           <p className="hero-desc">
-            Saya <strong>Bahaudin Mahardika</strong> (biasa dipanggil Rayyan). Seorang developer yang berdedikasi dalam merancang antarmuka pengguna yang intuitif dan estetik (<strong>UI/UX</strong>) serta membangun sistem backend web yang andal menggunakan <strong>PHP dan Laravel</strong>.
+            Saya <strong>Hasya Rayyan Bahaudin Mahardika</strong> (biasa dipanggil Hasya). Seorang Software Engineer yang berdedikasi dalam merancang antarmuka pengguna yang intuitif dan estetik (<strong>UI/UX</strong>) serta membangun sistem backend web yang andal menggunakan <strong>PHP dan Laravel</strong>.
           </p>
           <div className="hero-actions">
             <button className="btn btn-primary" onClick={() => handleScrollTo('projects')}>

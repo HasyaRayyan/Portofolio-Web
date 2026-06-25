@@ -9,6 +9,12 @@ export default function Experience() {
       desc: ''
     },
     {
+      date: 'Dec 2024 - present',
+      title: 'Owner & Founder ',
+      org: 'FourtyFourThrift',
+      desc: 'Mendirikan dan mengelola FourtyFourThrift, sebuah bisnis thrift yang berfokus pada penjualan pakaian bekas berkualitas. Bertanggung jawab atas strategi pemasaran, manajemen inventaris, dan pengembangan merek untuk menciptakan pengalaman belanja yang unik bagi pelanggan.'
+    },
+    {
       date: 'Jan 2025 - Dec 2025',
       title: 'Full-Stack Developer Intern',
       org: 'PT Pringapus Digital Teknologi',
