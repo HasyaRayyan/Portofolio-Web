@@ -20,12 +20,9 @@ export default function Footer() {
       <div className="container footer-container">
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
           <a href="#home" className="footer-logo" onClick={(e) => handleScrollTo(e, 'home')}>
-            <span className="gradient-text">HR</span>
+            <span className="gradient-text">Hasya </span>
             <span style={{ color: 'var(--text-main)', fontWeight: 500 }}>Rayyan</span>
           </a>
-          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', maxWidth: '400px' }}>
-            Membangun aplikasi digital berkinerja tinggi, responsif, dan didesain secara presisi.
-          </p>
         </div>
 
         <div className="footer-socials">
@@ -69,7 +66,7 @@ export default function Footer() {
         </div>
 
         <div className="footer-copy">
-          &copy; {currentYear} Hasya Rayyan Bahaudin Mahardika. Hak Cipta Dilindungi.
+          &copy; {currentYear} Hasya Rayyan Bahaudin Mahardika.
         </div>
       </div>
     </footer>
