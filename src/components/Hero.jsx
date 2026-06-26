@@ -23,7 +23,7 @@ export default function Hero() {
             <span className="gradient-text">Hasya Rayyan</span>
           </h1>
           <p className="hero-desc">
-            Saya <strong>Hasya Rayyan Bahaudin Mahardika</strong> (biasa dipanggil Hasya). Seorang Software Engineer yang berdedikasi dalam merancang antarmuka pengguna yang intuitif dan estetik (<strong>UI/UX</strong>) serta membangun sistem backend web yang andal menggunakan <strong>PHP dan Laravel</strong>.
+            Saya <strong>Hasya Rayyan Bahaudin Mahardika</strong> (biasa dipanggil Hasya). Seorang Full-Stack Developer yang berdedikasi dalam membangun produk digital ujung-ke-ujung. Di sisi Frontend, saya berfokus merancang antarmuka pengguna (UI/UX) yang modern, estetik, dan responsif. Sementara di sisi Backend, saya mengonstruksi arsitektur sistem dan API yang andal, aman, serta teroptimasi dengan baik menggunakan PHP dan Laravel.
           </p>
           <div className="hero-actions">
             <button className="btn btn-primary" onClick={() => handleScrollTo('projects')}>
