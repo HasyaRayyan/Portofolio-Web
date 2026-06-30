@@ -14,11 +14,11 @@ export default function Projects() {
       live: 'https://example.com'
     },
     {
-      title: 'HealthSync - Mobile Patient Companion',
-      desc: 'Aplikasi mobile cross-platform yang membantu pasien memantau jadwal konsultasi dokter, grafik rekam medis, serta resep obat harian terintegrasi API server.',
+      title: 'Aplikasi Web POS With Member And loyalty System',
+      desc: 'Aplikasi web untuk sistem point of sale dengan fitur member dan program loyalitas.',
       image: healthsyncMockup,
-      tags: ['Ionic', 'Angular', 'Laravel API', 'SQL'],
-      github: 'https://github.com',
+      tags: ['Ionic', 'Angular', 'Code Igniter', 'MySQL', 'Tailwind CSS'],
+      github: 'https://github.com/HasyaRayyan/Aplikasi-Web-Kasir-POS-Member-Loyality',
       live: 'https://example.com'
     },
     {
