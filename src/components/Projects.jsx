@@ -14,15 +14,15 @@ export default function Projects() {
       live: 'https://example.com'
     },
     {
-      title: 'Aplikasi Web POS With Member And loyalty System',
+      title: 'FourtyfourPOS - POS With Member And loyalty System',
       desc: 'Aplikasi web untuk sistem point of sale dengan fitur member dan program loyalitas.',
       image: healthsyncMockup,
       tags: ['Ionic', 'Angular', 'Code Igniter', 'MySQL', 'Tailwind CSS'],
       github: 'https://github.com/HasyaRayyan/Aplikasi-Web-Kasir-POS-Member-Loyality',
-      live: 'https://example.cowddwm'
+      live: 'https://example.com'
     },
     {
-      title: 'FinTrack - Personal Finance Dashboard',
+      title: 'My Finance - Personal Finance Dashboard',
       desc: 'Dasbor analitik keuangan untuk manajemen pengeluaran, budgeting, serta integrasi dompet digital dengan diagram visualisasi data interaktif.',
       image: fintrackMockup,
       tags: ['React', 'Vite', 'SQL', 'CSS Grid'],
