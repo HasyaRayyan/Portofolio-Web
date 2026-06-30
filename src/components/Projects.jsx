@@ -19,7 +19,7 @@ export default function Projects() {
       image: healthsyncMockup,
       tags: ['Ionic', 'Angular', 'Code Igniter', 'MySQL', 'Tailwind CSS'],
       github: 'https://github.com/HasyaRayyan/Aplikasi-Web-Kasir-POS-Member-Loyality',
-      live: 'https://example.com'
+      live: 'https://example.cowddwm'
     },
     {
       title: 'FinTrack - Personal Finance Dashboard',
