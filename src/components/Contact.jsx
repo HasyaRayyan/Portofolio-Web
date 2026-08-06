@@ -72,10 +72,15 @@ export default function Contact() {
 
   return (
     <section id="contact" className="section container" style={{ borderTop: '1px solid var(--border)' }}>
-      <h2 className="section-title">Hubungi Saya</h2>
-      <p className="section-subtitle">
-        Punya ide proyek, tawaran pekerjaan, atau hanya ingin menyapa? Hubungi saya kapan saja.
-      </p>
+      <div className="reveal">
+        <h2 className="section-title">
+          <span className="section-title-accent">Get In Touch</span>
+          Hubungi Saya
+        </h2>
+        <p className="section-subtitle">
+          Punya ide proyek, tawaran pekerjaan, atau hanya ingin menyapa? Hubungi saya kapan saja.
+        </p>
+      </div>
 
       <div className="contact-wrapper">
         <div className="contact-info">
