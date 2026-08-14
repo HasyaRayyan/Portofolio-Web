@@ -9,12 +9,10 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 
 function App() {
-  // Check local storage or system color scheme preference
   const [theme, setTheme] = useState(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) return savedTheme;
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    return systemPrefersDark ? 'dark' : 'light';
+    const saved = localStorage.getItem('theme');
+    if (saved) return saved;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
 
   useEffect(() => {
@@ -22,52 +20,29 @@ function App() {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  // Global IntersectionObserver for all .reveal elements
+  // Global scroll reveal — IntersectionObserver on all .reveal elements
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.12, rootMargin: '0px 0px -32px 0px' }
     );
 
-    // Observe all current and future .reveal elements
-    const observe = () => {
-      document.querySelectorAll('.reveal:not(.visible)').forEach((el) => {
-        observer.observe(el);
-      });
-    };
+    const observe = () =>
+      document.querySelectorAll('.reveal:not(.visible)').forEach((el) => io.observe(el));
 
     observe();
 
-    // Re-observe whenever DOM might change (e.g. skills pagination)
-    const mutationObserver = new MutationObserver(observe);
-    mutationObserver.observe(document.body, { childList: true, subtree: true });
+    // Re-observe on DOM mutations (skills pagination etc.)
+    const mo = new MutationObserver(observe);
+    mo.observe(document.body, { childList: true, subtree: true });
 
-    return () => {
-      observer.disconnect();
-      mutationObserver.disconnect();
-    };
+    return () => { io.disconnect(); mo.disconnect(); };
   }, []);
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-  };
 
   return (
     <>
-      {/* Background glow effects */}
-      <div className="ambient-glow glow-purple" />
-      <div className="ambient-glow glow-cyan" />
-
-      {/* Main Layout Elements */}
-      <Navbar theme={theme} toggleTheme={toggleTheme} />
-
-      <main style={{ marginTop: '76px' }}>
+      <Navbar theme={theme} toggleTheme={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))} />
+      <main style={{ paddingTop: '68px' }}>
         <Hero />
         <About />
         <Skills />
@@ -75,7 +50,6 @@ function App() {
         <Experience />
         <Contact />
       </main>
-
       <Footer />
     </>
   );

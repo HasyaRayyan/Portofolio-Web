@@ -1,192 +1,114 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-// Hook: IntersectionObserver for scroll reveal
-function useScrollReveal() {
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-}
-
-// Hook: Counter animation
-function useCounterAnimation(target, duration = 1500, suffix = '+') {
-  const [count, setCount] = useState(0);
+// Counter animation
+function Counter({ target, suffix = '+' }) {
+  const [val, setVal] = useState(0);
   const [started, setStarted] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !started) {
-          setStarted(true);
-        }
-      },
-      { threshold: 0.5 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !started) setStarted(true);
+    }, { threshold: 0.6 });
+    if (ref.current) io.observe(ref.current);
+    return () => io.disconnect();
   }, [started]);
 
   useEffect(() => {
     if (!started) return;
-    let start = 0;
+    let n = 0;
     const end = parseInt(target);
-    const step = Math.ceil(end / (duration / 40));
-    const timer = setInterval(() => {
-      start = Math.min(start + step, end);
-      setCount(start);
-      if (start >= end) clearInterval(timer);
+    const step = Math.ceil(end / 30);
+    const t = setInterval(() => {
+      n = Math.min(n + step, end);
+      setVal(n);
+      if (n >= end) clearInterval(t);
     }, 40);
-    return () => clearInterval(timer);
-  }, [started, target, duration]);
+    return () => clearInterval(t);
+  }, [started, target]);
 
-  return { count, ref };
+  return <span ref={ref}>{val}{suffix}</span>;
 }
 
-function StatCounter({ num, label }) {
-  const { count, ref } = useCounterAnimation(num);
-  return (
-    <div className="card-glass stat-item reveal" ref={ref}>
-      <span className="stat-num">{count}+</span>
-      <div className="stat-label">{label}</div>
-    </div>
-  );
-}
+const capabilities = [
+  {
+    num: '01',
+    title: 'Frontend & Responsive Web',
+    desc: 'Membangun antarmuka modern yang interaktif dan responsif dengan React, Angular, dan Vite.',
+  },
+  {
+    num: '02',
+    title: 'Cross-Platform Mobile',
+    desc: 'Mengembangkan aplikasi Android & iOS dari satu basis kode menggunakan Ionic Framework.',
+  },
+  {
+    num: '03',
+    title: 'Backend & Database',
+    desc: 'Merancang RESTful API yang aman dengan Laravel dan mengoptimalkan query database SQL.',
+  },
+];
+
+const STACK = ['React', 'Laravel', 'PHP', 'MySQL', 'Angular', 'Ionic', 'Figma', 'Git', 'Vite', 'TypeScript'];
 
 export default function About() {
-  useScrollReveal();
-
-  const capabilities = [
-    {
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-          <line x1="8" y1="21" x2="16" y2="21" />
-          <line x1="12" y1="17" x2="12" y2="21" />
-        </svg>
-      ),
-      iconClass: '',
-      title: 'Frontend & Responsive Web',
-      desc: 'Membangun antarmuka modern yang interaktif, responsif, dan ramah pengguna dengan React, Angular, dan Vite.',
-    },
-    {
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
-          <line x1="12" y1="18" x2="12.01" y2="18" />
-        </svg>
-      ),
-      iconClass: 'alt',
-      title: 'Cross-Platform Mobile Apps',
-      desc: 'Mengembangkan aplikasi mobile Android & iOS berkinerja tinggi dari satu basis kode menggunakan framework Ionic.',
-    },
-    {
-      icon: (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <ellipse cx="12" cy="5" rx="9" ry="3" />
-          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-          <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
-        </svg>
-      ),
-      iconClass: 'alt2',
-      title: 'Backend & Database Architecture',
-      desc: 'Merancang RESTful API yang aman dengan Laravel dan mengoptimalkan query database relasional SQL.',
-    },
-  ];
-
   return (
-    <section id="about" className="section" style={{ borderTop: '1px solid var(--border)' }}>
+    <section id="about" className="section" style={{ borderTop: '1px solid var(--line)' }}>
       <div className="container">
-        <div className="reveal">
-          <h2 className="section-title">
-            <span className="section-title-accent">About Me</span>
-            Tentang Saya
-          </h2>
-          <p className="section-subtitle">
-            Mengenal lebih dalam perjalanan profesional dan visi saya dalam membangun solusi teknologi.
-          </p>
+        <div className="reveal" style={{ textAlign: 'center', marginBottom: '64px' }}>
+          <span className="section-label">01 — Tentang Saya</span>
+          <h2 className="section-title">Developer dengan<br />fokus pada kualitas.</h2>
         </div>
 
-        <div className="about-wrapper">
-          {/* Left Card */}
-          <div className="card-glass reveal from-left" style={{ padding: '40px', textAlign: 'left' }}>
-            {/* Decorative line */}
-            <div style={{
-              width: '48px',
-              height: '4px',
-              background: 'linear-gradient(90deg, var(--accent-violet), var(--accent-cyan))',
-              borderRadius: '2px',
-              marginBottom: '24px',
-            }} />
+        <div className="about-grid">
+          {/* Left — bio */}
+          <div className="reveal from-left">
+            <div className="about-body">
+              <p>
+                Dengan minat mendalam dalam software development, saya mengkhususkan diri
+                menghubungkan keindahan antarmuka web dengan kestabilan arsitektur sistem backend.
+                Setiap proyek dimulai dari memahami kebutuhan pengguna terlebih dahulu.
+              </p>
+              <p>
+                Saya senang memecahkan masalah kompleks, merancang skema database yang efisien,
+                dan menulis kode yang bersih serta mudah dipelihara. Belajar teknologi baru
+                adalah bahan bakar saya setiap harinya.
+              </p>
+            </div>
 
-            <h3 style={{ fontSize: '1.5rem', marginBottom: '20px', letterSpacing: '-0.5px', lineHeight: 1.3 }}>
-              Developer fokus pada{' '}
-              <span className="gradient-text">Kualitas</span>{' '}
-              &amp;{' '}
-              <span className="gradient-text">Pengalaman Pengguna</span>
-            </h3>
+            <div className="about-stack">
+              {STACK.map((t) => (
+                <span key={t} className="stack-tag">{t}</span>
+              ))}
+            </div>
 
-            <p className="about-desc">
-              Dengan minat mendalam dalam industri software development, saya mengkhususkan diri untuk
-              menghubungkan keindahan antarmuka web dan aplikasi mobile dengan kestabilan arsitektur sistem backend.
-            </p>
-            <p className="about-desc" style={{ marginBottom: 0 }}>
-              Saya senang memecahkan masalah kompleks, merancang skema database SQL yang efisien,
-              dan menulis kode yang bersih, mudah dipelihara, serta teruji dengan baik. Kolaborasi tim
-              dan pembelajaran teknologi baru adalah apa yang mendorong saya untuk terus bertumbuh.
-            </p>
-
-            {/* Tech stack chips */}
-            <div style={{ marginTop: '28px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-              {['React', 'Laravel', 'PHP', 'MySQL', 'Angular', 'Ionic', 'Figma', 'Git'].map((tech) => (
-                <span key={tech} style={{
-                  fontSize: '0.78rem',
-                  fontWeight: 600,
-                  padding: '5px 12px',
-                  borderRadius: '999px',
-                  background: 'var(--bg-surface-hover)',
-                  border: '1px solid var(--border)',
-                  color: 'var(--text-muted)',
-                  letterSpacing: '0.3px',
-                }}>{tech}</span>
+            {/* Mini stats */}
+            <div style={{ display: 'flex', gap: '32px', marginTop: '40px', paddingTop: '32px', borderTop: '1px solid var(--line)' }}>
+              {[['3+', 'Tahun Studi'], ['12+', 'Proyek'], ['15+', 'Teknologi']].map(([n, l]) => (
+                <div key={l}>
+                  <div style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', fontWeight: 900, lineHeight: 1, marginBottom: '4px' }}>
+                    <Counter target={parseInt(n)} />
+                  </div>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-ghost)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{l}</div>
+                </div>
               ))}
             </div>
           </div>
 
-          {/* Right: capabilities + stats */}
-          <div className="about-details">
-            <div className="reveal from-right" style={{ marginBottom: '32px' }}>
-              <h3 style={{ fontSize: '1.4rem', marginBottom: '20px', letterSpacing: '-0.3px' }}>Kemampuan Kunci</h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {capabilities.map((cap, i) => (
-                  <div key={i} className={`about-capability-card reveal stagger-${i + 1}`}>
-                    <div className={`about-cap-icon ${cap.iconClass}`}>
-                      {cap.icon}
-                    </div>
-                    <div>
-                      <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '4px' }}>{cap.title}</h4>
-                      <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>{cap.desc}</p>
-                    </div>
+          {/* Right — capabilities */}
+          <div className="reveal from-right">
+            <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-ghost)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '20px' }}>
+              Yang Saya Kerjakan
+            </p>
+            <div className="cap-list">
+              {capabilities.map((c, i) => (
+                <div key={c.num} className={`cap-item reveal d${i + 1}`}>
+                  <span className="cap-num">{c.num}</span>
+                  <div className="cap-content">
+                    <h4>{c.title}</h4>
+                    <p>{c.desc}</p>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="about-stats">
-              <StatCounter num={3} label="Tahun Studi" />
-              <StatCounter num={12} label="Proyek Jadi" />
-              <StatCounter num={15} label="Teknologi" />
+                </div>
+              ))}
             </div>
           </div>
         </div>
