@@ -417,7 +417,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Photo */
 .hero-photo-wrap {
   position: relative;
-  width: 340px;
+  width: 260px;
   flex-shrink: 0;
 }
 
@@ -435,28 +435,60 @@ h1, h2, h3, h4, h5, h6 {
   height: 100%;
   object-fit: cover;
   object-position: top center;
-  filter: grayscale(20%);
+  filter: grayscale(15%);
   transition: filter var(--mid) var(--ease), transform var(--slow) var(--ease);
 }
 .hero-photo-wrap:hover .hero-photo-inner img {
   filter: grayscale(0%);
-  transform: scale(1.03);
+  transform: scale(1.04);
 }
 
 /* Accent corner tag */
 .hero-photo-tag {
   position: absolute;
-  bottom: -16px;
-  left: -16px;
+  bottom: -14px;
+  left: -14px;
   background: var(--accent);
   color: var(--accent-on);
   font-family: var(--font-heading);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 10px 16px;
+  padding: 9px 14px;
   border-radius: var(--r-sm);
+}
+
+/* Social links row */
+.hero-socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.hero-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-ghost);
+  padding: 8px 14px;
+  border-radius: var(--r-sm);
+  border: 1.5px solid var(--line);
+  background: transparent;
+  transition: all var(--fast) var(--ease);
+  letter-spacing: 0.03em;
+}
+.hero-social-link:hover {
+  border-color: var(--text);
+  color: var(--text);
+  background: var(--bg-card);
+}
+.hero-social-link svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
 }
 
 /* ============================================================

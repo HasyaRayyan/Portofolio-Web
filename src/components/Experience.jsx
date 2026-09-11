@@ -138,7 +138,7 @@ export default function Experience() {
       <div className="container">
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '64px' }}>
           <span className="section-label">04 — Perjalanan</span>
-          <h2 className="section-title">Dari mana saya<br />berasal.</h2>
+          <h2 className="section-title">Perjalanan yang<br />membentuk saya.</h2>
         </div>
 
         <div className="exp-grid">
