@@ -143,9 +143,6 @@ const BadgeIcon = ({ type }) => {
 };
 
 export default function Experience() {
-  const featured = experiences.filter((e) => e.featured);
-  const rest = experiences.filter((e) => !e.featured);
-
   return (
     <section id="experience" className="section" style={{ borderTop: '1px solid var(--line)' }}>
       <div className="container">
@@ -155,36 +152,10 @@ export default function Experience() {
         </div>
 
         <div className="exp-grid">
-          {/* Featured card — UIN (full width) */}
-          {featured.map((exp, i) => {
+          {experiences.map((exp, i) => {
             const { Logo } = exp;
             return (
-              <div key={i} className={`exp-card featured reveal d${i + 1}`}>
-                <div className="exp-logo">
-                  <Logo />
-                </div>
-                <div className="exp-body">
-                  <span className={`exp-badge ${exp.badge}`}>
-                    <BadgeIcon type={exp.badge} />
-                    {exp.badgeLabel}
-                  </span>
-                  <span className="exp-date">{exp.date}</span>
-                  <h3 className="exp-title">{exp.title}</h3>
-                  <span className="exp-org">{exp.org}</span>
-                  <p className="exp-desc">{exp.desc}</p>
-                  <div className="exp-chips">
-                    {exp.chips.map((c) => <span key={c} className="exp-chip">{c}</span>)}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-
-          {/* Regular cards */}
-          {rest.map((exp, i) => {
-            const { Logo } = exp;
-            return (
-              <div key={i} className={`exp-card reveal d${i + 1}`}>
+              <div key={i} className={`exp-card${exp.featured ? ' featured' : ''} reveal d${Math.min(i + 1, 4)}`}>
                 <div className="exp-logo">
                   <Logo />
                 </div>
