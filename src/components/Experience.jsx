@@ -1,4 +1,5 @@
 import React from 'react';
+import logo44Thrift from '../assets/logo_44thrift.png';
 
 /* ─── Inline SVG logos untuk setiap institusi ─── */
 
@@ -60,20 +61,9 @@ const LogoPringapus = () => (
   </svg>
 );
 
-// Logo FourtyFourThrift (stylized thrift/clothing)
+// Logo FourtyFourThrift — gambar asli
 const LogoFourtyFour = () => (
-  <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Background */}
-    <rect x="8" y="8" width="64" height="64" rx="12" fill="#78350f"/>
-    {/* Hanger */}
-    <path d="M40 20 C37 20 34 22 34 25 C34 27 36 28 40 30 L20 42 L60 42 L40 30 C44 28 46 27 46 25 C46 22 43 20 40 20 Z"
-      fill="#fbbf24" stroke="#f59e0b" strokeWidth="1"/>
-    {/* Shirt body */}
-    <path d="M20 42 L22 60 L58 60 L60 42 Z" fill="#fbbf24" opacity="0.9"/>
-    {/* "44" text */}
-    <text x="40" y="56" textAnchor="middle" fontSize="11" fontWeight="900"
-      fill="#78350f" fontFamily="sans-serif">44</text>
-  </svg>
+  <img src={logo44Thrift} alt="FourtyFourThrift logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
 );
 
 /* ─── Data pengalaman ─── */

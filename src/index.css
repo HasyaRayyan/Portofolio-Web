@@ -823,8 +823,8 @@ h1, h2, h3, h4, h5, h6 {
 .exp-card:hover::before { background: var(--accent); }
 
 .exp-logo {
-  width: 110px;
-  height: 110px;
+  width: 140px;
+  height: 140px;
   border-radius: var(--r-lg);
   background: transparent;
   border: none;
@@ -837,8 +837,8 @@ h1, h2, h3, h4, h5, h6 {
   transition: transform var(--mid) var(--ease);
 }
 .exp-card.featured .exp-logo {
-  width: 124px;
-  height: 124px;
+  width: 160px;
+  height: 160px;
 }
 .exp-card:hover .exp-logo {
   transform: scale(1.06);
@@ -850,7 +850,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 12px;
   filter: none;
 }
-.exp-logo svg { width: 64px; height: 64px; }
+.exp-logo svg { width: 80px; height: 80px; }
 
 .exp-body { flex: 1; order: 1; }
 
