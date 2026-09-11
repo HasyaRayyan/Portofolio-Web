@@ -792,11 +792,11 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--bg-card);
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
-  padding: 24px 28px;
+  padding: 28px 32px;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  gap: 24px;
+  align-items: center;
+  gap: 28px;
   position: relative;
   overflow: hidden;
   transition: border-color var(--fast) var(--ease),
@@ -809,7 +809,7 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 16px 40px -8px rgba(0,0,0,0.15);
 }
 .exp-card.featured {
-  padding: 28px 32px;
+  padding: 32px 36px;
 }
 
 .exp-card::before {
@@ -823,33 +823,36 @@ h1, h2, h3, h4, h5, h6 {
 .exp-card:hover::before { background: var(--accent); }
 
 .exp-logo {
-  width: 52px;
-  height: 52px;
-  border-radius: var(--r-md);
-  background: var(--bg);
-  border: 1px solid var(--line);
+  width: 110px;
+  height: 110px;
+  border-radius: var(--r-lg);
+  background: transparent;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   overflow: hidden;
-  transition: border-color var(--fast) var(--ease);
+  order: 2;
+  transition: transform var(--mid) var(--ease);
 }
 .exp-card.featured .exp-logo {
-  width: 60px;
-  height: 60px;
+  width: 124px;
+  height: 124px;
 }
-.exp-card:hover .exp-logo { border-color: var(--accent); }
+.exp-card:hover .exp-logo {
+  transform: scale(1.06);
+}
 .exp-logo img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 8px;
+  padding: 12px;
   filter: none;
 }
-.exp-logo svg { width: 28px; height: 28px; }
+.exp-logo svg { width: 64px; height: 64px; }
 
-.exp-body { flex: 1; }
+.exp-body { flex: 1; order: 1; }
 
 .exp-badge {
   display: inline-flex;
@@ -919,8 +922,10 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 768px) {
   .exp-grid { grid-template-columns: 1fr; }
-  .exp-card.featured { flex-direction: column; gap: 16px; }
-  .exp-card.featured .exp-logo { width: 52px; height: 52px; margin-bottom: 0; }
+  .exp-card { gap: 20px; padding: 20px; }
+  .exp-logo { width: 64px; height: 64px; }
+  .exp-logo svg { width: 38px; height: 38px; }
+  .exp-card.featured .exp-logo { width: 72px; height: 72px; }
 }
 
 /* ============================================================
