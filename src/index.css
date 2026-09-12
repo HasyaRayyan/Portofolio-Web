@@ -116,15 +116,29 @@ h1, h2, h3, h4, h5, h6 {
 /* ============================================================
    SCROLL REVEAL
    ============================================================ */
+:root {
+  --fast: 0.18s;
+  --mid: 0.35s;
+  --slow: 0.7s;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity var(--slow) var(--ease),
-              transform var(--slow) var(--ease);
+  transform: translateY(32px) scale(0.98);
+  filter: blur(4px);
+  transition: opacity 0.8s var(--ease),
+              transform 0.8s var(--ease),
+              filter 0.8s var(--ease);
+  will-change: opacity, transform, filter;
 }
-.reveal.from-left  { transform: translateX(-36px); }
-.reveal.from-right { transform: translateX(36px); }
-.reveal.visible    { opacity: 1; transform: none; }
+.reveal.from-left  { transform: translateX(-40px) scale(0.98); }
+.reveal.from-right { transform: translateX(40px) scale(0.98); }
+.reveal.visible    { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 
 .d1 { transition-delay: 0.08s; }
 .d2 { transition-delay: 0.16s; }
@@ -1096,38 +1110,54 @@ textarea.form-input {
 /* ============================================================
    FOOTER
    ============================================================ */
-.footer {
-  padding: 32px 0;
-  border-top: 1px solid var(--line);
+/* Tab Switcher */
+.tab-btn {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  color: var(--text-sub);
+  cursor: pointer;
+  transition: all var(--fast) var(--ease);
 }
-.footer-inner {
+.tab-btn:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+.tab-btn.active {
+  background: var(--accent);
+  color: var(--accent-on);
+  border-color: var(--accent);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+}
+.footer-simple {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
   gap: 16px;
+  flex-wrap: wrap;
 }
 .footer-logo {
   font-family: var(--font-heading);
   font-weight: 900;
-  font-size: 1rem;
+  font-size: 1.05rem;
   letter-spacing: -0.03em;
 }
 .footer-copy {
   font-size: 0.8rem;
   color: var(--text-ghost);
 }
-.footer-links {
-  display: flex;
-  gap: 20px;
-}
-.footer-link {
-  font-size: 0.8rem;
-  color: var(--text-ghost);
-  font-weight: 500;
-  transition: color var(--fast) var(--ease);
-}
-.footer-link:hover { color: var(--text); }
 
 /* ============================================================
    RESPONSIVE
