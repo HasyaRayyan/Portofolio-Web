@@ -139,10 +139,10 @@ export default function Experience() {
       <div className="container">
 
         {/* Header */}
-        <div className="reveal" style={{ marginBottom: '72px' }}>
+        <div className="reveal" style={{ textAlign: 'center', marginBottom: '64px' }}>
           <span className="section-label">04 — Track Record</span>
-          <h2 className="section-title" style={{ maxWidth: '480px' }}>
-            Pengalaman &amp;<br />Pendidikan.
+          <h2 className="section-title">
+            Pengalaman &amp; Pendidikan
           </h2>
         </div>
 
