@@ -114,37 +114,68 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ============================================================
-   SCROLL REVEAL
+   SCROLL REVEAL — premium entry animations
    ============================================================ */
-:root {
-  --fast: 0.18s;
-  --mid: 0.35s;
-  --slow: 0.7s;
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
 }
 
-/* ============================================================
-   SCROLL REVEAL
-   ============================================================ */
+@keyframes revealLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-48px) scale(0.97);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes revealRight {
+  from {
+    opacity: 0;
+    transform: translateX(48px) scale(0.97);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+}
+
 .reveal {
   opacity: 0;
-  transform: translateY(32px) scale(0.98);
-  filter: blur(4px);
-  transition: opacity 0.8s var(--ease),
-              transform 0.8s var(--ease),
-              filter 0.8s var(--ease);
+  transform: translateY(40px) scale(0.97);
+  filter: blur(6px);
   will-change: opacity, transform, filter;
 }
-.reveal.from-left  { transform: translateX(-40px) scale(0.98); }
-.reveal.from-right { transform: translateX(40px) scale(0.98); }
-.reveal.visible    { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+.reveal.from-left  { transform: translateX(-48px) scale(0.97); }
+.reveal.from-right { transform: translateX(48px) scale(0.97); }
 
-.d1 { transition-delay: 0.08s; }
-.d2 { transition-delay: 0.16s; }
-.d3 { transition-delay: 0.24s; }
-.d4 { transition-delay: 0.32s; }
-.d5 { transition-delay: 0.40s; }
+.reveal.visible {
+  animation: revealUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.reveal.from-left.visible  { animation-name: revealLeft; }
+.reveal.from-right.visible { animation-name: revealRight; }
+
+.d1 { animation-delay: 0.05s; }
+.d2 { animation-delay: 0.12s; }
+.d3 { animation-delay: 0.20s; }
+.d4 { animation-delay: 0.28s; }
+.d5 { animation-delay: 0.36s; }
 
 /* ============================================================
    ACCENT UTILITY
@@ -824,155 +855,181 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ============================================================
-   EXPERIENCE — CARD GRID
+   EXPERIENCE — TWO COLUMN
    ============================================================ */
 
-.exp-grid {
+/* Outer wrapper: career left | divider | education right */
+.exp-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 0 56px;
+  align-items: start;
+}
+
+/* Vertical divider line */
+.exp-divider {
+  width: 1px;
+  background: var(--line);
+  align-self: stretch;
+  min-height: 100%;
+}
+
+/* Each column */
+.exp-col {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  max-width: 800px;
-  margin: 0 auto;
+  gap: 0;
 }
 
-.exp-card {
-  background: var(--bg-card);
-  border: 1px solid var(--line);
-  border-radius: var(--r-lg);
-  padding: 28px 32px;
+/* Column header */
+.exp-col-header {
+  margin-bottom: 36px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.exp-col-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-ghost);
+  margin-bottom: 6px;
+}
+.exp-col-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* List of items per column */
+.exp-col-list {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 28px;
-  position: relative;
-  overflow: hidden;
-  transition: border-color var(--fast) var(--ease),
-              transform var(--mid) var(--ease),
-              box-shadow var(--mid) var(--ease);
-}
-.exp-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-3px);
-  box-shadow: 0 16px 40px -8px rgba(0,0,0,0.15);
-}
-.exp-card.featured {
-  padding: 32px 36px;
+  flex-direction: column;
+  gap: 0;
 }
 
-.exp-card::before {
+/* Individual experience item */
+.exp-item {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  transition: padding-left var(--mid) var(--ease);
+  cursor: default;
+}
+.exp-item:last-child { border-bottom: none; }
+.exp-item::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--line);
-  transition: background var(--fast) var(--ease);
+  left: 0; top: 0; bottom: 0;
+  width: 0;
+  background: var(--accent);
+  opacity: 0.08;
+  border-radius: 0 4px 4px 0;
+  transition: width var(--mid) var(--ease);
 }
-.exp-card:hover::before { background: var(--accent); }
+.exp-item:hover { padding-left: 12px; }
+.exp-item:hover::before { width: 3px; }
 
-.exp-logo {
-  width: 140px;
-  height: 140px;
-  border-radius: var(--r-lg);
-  background: transparent;
-  border: none;
+/* Top row: logo + meta */
+.exp-item-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+/* Logo */
+.exp-item-logo {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
   overflow: hidden;
-  order: 2;
-  transition: transform var(--mid) var(--ease);
+  transition: transform var(--mid) var(--ease-spring);
 }
-.exp-card.featured .exp-logo {
-  width: 160px;
-  height: 160px;
+.exp-item:hover .exp-item-logo {
+  transform: scale(1.1) rotate(-3deg);
 }
-.exp-card:hover .exp-logo {
-  transform: scale(1.06);
-}
-.exp-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 12px;
-  filter: none;
-}
-.exp-logo svg { width: 80px; height: 80px; }
+.exp-item-logo svg { width: 100%; height: 100%; }
+.exp-item-logo img { width: 100%; height: 100%; object-fit: contain; }
 
-.exp-body { flex: 1; order: 1; }
-
-.exp-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.63rem;
+/* Type + date */
+.exp-item-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.exp-item-type {
+  font-size: 0.62rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding: 4px 9px;
-  border-radius: 4px;
-  margin-bottom: 14px;
+  color: var(--accent);
 }
-.exp-badge.education { background: rgba(96,165,250,0.12); color: #60a5fa; border: 1px solid rgba(96,165,250,0.25); }
-.exp-badge.work      { background: rgba(52,211,153,0.12); color: #34d399; border: 1px solid rgba(52,211,153,0.25); }
-.exp-badge.business  { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.25); }
-
-[data-theme="light"] .exp-badge.education { background: rgba(59,130,246,0.08); color: #2563eb; border-color: rgba(59,130,246,0.2); }
-[data-theme="light"] .exp-badge.work      { background: rgba(16,185,129,0.08); color: #059669; border-color: rgba(16,185,129,0.2); }
-[data-theme="light"] .exp-badge.business  { background: rgba(245,158,11,0.08); color: #d97706; border-color: rgba(245,158,11,0.2); }
-
-.exp-date {
+.exp-item-date {
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--text-ghost);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 8px;
+  letter-spacing: 0.04em;
 }
-.exp-title {
+
+/* Content */
+.exp-item-title {
   font-family: var(--font-heading);
-  font-size: 1.08rem;
+  font-size: 1rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
   line-height: 1.25;
+  transition: color var(--fast) var(--ease);
 }
-.exp-org {
-  font-size: 0.85rem;
+.exp-item:hover .exp-item-title { color: var(--accent); }
+
+.exp-item-org {
+  display: block;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--text-sub);
-  display: block;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
-.exp-desc {
+.exp-item-desc {
   font-size: 0.83rem;
   color: var(--text-sub);
-  line-height: 1.78;
+  line-height: 1.75;
 }
-.exp-chips {
+.exp-item-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 16px;
+  gap: 5px;
+  margin-top: 14px;
 }
-.exp-chip {
-  font-size: 0.63rem;
+.exp-item-chip {
+  font-size: 0.61rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 3px 8px;
+  padding: 3px 7px;
   border-radius: 4px;
   border: 1px solid var(--line);
   color: var(--text-ghost);
+  transition: border-color var(--fast) var(--ease), color var(--fast) var(--ease);
+}
+.exp-item:hover .exp-item-chip {
+  border-color: var(--accent);
+  color: var(--text);
 }
 
+/* Responsive: stack columns on mobile */
 @media (max-width: 768px) {
-  .exp-grid { grid-template-columns: 1fr; }
-  .exp-card { gap: 20px; padding: 20px; }
-  .exp-logo { width: 64px; height: 64px; }
-  .exp-logo svg { width: 38px; height: 38px; }
-  .exp-card.featured .exp-logo { width: 72px; height: 72px; }
+  .exp-two-col {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .exp-divider { display: none; }
 }
 
 /* ============================================================
@@ -1110,29 +1167,6 @@ textarea.form-input {
 /* ============================================================
    FOOTER
    ============================================================ */
-/* Tab Switcher */
-.tab-btn {
-  font-family: var(--font-body);
-  font-size: 0.82rem;
-  font-weight: 700;
-  padding: 8px 18px;
-  border-radius: var(--r-sm);
-  border: 1px solid var(--line);
-  background: var(--bg-card);
-  color: var(--text-sub);
-  cursor: pointer;
-  transition: all var(--fast) var(--ease);
-}
-.tab-btn:hover {
-  border-color: var(--text);
-  color: var(--text);
-}
-.tab-btn.active {
-  background: var(--accent);
-  color: var(--accent-on);
-  border-color: var(--accent);
-}
-
 /* ============================================================
    FOOTER
    ============================================================ */
