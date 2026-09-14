@@ -151,7 +151,7 @@ export default function Experience() {
 
           {/* Left — Karier */}
           <div className="exp-col">
-            <ColHeader label="Karier" title="Dunia Kerja" />
+            <ColHeader label="Karier" title="Pengalaman Kerja" />
             <div className="exp-col-list">
               {careerData.map((item, i) => (
                 <ExpItem key={item.title} item={item} delay={i + 1} />
@@ -164,7 +164,7 @@ export default function Experience() {
 
           {/* Right — Pendidikan */}
           <div className="exp-col">
-            <ColHeader label="Pendidikan" title="Institusi" />
+            <ColHeader label="Pendidikan" title="Riwayat Studi" />
             <div className="exp-col-list">
               {educationData.map((item, i) => (
                 <ExpItem key={item.title} item={item} delay={i + 1} />

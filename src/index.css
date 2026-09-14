@@ -951,7 +951,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 16px;
 }
 
-/* Logo — bigger */
+/* Logo — clear & prominent */
 .exp-item-logo {
   width: 72px;
   height: 72px;
@@ -959,12 +959,11 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
   border-radius: var(--r-md);
-  transition: transform 0.5s var(--ease-spring);
+  transition: transform 0.35s var(--ease);
 }
 .exp-item:hover .exp-item-logo {
-  transform: scale(1.12) rotate(-4deg);
+  transform: scale(1.06);
 }
 .exp-item-logo svg {
   width: 100%;
@@ -1050,25 +1049,25 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ── Responsive ── */
 
-/* Tablet: kecilkan gap dan logo */
+/* Tablet: smaller gap */
 @media (max-width: 900px) {
   .exp-two-col {
     grid-template-columns: 1fr 1px 1fr;
-    gap: 0 36px;
+    gap: 0 32px;
   }
-  .exp-item-logo { width: 56px; height: 56px; }
+  .exp-item-logo { width: 60px; height: 60px; }
 }
 
-/* Mobile: stack vertikal */
-@media (max-width: 680px) {
+/* Mobile: stack vertically */
+@media (max-width: 768px) {
   .exp-two-col {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 40px;
   }
   .exp-divider { display: none; }
-  .exp-item { padding: 18px 16px; }
-  .exp-item-logo { width: 60px; height: 60px; }
-  .exp-col-title { font-size: 1.1rem; }
+  .exp-item { padding: 20px 16px; }
+  .exp-item-logo { width: 56px; height: 56px; }
+  .exp-col-title { font-size: 1.15rem; }
 }
 
 /* ============================================================
