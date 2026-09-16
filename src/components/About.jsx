@@ -33,53 +33,47 @@ function Counter({ target, suffix = '+' }) {
 const capabilities = [
   {
     num: '01',
-    title: 'Frontend & Reactive UI',
-    desc: 'Membangun Single Page Application fluid dengan React, TypeScript, dan Vite. Mengutamakan performa rendering cepat dan arsitektur komponen modular.',
+    title: 'Frontend Architecture & Reactive UI',
+    desc: 'Menyusun arsitektur Single Page Application (SPA) cepat menggunakan React, Vite, dan TypeScript dengan state management modular.',
   },
   {
     num: '02',
-    title: 'Cross-Platform Mobile Dev',
-    desc: 'Mendesain dan mengeksekusi aplikasi mobile multiplatform Android & iOS menggunakan Ionic Framework dan Capacitor dengan satu basis kode efisien.',
+    title: 'Cross-Platform Mobile Engineering',
+    desc: 'Membangun aplikasi mobile multiplatform Android & iOS dari satu basis kode terpadu dengan Ionic Framework dan Capacitor plugins.',
   },
   {
     num: '03',
-    title: 'Backend Architecture & Database',
-    desc: 'Merancang API RESTful aman dengan Laravel & CodeIgniter, pemodelan relasi database SQL, serta optimalisasi query database performa tinggi.',
-  },
-  {
-    num: '04',
-    title: 'Clean Code & Engineering Workflow',
-    desc: 'Menerapkan branching Gitflow teratur, pengujian kontrak endpoint via Postman, dan prinsip Clean Architecture agar kode mudah di-maintain.',
+    title: 'Backend Systems & Database Design',
+    desc: 'Merancang RESTful API terstruktur dengan Laravel / PHP dan optimasi indexing query database SQL performa tinggi.',
   },
 ];
 
-const STACK = ['React.js', 'TypeScript', 'Laravel', 'Ionic', 'MySQL', 'PHP 8', 'Angular', 'Tailwind', 'Git & GitHub', 'Vite'];
+const STACK = ['React', 'TypeScript', 'Tailwind', 'Laravel', 'PHP 8', 'MySQL', 'Angular', 'Ionic', 'Git', 'Vite'];
 
 export default function About() {
   return (
     <section id="about" className="section" style={{ borderTop: '1px solid var(--line)' }}>
       <div className="container">
-        <div className="reveal" style={{ textAlign: 'center', marginBottom: '64px' }}>
+        <div className="reveal" style={{ textAlign: 'center', marginBottom: '56px' }}>
           <span className="section-label">01 — Filosofi &amp; Karakter</span>
-          <h2 className="section-title">Developer dengan<br />fokus pada kualitas.</h2>
+          <h2 className="section-title">Rekayasa Software<br />dengan Standar Presisi.</h2>
+          <p className="section-sub" style={{ marginBottom: 0 }}>
+            Menghubungkan arsitektur kode yang tangguh dengan antarmuka yang intuitif dan berdaya guna tinggi.
+          </p>
         </div>
 
         <div className="about-grid">
-          {/* Left — bio with coder vibe */}
+          {/* Left — bio */}
           <div className="reveal from-left">
             <div className="about-body">
               <p>
-                Bagi saya, menulis kode bukan sekadar membuat program berjalan, melainkan
-                seni rekayasa perangkat lunak yang memadukan performa tinggi, kesederhanaan logika,
-                dan kepuasan pengguna. Dari merancang skema database SQL berkecepatan tinggi
-                hingga menyusun micro-interaction fluid di sisi antarmuka, setiap baris kode
-                dibuat dengan pertimbangan cermat.
+                Bagi saya, koding bukan sekadar menyelesaikan baris sintaks—melainkan seni memecahkan masalah nyata melalui arsitektur sistem yang modular, bersih, dan terukur.
               </p>
               <p>
-                Berbasis di <strong>Kota Batu, Jawa Timur</strong>, saya terbiasa memecahkan masalah kompleks,
-                melakukan debugging dengan teliti, dan mengadopsi teknologi mutakhir seperti
-                React, TypeScript, Laravel, dan Ionic. Belajar hal baru dan mengirim kode berkualitas
-                ke tahap produksi adalah rutinitas yang selalu memicu semangat saya.
+                Saya mendalami siklus pengembangan software secara utuh: mulai dari pemodelan skema relasional database, penyusunan kontrak RESTful API berkeamanan tinggi, hingga implementasi komponen UI reaktif yang responsif di berbagai ukuran layar.
+              </p>
+              <p>
+                Berbasis di Kota Batu, Jawa Timur, saya terus mengeksplorasi ekosistem teknologi mutakhir untuk menghasilkan aplikasi digital yang cepat dimuat, mudah di-maintain, dan memberikan dampak nyata bagi pengguna.
               </p>
             </div>
 
@@ -91,11 +85,7 @@ export default function About() {
 
             {/* Mini stats */}
             <div style={{ display: 'flex', gap: '32px', marginTop: '40px', paddingTop: '32px', borderTop: '1px solid var(--line)' }}>
-              {[
-                ['3+', 'Tahun Coding'],
-                ['12+', 'Proyek Shipped'],
-                ['15+', 'Teknologi'],
-              ].map(([n, l]) => (
+              {[['3+', 'Tahun Eksplorasi'], ['12+', 'Proyek Selesai'], ['15+', 'Teknologi Dikuasai']].map(([n, l]) => (
                 <div key={l}>
                   <div style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', fontWeight: 900, lineHeight: 1, marginBottom: '4px' }}>
                     <Counter target={parseInt(n)} />
@@ -109,7 +99,7 @@ export default function About() {
           {/* Right — capabilities */}
           <div className="reveal from-right">
             <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-ghost)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '20px' }}>
-              Pilar Rekayasa Perangkat Lunak
+              Fokus Rekayasa &amp; Kapabilitas
             </p>
             <div className="cap-list">
               {capabilities.map((c, i) => (

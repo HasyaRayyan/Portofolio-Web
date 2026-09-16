@@ -4,179 +4,173 @@ import logoPringapus from '../assets/logo_pringapus.jpg';
 import logoSMK from '../assets/logo_smk_pgri.jpg';
 import logoUIN from '../assets/logo_uin_malang.png';
 
-/* ─── Data Karir & Pendidikan (Authentic Dev Log) ─── */
+/* ─── Data ─── */
 
 const careerData = [
   {
-    period: '2025.01 — 2025.12',
-    duration: '1 Tahun',
+    date: 'Jan 2025 — Des 2025',
     title: 'Full-Stack Developer Intern',
     org: 'PT Pringapus Digital Teknologi',
-    location: 'Malang • Hybrid',
-    status: 'Magang',
-    bulletPoints: [
-      'Mengembangkan antarmuka aplikasi web dan mobile hybrid menggunakan Ionic Angular.',
-      'Merancang modul backend dan integrasi endpoint RESTful API berbasis CodeIgniter & WordPress.',
-      'Mengelola struktur database SQL, indexing relasional, dan optimalisasi konsumsi data.',
+    desc: 'Pengembangan dan pemeliharaan aplikasi web & sistem informasi berbasis enterprise.',
+    highlights: [
+      'Membangun modul frontend responsif menggunakan Ionic Angular & antarmuka modern.',
+      'Merancang RESTful API dan integrasi backend menggunakan PHP CodeIgniter.',
+      'Mengoptimasi skema database SQL untuk transaksi data yang cepat dan aman.',
     ],
-    tech: ['Ionic', 'Angular', 'CodeIgniter', 'SQL', 'REST API'],
     logo: logoPringapus,
     alt: 'Logo PT Pringapus Digital Teknologi',
+    type: 'Magang Industri',
   },
   {
-    period: '2024.12 — Sekarang',
-    duration: 'Aktif',
-    title: 'Founder & Tech Lead',
+    date: 'Des 2024 — Sekarang',
+    title: 'Owner & Digital Strategist',
     org: 'FourtyFourThrift',
-    location: 'Kota Batu / Online',
-    status: 'Wirausaha',
-    bulletPoints: [
-      'Membangun strategi branding digital, kanal penjualan digital, dan otomatisasi pembukuan.',
-      'Mengelola inventory management serta eksekusi campaign pemasaran digital berbasis data.',
-      'Mengembangkan presence e-commerce modern dengan engagement pelanggan terukur.',
+    desc: 'Membangun dan mengembangkan brand e-commerce pakaian vintage berkualitas.',
+    highlights: [
+      'Membangun sistem katalog digital dan manajemen inventaris berbasis web.',
+      'Menjalankan strategi pemasaran performa dan branding digital omnichannel.',
+      'Mengelola alur operasional, kepuasan pelanggan, dan analitik penjualan.',
     ],
-    tech: ['Branding', 'E-Commerce', 'Inventory', 'Digital Marketing'],
     logo: logo44Thrift,
     alt: 'Logo FourtyFourThrift',
+    type: 'Wirausaha Digital',
   },
 ];
 
 const educationData = [
   {
-    period: '2026.08 — Sekarang',
-    duration: 'S1 Degree',
+    date: 'Agt 2026 — Sekarang',
     title: 'S1 Teknik Informatika',
     org: 'UIN Maulana Malik Ibrahim Malang',
-    location: 'Kota Malang',
-    status: 'Perkuliahan',
-    bulletPoints: [
-      'Pendalaman mendalam struktur data, algoritma, dan arsitektur rekayasa perangkat lunak enterprise.',
-      'Eksplorasi sistem komputasi terdistribusi, kecerdasan buatan, dan perancangan database skala besar.',
-      'Kolaborasi riset teknologi dan penerapan standar Clean Code dalam siklus software development.',
+    desc: 'Fokus pada Software Engineering, Algoritma Lanjut, dan Sistem Terdistribusi.',
+    highlights: [
+      'Memperdalam arsitektur sistem enterprise, struktur data, dan rekayasa perangkat lunak.',
+      'Eksplorasi kecerdasan buatan (AI), data modeling, dan cloud deployment.',
+      'Kolaborasi riset akademik dan pembuatan prototipe solusi komputasi cerdas.',
     ],
-    tech: ['Data Structures', 'Algorithms', 'AI', 'Software Engineering'],
     logo: logoUIN,
     alt: 'Logo UIN Maulana Malik Ibrahim Malang',
+    type: 'Pendidikan Tinggi (S1)',
   },
   {
-    period: '2023.06 — 2026.05',
-    duration: '3 Tahun',
+    date: 'Jun 2023 — Mei 2026',
     title: 'Rekayasa Perangkat Lunak (RPL)',
     org: 'SMK PGRI 03 Malang (Skariga)',
-    location: 'Kota Malang',
-    status: 'Vokasi',
-    bulletPoints: [
-      'Pelatihan intensif rekayasa software: pemrograman web frontend & backend, dan aplikasi mobile.',
-      'Implementasi database SQL terstruktur (DDL/DML), normalisasi, dan manajemen transaksi data.',
-      'Penyelesaian proyek capstone berbasis tim dengan standard workflow industri dan version control.',
+    desc: 'Pendidikan vokasi teknologi informasi intensif berorientasi industri.',
+    highlights: [
+      'Penguasaan fundamental algoritma pemrograman, web full-stack, & mobile app.',
+      'Praktek perancangan database relasional MySQL dan pemodelan sistem UML.',
+      'Pengalaman kepemimpinan tim dalam pengerjaan proyek software riil.',
     ],
-    tech: ['Web Dev', 'Mobile Dev', 'Database SQL', 'OOP PHP', 'Git'],
     logo: logoSMK,
     alt: 'Logo SMK PGRI 03 Malang (Skariga)',
+    type: 'Vokasi Kejuruan',
   },
 ];
 
-function ResumeCard({ item, delay }) {
+/* ─── Sub components ─── */
+
+function ColHeader({ label, title }) {
   return (
-    <div className={`resume-card reveal d${delay}`}>
-      {/* Top Meta Bar */}
-      <div className="resume-header">
-        <div className="resume-logo-wrap">
+    <div className="exp-col-header text-center">
+      <span className="exp-col-label">{label}</span>
+      <h3 className="exp-col-title">{title}</h3>
+    </div>
+  );
+}
+
+function ExpItem({ item, delay }) {
+  return (
+    <div className={`exp-card-bespoke reveal d${delay}`}>
+      {/* Top Header Row */}
+      <div className="exp-card-top">
+        <div className="exp-logo-frame">
           <img src={item.logo} alt={item.alt} />
         </div>
-        <div className="resume-title-block">
-          <div className="resume-tag-row">
-            <span className="resume-status-badge">{item.status}</span>
-            <span className="resume-duration">{item.duration}</span>
-            <span className="resume-loc">{item.location}</span>
+        <div className="exp-card-header-info">
+          <div className="exp-card-pill-row">
+            <span className="exp-type-pill">{item.type}</span>
+            <span className="exp-period-pill">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+              {item.date}
+            </span>
           </div>
-          <h4 className="resume-role">{item.title}</h4>
-          <span className="resume-org">{item.org}</span>
+          <h4 className="exp-card-title">{item.title}</h4>
+          <span className="exp-card-org">{item.org}</span>
         </div>
       </div>
 
-      {/* Period Time Tag */}
-      <div className="resume-period-row">
-        <span className="resume-period-tag">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-            <line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" />
-            <line x1="3" y1="10" x2="21" y2="10" />
-          </svg>
-          {item.period}
-        </span>
-      </div>
+      {/* Summary */}
+      <p className="exp-card-summary">{item.desc}</p>
 
-      {/* Engineering Bullet Highlights */}
-      <ul className="resume-bullets">
-        {item.bulletPoints.map((pt, i) => (
-          <li key={i}>{pt}</li>
-        ))}
-      </ul>
-
-      {/* Tech Stack Chips */}
-      <div className="resume-tech-row">
-        {item.tech.map((t) => (
-          <span key={t} className="resume-tech-chip">
-            #{t.toLowerCase()}
-          </span>
-        ))}
+      {/* Key Highlights / Poin Kontribusi */}
+      <div className="exp-highlights-wrap">
+        <span className="exp-highlights-title">Kontribusi &amp; Fokus Utama:</span>
+        <ul className="exp-highlights-list">
+          {item.highlights.map((h, idx) => (
+            <li key={idx} className="exp-highlight-item">
+              <span className="exp-highlight-bullet">▹</span>
+              <span>{h}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
 }
+
+/* ─── Main component ─── */
 
 export default function Experience() {
   return (
     <section id="experience" className="section" style={{ borderTop: '1px solid var(--line)' }}>
       <div className="container">
 
-        {/* Centered Section Header */}
+        {/* Section Header */}
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '56px' }}>
           <span className="section-label">04 — Track Record</span>
           <h2 className="section-title">
             Pengalaman &amp; Pendidikan
           </h2>
           <p className="section-sub" style={{ marginBottom: 0 }}>
-            Perjalanan langsung di industri pengembangan perangkat lunak dan fondasi akademik vokasi &amp; perguruan tinggi.
+            Perjalanan profesional, rekayasa software industri, serta fondasi akademis yang membentuk kapabilitas teknis saya.
           </p>
         </div>
 
-        {/* Centered Dual-Column Container */}
-        <div className="resume-centered-container">
+        {/* Two-column layout centered */}
+        <div className="exp-two-col-container">
+          <div className="exp-two-col">
 
-          {/* Left Column: Pengalaman Kerja */}
-          <div className="resume-column">
-            <div className="resume-col-header">
-              <span className="resume-col-sublabel">Karier</span>
-              <h3 className="resume-col-maintitle">Pengalaman Kerja</h3>
-              <div className="resume-col-line" />
+            {/* Left — Karier */}
+            <div className="exp-col">
+              <ColHeader label="Karier" title="Pengalaman Kerja" />
+              <div className="exp-col-list">
+                {careerData.map((item, i) => (
+                  <ExpItem key={item.title} item={item} delay={i + 1} />
+                ))}
+              </div>
             </div>
 
-            <div className="resume-cards-list">
-              {careerData.map((item, i) => (
-                <ResumeCard key={item.title} item={item} delay={i + 1} />
-              ))}
+            {/* Divider */}
+            <div className="exp-divider" />
+
+            {/* Right — Pendidikan */}
+            <div className="exp-col">
+              <ColHeader label="Pendidikan" title="Riwayat Studi" />
+              <div className="exp-col-list">
+                {educationData.map((item, i) => (
+                  <ExpItem key={item.title} item={item} delay={i + 1} />
+                ))}
+              </div>
             </div>
+
           </div>
-
-          {/* Right Column: Riwayat Studi */}
-          <div className="resume-column">
-            <div className="resume-col-header">
-              <span className="resume-col-sublabel">Pendidikan</span>
-              <h3 className="resume-col-maintitle">Riwayat Studi</h3>
-              <div className="resume-col-line" />
-            </div>
-
-            <div className="resume-cards-list">
-              {educationData.map((item, i) => (
-                <ResumeCard key={item.title} item={item} delay={i + 1} />
-              ))}
-            </div>
-          </div>
-
         </div>
-
       </div>
     </section>
   );

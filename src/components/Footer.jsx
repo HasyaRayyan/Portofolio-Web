@@ -23,7 +23,7 @@ export default function Footer() {
               Hasya<span className="accent">.</span>
             </a>
             <p className="footer-tagline">
-              Full-Stack Developer &amp; Mobile Engineer berbasis di Kota Batu, Jawa Timur. Berfokus pada kode bersih, skalabilitas, dan pengalaman pengguna superior.
+              Full-Stack Developer &amp; Mobile Software Craftsman berbasis di Kota Batu, Jawa Timur, Indonesia. Membangun produk digital yang cepat, responsif, dan berorientasi performa.
             </p>
           </div>
 

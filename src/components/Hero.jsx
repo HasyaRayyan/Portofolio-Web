@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import hasyaRayyanPhoto from '../assets/hasya_rayyan.jpg';
 
 function use3DTilt(ref, strength = 6) {
@@ -9,11 +9,11 @@ function use3DTilt(ref, strength = 6) {
       const r = el.getBoundingClientRect();
       const x = ((e.clientX - r.left) / r.width  - 0.5) * strength;
       const y = ((e.clientY - r.top)  / r.height - 0.5) * -strength;
-      el.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${y}deg)`;
+      el.style.transform = `perspective(900px) rotateY(${x}deg) rotateX(${y}deg)`;
     };
     const off = () => {
       el.style.transition = 'transform 0.6s cubic-bezier(0.4,0,0.2,1)';
-      el.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
+      el.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg)';
     };
     const start = () => { el.style.transition = 'transform 0.1s ease'; };
     el.addEventListener('mousemove', on);
@@ -60,10 +60,16 @@ const socials = [
 ];
 
 export default function Hero() {
-  const cardRef = useRef(null);
-  use3DTilt(cardRef, 7);
+  const photoRef = useRef(null);
+  use3DTilt(photoRef, 6);
 
-  const [activeTab, setActiveTab] = useState('profile'); // 'profile' | 'terminal'
+  const [copied, setCopied] = useState(false);
+
+  const copyEmail = () => {
+    navigator.clipboard.writeText('hasyarayyanbm@gmail.com');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
 
   const goto = (id) => {
     const el = document.getElementById(id);
@@ -75,36 +81,38 @@ export default function Hero() {
       <div className="container">
         <div className="hero-grid">
 
-          {/* ── Kiri: Konten Coder Vibe ── */}
+          {/* ── Kiri: konten ── */}
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 
-            {/* Live Status Pill */}
-            <div className="hero-status-pill reveal">
-              <span className="hero-pulse-dot" />
-              <span className="hero-status-text">Siap untuk Proyek &amp; Kolaborasi Rekayasa Software</span>
-            </div>
-
-            {/* Eyebrow */}
-            <div className="hero-eyebrow reveal d1">
-              <div className="hero-eyebrow-line" />
-              <span className="hero-eyebrow-text">Software Engineer &amp; Full-Stack Craftsman</span>
+            {/* Live Developer Badge */}
+            <div className="hero-eyebrow reveal">
+              <div className="hero-pulse-badge">
+                <span className="hero-pulse-dot" />
+                <span className="hero-pulse-text">AVAILABLE FOR PROJECTS • KOTA BATU, ID</span>
+              </div>
             </div>
 
             {/* Nama lengkap */}
-            <h1 className="hero-name reveal d2">
+            <h1 className="hero-name reveal d1">
               Hasya Rayyan
               <span className="line2">Bahaudin Mahardika.</span>
             </h1>
 
-            {/* Deskripsi Coder Vibe */}
-            <p className="hero-desc reveal d3">
-              Passionate software engineer yang terobsesi meracik sistem end-to-end: dari arsitektur
-              backend yang kokoh, database efisien, hingga antarmuka web &amp; mobile yang fluid dan responsif.
-              Menerjemahkan logika kompleks menjadi kode yang bersih, teruji, dan scalable.
+            {/* Vibe Coder Tagline */}
+            <div className="hero-coder-badge reveal d2">
+              <span className="code-bracket">&lt;</span>
+              <span className="code-text">Full-Stack &amp; Mobile Software Craftsman</span>
+              <span className="code-bracket">/&gt;</span>
+            </div>
+
+            {/* Deskripsi Vibe Coder */}
+            <p className="hero-desc reveal d2">
+              Merancang sistem dari baris kode pertama hingga performa skala produksi.
+              Menggabungkan arsitektur backend yang solid (Laravel &amp; SQL) dengan antarmuka web &amp; mobile (React, Angular, Ionic) yang responsif, terukur, dan memanjakan pengguna.
             </p>
 
-            {/* Action Buttons */}
-            <div className="hero-cta reveal d4">
+            {/* CTA */}
+            <div className="hero-cta reveal d3">
               <button className="btn btn-primary" onClick={() => goto('projects')}>
                 Lihat Proyek
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -114,10 +122,33 @@ export default function Hero() {
               <button className="btn btn-outline" onClick={() => goto('contact')}>
                 Hubungi Saya
               </button>
+              <button
+                type="button"
+                className={`btn btn-dev-copy ${copied ? 'copied' : ''}`}
+                onClick={copyEmail}
+                title="Salin email ke clipboard"
+              >
+                {copied ? (
+                  <>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span>Email Tersalin!</span>
+                  </>
+                ) : (
+                  <>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                    </svg>
+                    <span>Salin Email</span>
+                  </>
+                )}
+              </button>
             </div>
 
             {/* Social links */}
-            <div className="hero-socials reveal d4">
+            <div className="hero-socials reveal d3">
               {socials.map(({ label, href, icon }) => (
                 <a
                   key={label}
@@ -132,14 +163,9 @@ export default function Hero() {
               ))}
             </div>
 
-            {/* Coder Telemetry Stats */}
-            <div className="hero-stats reveal d5">
-              {[
-                ['3+', 'Tahun Coding'],
-                ['12+', 'Proyek Shipped'],
-                ['15+', 'Teknologi'],
-                ['100%', 'Vibe Coder'],
-              ].map(([n, l]) => (
+            {/* Stats */}
+            <div className="hero-stats reveal d4">
+              {[['3+', 'Tahun Eksplorasi'], ['12+', 'Proyek Selesai'], ['15+', 'Modern Stack']].map(([n, l]) => (
                 <div key={l} className="hero-stat">
                   <div className="hero-stat-num">{n}</div>
                   <div className="hero-stat-label">{l}</div>
@@ -148,74 +174,38 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* ── Kanan: Interactive Coder Card & Terminal ── */}
+          {/* ── Kanan: Foto & Interactive Dev Terminal ── */}
           <div
             className="hero-photo-wrap reveal from-right d2"
-            ref={cardRef}
+            ref={photoRef}
             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
           >
-            <div className="coder-window-card">
-              {/* Window Bar Controls */}
-              <div className="coder-window-header">
-                <div className="coder-window-dots">
-                  <span className="dot-red" />
-                  <span className="dot-yellow" />
-                  <span className="dot-green" />
-                </div>
-                <div className="coder-window-tabs">
-                  <button
-                    type="button"
-                    className={`coder-tab-btn ${activeTab === 'profile' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('profile')}
-                  >
-                    <span>hasya_rayyan.jpg</span>
-                  </button>
-                  <button
-                    type="button"
-                    className={`coder-tab-btn ${activeTab === 'terminal' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('terminal')}
-                  >
-                    <span>profile.ts</span>
-                  </button>
-                </div>
-                <div className="coder-window-location">Kota Batu, ID</div>
+            <div className="hero-photo-inner">
+              <img src={hasyaRayyanPhoto} alt="Hasya Rayyan Bahaudin Mahardika" />
+            </div>
+
+            {/* Interactive Terminal HUD Card */}
+            <div className="hero-terminal-card">
+              <div className="terminal-header">
+                <span className="term-dot red" />
+                <span className="term-dot yellow" />
+                <span className="term-dot green" />
+                <span className="term-title">hasya@dev: ~</span>
               </div>
-
-              {/* Window Content */}
-              {activeTab === 'profile' ? (
-                <div className="coder-profile-view">
-                  <div className="hero-photo-inner">
-                    <img src={hasyaRayyanPhoto} alt="Hasya Rayyan Bahaudin Mahardika" />
-                  </div>
-                  <div className="hero-photo-tag">● Kota Batu, ID • Open to Work</div>
-
-                  {/* Floating Micro-Telemetry Pill */}
-                  <div className="coder-floating-pill">
-                    <span className="coder-pill-indicator" />
-                    <span>git:(main) • Ready to ship</span>
-                  </div>
+              <div className="terminal-body">
+                <div className="term-line">
+                  <span className="term-prompt">$</span> <span className="term-cmd">whoami</span>
                 </div>
-              ) : (
-                <div className="coder-terminal-view">
-                  <pre className="coder-code-block">
-                    <code>
-                      <span className="code-keyword">const</span> <span className="code-var">developer</span>: <span className="code-type">Engineer</span> = {'{\n'}
-                      {'  '}name: <span className="code-string">"Hasya Rayyan"</span>,{'\n'}
-                      {'  '}role: <span className="code-string">"Full-Stack &amp; Mobile"</span>,{'\n'}
-                      {'  '}location: <span className="code-string">"Kota Batu, Jawa Timur"</span>,{'\n'}
-                      {'  '}primaryStack: [{'\n'}
-                      {'    '}<span className="code-string">"React"</span>, <span className="code-string">"TypeScript"</span>,{'\n'}
-                      {'    '}<span className="code-string">"Laravel"</span>, <span className="code-string">"Ionic"</span>,{'\n'}
-                      {'    '}<span className="code-string">"MySQL"</span>, <span className="code-string">"Tailwind"</span>{'\n'}
-                      {'  '}],{'\n'}
-                      {'  '}motto: <span className="code-string">"Code with precision."</span>,{'\n'}
-                      {'  '}status: <span className="code-status">"READY_TO_COLLABORATE"</span>{'\n'}
-                      {'}'};{'\n\n'}
-                      <span className="code-comment">// Click 'hasya_rayyan.jpg' tab to view photo</span>
-                    </code>
-                  </pre>
+                <div className="term-output">
+                  <span className="term-key">craft:</span> <span className="term-val">"Full-Stack &amp; Mobile"</span>
                 </div>
-              )}
+                <div className="term-output">
+                  <span className="term-key">stack:</span> <span className="term-val">["React", "Laravel", "Ionic", "SQL"]</span>
+                </div>
+                <div className="term-output">
+                  <span className="term-key">status:</span> <span className="term-green">"🟢 Ready to Ship"</span>
+                </div>
+              </div>
             </div>
           </div>
 
