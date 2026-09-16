@@ -1,7 +1,7 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import hasyaRayyanPhoto from '../assets/hasya_rayyan.jpg';
 
-function use3DTilt(ref, strength = 7) {
+function use3DTilt(ref, strength = 6) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -9,11 +9,11 @@ function use3DTilt(ref, strength = 7) {
       const r = el.getBoundingClientRect();
       const x = ((e.clientX - r.left) / r.width  - 0.5) * strength;
       const y = ((e.clientY - r.top)  / r.height - 0.5) * -strength;
-      el.style.transform = `perspective(900px) rotateY(${x}deg) rotateX(${y}deg)`;
+      el.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${y}deg)`;
     };
     const off = () => {
       el.style.transition = 'transform 0.6s cubic-bezier(0.4,0,0.2,1)';
-      el.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg)';
+      el.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
     };
     const start = () => { el.style.transition = 'transform 0.1s ease'; };
     el.addEventListener('mousemove', on);
@@ -39,7 +39,7 @@ const socials = [
   },
   {
     label: 'LinkedIn',
-    href: 'https://linkedin.com',
+    href: 'https://www.linkedin.com/in/hasyarayyan',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
@@ -60,8 +60,10 @@ const socials = [
 ];
 
 export default function Hero() {
-  const photoRef = useRef(null);
-  use3DTilt(photoRef, 7);
+  const cardRef = useRef(null);
+  use3DTilt(cardRef, 7);
+
+  const [activeTab, setActiveTab] = useState('profile'); // 'profile' | 'terminal'
 
   const goto = (id) => {
     const el = document.getElementById(id);
@@ -73,30 +75,36 @@ export default function Hero() {
       <div className="container">
         <div className="hero-grid">
 
-          {/* ── Kiri: konten ── */}
+          {/* ── Kiri: Konten Coder Vibe ── */}
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 
+            {/* Live Status Pill */}
+            <div className="hero-status-pill reveal">
+              <span className="hero-pulse-dot" />
+              <span className="hero-status-text">Siap untuk Proyek &amp; Kolaborasi Rekayasa Software</span>
+            </div>
+
             {/* Eyebrow */}
-            <div className="hero-eyebrow reveal">
+            <div className="hero-eyebrow reveal d1">
               <div className="hero-eyebrow-line" />
-              <span className="hero-eyebrow-text">Full-Stack &amp; Mobile Developer</span>
+              <span className="hero-eyebrow-text">Software Engineer &amp; Full-Stack Craftsman</span>
             </div>
 
             {/* Nama lengkap */}
-            <h1 className="hero-name reveal d1">
+            <h1 className="hero-name reveal d2">
               Hasya Rayyan
               <span className="line2">Bahaudin Mahardika.</span>
             </h1>
 
-            {/* Deskripsi */}
-            <p className="hero-desc reveal d2">
-              Membangun produk digital dari ujung ke ujung —
-              antarmuka yang bersih, sistem backend yang solid,
-              dan pengalaman pengguna yang selalu jadi prioritas.
+            {/* Deskripsi Coder Vibe */}
+            <p className="hero-desc reveal d3">
+              Passionate software engineer yang terobsesi meracik sistem end-to-end: dari arsitektur
+              backend yang kokoh, database efisien, hingga antarmuka web &amp; mobile yang fluid dan responsif.
+              Menerjemahkan logika kompleks menjadi kode yang bersih, teruji, dan scalable.
             </p>
 
-            {/* CTA */}
-            <div className="hero-cta reveal d3">
+            {/* Action Buttons */}
+            <div className="hero-cta reveal d4">
               <button className="btn btn-primary" onClick={() => goto('projects')}>
                 Lihat Proyek
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -109,7 +117,7 @@ export default function Hero() {
             </div>
 
             {/* Social links */}
-            <div className="hero-socials reveal d3">
+            <div className="hero-socials reveal d4">
               {socials.map(({ label, href, icon }) => (
                 <a
                   key={label}
@@ -124,9 +132,14 @@ export default function Hero() {
               ))}
             </div>
 
-            {/* Stats */}
-            <div className="hero-stats reveal d4">
-              {[['3+', 'Tahun Belajar'], ['12+', 'Proyek'], ['15+', 'Teknologi']].map(([n, l]) => (
+            {/* Coder Telemetry Stats */}
+            <div className="hero-stats reveal d5">
+              {[
+                ['3+', 'Tahun Coding'],
+                ['12+', 'Proyek Shipped'],
+                ['15+', 'Teknologi'],
+                ['100%', 'Vibe Coder'],
+              ].map(([n, l]) => (
                 <div key={l} className="hero-stat">
                   <div className="hero-stat-num">{n}</div>
                   <div className="hero-stat-label">{l}</div>
@@ -135,16 +148,75 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* ── Kanan: foto ── */}
+          {/* ── Kanan: Interactive Coder Card & Terminal ── */}
           <div
             className="hero-photo-wrap reveal from-right d2"
-            ref={photoRef}
+            ref={cardRef}
             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}
           >
-            <div className="hero-photo-inner">
-              <img src={hasyaRayyanPhoto} alt="Hasya Rayyan Bahaudin Mahardika" />
+            <div className="coder-window-card">
+              {/* Window Bar Controls */}
+              <div className="coder-window-header">
+                <div className="coder-window-dots">
+                  <span className="dot-red" />
+                  <span className="dot-yellow" />
+                  <span className="dot-green" />
+                </div>
+                <div className="coder-window-tabs">
+                  <button
+                    type="button"
+                    className={`coder-tab-btn ${activeTab === 'profile' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('profile')}
+                  >
+                    <span>hasya_rayyan.jpg</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`coder-tab-btn ${activeTab === 'terminal' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('terminal')}
+                  >
+                    <span>profile.ts</span>
+                  </button>
+                </div>
+                <div className="coder-window-location">Kota Batu, ID</div>
+              </div>
+
+              {/* Window Content */}
+              {activeTab === 'profile' ? (
+                <div className="coder-profile-view">
+                  <div className="hero-photo-inner">
+                    <img src={hasyaRayyanPhoto} alt="Hasya Rayyan Bahaudin Mahardika" />
+                  </div>
+                  <div className="hero-photo-tag">● Kota Batu, ID • Open to Work</div>
+
+                  {/* Floating Micro-Telemetry Pill */}
+                  <div className="coder-floating-pill">
+                    <span className="coder-pill-indicator" />
+                    <span>git:(main) • Ready to ship</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="coder-terminal-view">
+                  <pre className="coder-code-block">
+                    <code>
+                      <span className="code-keyword">const</span> <span className="code-var">developer</span>: <span className="code-type">Engineer</span> = {'{\n'}
+                      {'  '}name: <span className="code-string">"Hasya Rayyan"</span>,{'\n'}
+                      {'  '}role: <span className="code-string">"Full-Stack &amp; Mobile"</span>,{'\n'}
+                      {'  '}location: <span className="code-string">"Kota Batu, Jawa Timur"</span>,{'\n'}
+                      {'  '}primaryStack: [{'\n'}
+                      {'    '}<span className="code-string">"React"</span>, <span className="code-string">"TypeScript"</span>,{'\n'}
+                      {'    '}<span className="code-string">"Laravel"</span>, <span className="code-string">"Ionic"</span>,{'\n'}
+                      {'    '}<span className="code-string">"MySQL"</span>, <span className="code-string">"Tailwind"</span>{'\n'}
+                      {'  '}],{'\n'}
+                      {'  '}motto: <span className="code-string">"Code with precision."</span>,{'\n'}
+                      {'  '}status: <span className="code-status">"READY_TO_COLLABORATE"</span>{'\n'}
+                      {'}'};{'\n\n'}
+                      <span className="code-comment">// Click 'hasya_rayyan.jpg' tab to view photo</span>
+                    </code>
+                  </pre>
+                </div>
+              )}
             </div>
-            <div className="hero-photo-tag">Open to Work</div>
           </div>
 
         </div>

@@ -33,45 +33,53 @@ function Counter({ target, suffix = '+' }) {
 const capabilities = [
   {
     num: '01',
-    title: 'Frontend & Responsive Web',
-    desc: 'Membangun antarmuka modern yang interaktif dan responsif dengan React, Angular, dan Vite.',
+    title: 'Frontend & Reactive UI',
+    desc: 'Membangun Single Page Application fluid dengan React, TypeScript, dan Vite. Mengutamakan performa rendering cepat dan arsitektur komponen modular.',
   },
   {
     num: '02',
-    title: 'Cross-Platform Mobile',
-    desc: 'Mengembangkan aplikasi Android & iOS dari satu basis kode menggunakan Ionic Framework.',
+    title: 'Cross-Platform Mobile Dev',
+    desc: 'Mendesain dan mengeksekusi aplikasi mobile multiplatform Android & iOS menggunakan Ionic Framework dan Capacitor dengan satu basis kode efisien.',
   },
   {
     num: '03',
-    title: 'Backend & Database',
-    desc: 'Merancang RESTful API yang aman dengan Laravel dan mengoptimalkan query database SQL.',
+    title: 'Backend Architecture & Database',
+    desc: 'Merancang API RESTful aman dengan Laravel & CodeIgniter, pemodelan relasi database SQL, serta optimalisasi query database performa tinggi.',
+  },
+  {
+    num: '04',
+    title: 'Clean Code & Engineering Workflow',
+    desc: 'Menerapkan branching Gitflow teratur, pengujian kontrak endpoint via Postman, dan prinsip Clean Architecture agar kode mudah di-maintain.',
   },
 ];
 
-const STACK = ['React', 'Laravel', 'PHP', 'MySQL', 'Angular', 'Ionic', 'Figma', 'Git', 'Vite', 'TypeScript'];
+const STACK = ['React.js', 'TypeScript', 'Laravel', 'Ionic', 'MySQL', 'PHP 8', 'Angular', 'Tailwind', 'Git & GitHub', 'Vite'];
 
 export default function About() {
   return (
     <section id="about" className="section" style={{ borderTop: '1px solid var(--line)' }}>
       <div className="container">
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '64px' }}>
-          <span className="section-label">01 — Tentang Saya</span>
+          <span className="section-label">01 — Filosofi &amp; Karakter</span>
           <h2 className="section-title">Developer dengan<br />fokus pada kualitas.</h2>
         </div>
 
         <div className="about-grid">
-          {/* Left — bio */}
+          {/* Left — bio with coder vibe */}
           <div className="reveal from-left">
             <div className="about-body">
               <p>
-                Dengan minat mendalam dalam software development, saya mengkhususkan diri
-                menghubungkan keindahan antarmuka web dengan kestabilan arsitektur sistem backend.
-                Setiap proyek dimulai dari memahami kebutuhan pengguna terlebih dahulu.
+                Bagi saya, menulis kode bukan sekadar membuat program berjalan, melainkan
+                seni rekayasa perangkat lunak yang memadukan performa tinggi, kesederhanaan logika,
+                dan kepuasan pengguna. Dari merancang skema database SQL berkecepatan tinggi
+                hingga menyusun micro-interaction fluid di sisi antarmuka, setiap baris kode
+                dibuat dengan pertimbangan cermat.
               </p>
               <p>
-                Saya senang memecahkan masalah kompleks, merancang skema database yang efisien,
-                dan menulis kode yang bersih serta mudah dipelihara. Belajar teknologi baru
-                adalah bahan bakar saya setiap harinya.
+                Berbasis di <strong>Kota Batu, Jawa Timur</strong>, saya terbiasa memecahkan masalah kompleks,
+                melakukan debugging dengan teliti, dan mengadopsi teknologi mutakhir seperti
+                React, TypeScript, Laravel, dan Ionic. Belajar hal baru dan mengirim kode berkualitas
+                ke tahap produksi adalah rutinitas yang selalu memicu semangat saya.
               </p>
             </div>
 
@@ -83,7 +91,11 @@ export default function About() {
 
             {/* Mini stats */}
             <div style={{ display: 'flex', gap: '32px', marginTop: '40px', paddingTop: '32px', borderTop: '1px solid var(--line)' }}>
-              {[['3+', 'Tahun Studi'], ['12+', 'Proyek'], ['15+', 'Teknologi']].map(([n, l]) => (
+              {[
+                ['3+', 'Tahun Coding'],
+                ['12+', 'Proyek Shipped'],
+                ['15+', 'Teknologi'],
+              ].map(([n, l]) => (
                 <div key={l}>
                   <div style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', fontWeight: 900, lineHeight: 1, marginBottom: '4px' }}>
                     <Counter target={parseInt(n)} />
@@ -97,7 +109,7 @@ export default function About() {
           {/* Right — capabilities */}
           <div className="reveal from-right">
             <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-ghost)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '20px' }}>
-              Yang Saya Kerjakan
+              Pilar Rekayasa Perangkat Lunak
             </p>
             <div className="cap-list">
               {capabilities.map((c, i) => (

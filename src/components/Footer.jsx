@@ -23,7 +23,7 @@ export default function Footer() {
               Hasya<span className="accent">.</span>
             </a>
             <p className="footer-tagline">
-              Full-Stack Developer &amp; Mobile Engineer berbasis di Malang, Indonesia. Membangun produk digital yang cepat, responsif, dan berorientasi pengguna.
+              Full-Stack Developer &amp; Mobile Engineer berbasis di Kota Batu, Jawa Timur. Berfokus pada kode bersih, skalabilitas, dan pengalaman pengguna superior.
             </p>
           </div>
 
@@ -65,7 +65,7 @@ export default function Footer() {
                 <span>GitHub</span>
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/hasyarayyan"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-social-btn"
