@@ -44,7 +44,7 @@ export default function Navbar({ theme, toggleTheme }) {
       <div className="container nav-container">
         {/* Logo */}
         <a href="#home" className="nav-logo" onClick={(e) => goto(e, 'home')}>
-          HR<span className="dot">.</span>
+          Hasya Rayyan<span className="dot">.</span>
         </a>
 
         {/* Desktop links */}

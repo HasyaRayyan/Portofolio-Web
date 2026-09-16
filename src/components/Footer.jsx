@@ -25,10 +25,6 @@ export default function Footer() {
             <p className="footer-tagline">
               Full-Stack Developer &amp; Mobile Engineer berbasis di Malang, Indonesia. Membangun produk digital yang cepat, responsif, dan berorientasi pengguna.
             </p>
-            <div className="footer-status">
-              <span className="status-dot"></span>
-              <span className="status-text">Tersedia untuk proyek &amp; kolaborasi</span>
-            </div>
           </div>
 
           {/* Quick Navigation Column */}

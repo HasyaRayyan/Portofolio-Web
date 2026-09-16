@@ -1,42 +1,14 @@
 import React, { useState } from 'react';
 
-const skills = [
-  {
-    name: 'UI/UX Design',
-    desc: 'Merancang antarmuka yang intuitif, estetik, dan berorientasi pada pengalaman terbaik.',
-    tags: ['Figma', 'Wireframe'],
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="9" cy="9" r="2" />
-        <path d="M21 15l-3.086-3.086a2 2 0 00-2.828 0L6 21" />
-      </svg>
-    ),
-  },
-  {
-    name: 'Laravel',
-    desc: 'Membangun backend yang terstruktur, aman, dan skalabel menggunakan framework Laravel.',
-    tags: ['REST API', 'Eloquent'],
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-        <polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" />
-      </svg>
-    ),
-  },
-  {
-    name: 'PHP',
-    desc: 'Pengembangan server-side dengan PHP, menangani logika bisnis dan manajemen data.',
-    tags: ['OOP', 'Server-side'],
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
-      </svg>
-    ),
-  },
+const categories = ['Semua', 'Frontend & Mobile', 'Backend & Database', 'Design & Tools'];
+
+const skillsData = [
   {
     name: 'React',
-    desc: 'Membangun antarmuka web yang dinamis dan reaktif dengan pendekatan komponen.',
-    tags: ['Hooks', 'Vite'],
+    category: 'Frontend & Mobile',
+    badge: 'Library',
+    desc: 'Pengembangan Single Page Application (SPA) reaktif dengan komponen modular, custom hooks, dan state management.',
+    tags: ['Hooks', 'Vite', 'SPA', 'Component-Driven'],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="3" />
@@ -47,21 +19,11 @@ const skills = [
     ),
   },
   {
-    name: 'MySQL / SQL',
-    desc: 'Merancang skema database relasional, query efisien, dan mengelola integritas data.',
-    tags: ['Schema', 'Query'],
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <ellipse cx="12" cy="5" rx="9" ry="3" />
-        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-        <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
-      </svg>
-    ),
-  },
-  {
     name: 'Angular',
-    desc: 'Mengembangkan aplikasi skala besar dengan arsitektur berbasis modul dan TypeScript.',
-    tags: ['TypeScript', 'Modular'],
+    category: 'Frontend & Mobile',
+    badge: 'Framework',
+    desc: 'Membangun aplikasi web skala enterprise dengan arsitektur dependency injection, modul terstruktur, dan TypeScript.',
+    tags: ['TypeScript', 'RxJS', 'Modular', 'Services'],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <polygon points="12 2 2 19 22 19" />
@@ -72,8 +34,10 @@ const skills = [
   },
   {
     name: 'Ionic Framework',
-    desc: 'Membangun aplikasi mobile cross-platform Android & iOS dari satu basis kode.',
-    tags: ['Mobile', 'Hybrid'],
+    category: 'Frontend & Mobile',
+    badge: 'Cross-Platform',
+    desc: 'Pengembangan aplikasi mobile multiplatform Android & iOS dari satu basis kode terpadu dengan performa native.',
+    tags: ['Capacitor', 'Android', 'iOS', 'Hybrid Mobile'],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <rect x="5" y="2" width="14" height="20" rx="2" />
@@ -82,9 +46,62 @@ const skills = [
     ),
   },
   {
-    name: 'Vite',
-    desc: 'Build tool modern yang menghadirkan development environment yang cepat dan efisien.',
-    tags: ['Build Tool', 'HMR'],
+    name: 'Laravel',
+    category: 'Backend & Database',
+    badge: 'Backend MVC',
+    desc: 'Perancangan arsitektur backend andal, keamanan data, otentikasi JWT/Sanctum, dan RESTful API performa tinggi.',
+    tags: ['REST API', 'Eloquent ORM', 'Middleware', 'MVC'],
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+        <polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" />
+      </svg>
+    ),
+  },
+  {
+    name: 'PHP & CodeIgniter',
+    category: 'Backend & Database',
+    badge: 'Server-Side',
+    desc: 'Pengembangan logika sistem server-side, manipulasi data, integrasi payment gateway, dan manajemen sesi.',
+    tags: ['PHP 8', 'OOP', 'CodeIgniter', 'Backend'],
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
+      </svg>
+    ),
+  },
+  {
+    name: 'MySQL & Database SQL',
+    category: 'Backend & Database',
+    badge: 'Database',
+    desc: 'Pemodelan skema relasional terstruktur (RDBMS), optimasi indexing query SQL cepat, dan integritas transaksi data.',
+    tags: ['RDBMS', 'Query Tuning', 'Relasi', 'Transactions'],
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <ellipse cx="12" cy="5" rx="9" ry="3" />
+        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+        <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
+      </svg>
+    ),
+  },
+  {
+    name: 'TypeScript & JavaScript',
+    category: 'Frontend & Mobile',
+    badge: 'Language',
+    desc: 'Penulisan kode berskala besar dengan static typing, strict type-safety, dan ekosistem modern ESNext.',
+    tags: ['Strict Typing', 'Async/Await', 'DOM', 'Interfaces'],
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16.5 9.4 7.55 4.24a1.78 1.78 0 0 0-2.5 1.55v12.42a1.78 1.78 0 0 0 2.5 1.55L16.5 14.6a1.78 1.78 0 0 0 0-3.2z" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Vite & Build Tools',
+    category: 'Design & Tools',
+    badge: 'Bundler',
+    desc: 'Konfigurasi workflow development instan dengan Hot Module Replacement (HMR) cepat dan optimasi bundle produksi.',
+    tags: ['HMR', 'Bundler', 'ESBuild', 'Optimasi'],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
@@ -92,9 +109,11 @@ const skills = [
     ),
   },
   {
-    name: 'Figma',
-    desc: 'Membuat wireframe, prototype interaktif, dan design system yang terstruktur.',
-    tags: ['Design System', 'Prototype'],
+    name: 'Figma & UI/UX',
+    category: 'Design & Tools',
+    badge: 'Design',
+    desc: 'Riset kebutuhan pengguna, wireframing, perancangan design system, serta prototipe antarmuka interaktif.',
+    tags: ['Design System', 'Wireframing', 'Prototype', 'UI/UX'],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5z" />
@@ -106,9 +125,11 @@ const skills = [
     ),
   },
   {
-    name: 'Git & GitHub',
-    desc: 'Mengelola versi kode dan berkolaborasi dalam tim menggunakan Git dan GitHub.',
-    tags: ['Version Control', 'CI/CD'],
+    name: 'Git & GitHub Workflow',
+    category: 'Design & Tools',
+    badge: 'Version Control',
+    desc: 'Manajemen versi kode kolaboratif, branching strategy, pull requests, issue tracking, dan deployment workflow.',
+    tags: ['Gitflow', 'Code Review', 'Branching', 'GitHub'],
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="18" cy="18" r="3" /><circle cx="6" cy="6" r="3" />
@@ -116,69 +137,84 @@ const skills = [
       </svg>
     ),
   },
+  {
+    name: 'RESTful API & Integration',
+    category: 'Backend & Database',
+    badge: 'API & Networking',
+    desc: 'Desain kontrak endpoint RESTful standar, serialisasi JSON, penanganan error terstruktur, dan integrasi pihak ketiga.',
+    tags: ['Postman', 'JSON', 'Endpoints', 'Webhook'],
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+      </svg>
+    ),
+  },
+  {
+    name: 'Tailwind CSS & Styling',
+    category: 'Frontend & Mobile',
+    badge: 'Styling',
+    desc: 'Membangun antarmuka modern yang konsisten dan responsif secara cepat menggunakan utility-first styling.',
+    tags: ['Responsive', 'Utility-First', 'Modern UI', 'CSS3'],
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z" />
+        <line x1="16" y1="8" x2="2" y2="22" /><line x1="17.5" y1="15" x2="9" y2="15" />
+      </svg>
+    ),
+  },
 ];
 
-const PER_PAGE = 6;
-
 export default function Skills() {
-  const [page, setPage] = useState(0);
-  const total = Math.ceil(skills.length / PER_PAGE);
-  const start = page * PER_PAGE;
-  const visible = skills.slice(start, start + PER_PAGE);
+  const [selectedCat, setSelectedCat] = useState('Semua');
+
+  const filtered = selectedCat === 'Semua'
+    ? skillsData
+    : skillsData.filter((s) => s.category === selectedCat);
 
   return (
     <section id="skills" className="section" style={{ borderTop: '1px solid var(--line)' }}>
       <div className="container">
-        <div className="reveal" style={{ textAlign: 'center', marginBottom: '64px' }}>
-          <span className="section-label">02 — Keahlian</span>
+        {/* Centered Header */}
+        <div className="reveal" style={{ textAlign: 'center', marginBottom: '44px' }}>
+          <span className="section-label">02 — Keahlian &amp; Teknologi</span>
           <h2 className="section-title">Teknologi yang<br />saya gunakan.</h2>
         </div>
 
-        <div className="skills-list">
-          {visible.map((skill, i) => (
-            <div key={start + i} className={`skill-row reveal d${Math.min(i + 1, 5)}`}>
-              <div className="skill-icon-box" aria-hidden="true">
-                {skill.icon}
+        {/* Category Filters */}
+        <div className="skills-filter-row reveal">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              className={`skills-filter-btn ${selectedCat === cat ? 'active' : ''}`}
+              onClick={() => setSelectedCat(cat)}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Skills Cards Grid */}
+        <div className="skills-cards-grid">
+          {filtered.map((skill, i) => (
+            <div key={skill.name} className={`skill-card reveal d${(i % 5) + 1}`}>
+              <div className="skill-card-top">
+                <div className="skill-card-icon" aria-hidden="true">
+                  {skill.icon}
+                </div>
+                <span className="skill-card-badge">{skill.badge}</span>
               </div>
-              <div className="skill-body">
-                <span className="skill-name">{skill.name}</span>
-                <span className="skill-desc">{skill.desc}</span>
-              </div>
-              <div className="skill-tags">
+
+              <h3 className="skill-card-title">{skill.name}</h3>
+              <p className="skill-card-desc">{skill.desc}</p>
+
+              <div className="skill-card-tags">
                 {skill.tags.map((t) => (
-                  <span key={t} className="skill-tag-sm">{t}</span>
+                  <span key={t} className="skill-card-tag">{t}</span>
                 ))}
               </div>
             </div>
           ))}
-        </div>
-
-        <div className="skills-footer">
-          <button
-            className="page-btn"
-            onClick={() => setPage((p) => Math.max(0, p - 1))}
-            disabled={page === 0}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-            Sebelumnya
-          </button>
-
-          <span className="page-info">
-            {start + 1}–{Math.min(start + PER_PAGE, skills.length)} dari {skills.length}
-          </span>
-
-          <button
-            className="page-btn"
-            onClick={() => setPage((p) => Math.min(total - 1, p + 1))}
-            disabled={page === total - 1}
-          >
-            Berikutnya
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </button>
         </div>
       </div>
     </section>

@@ -348,41 +348,31 @@ export default function Projects() {
   return (
     <section id="projects" className="section" style={{ borderTop: '1px solid var(--line)' }}>
       <div className="container">
-        {/* Section Header with Controls */}
-        <div className="proj-header-row reveal">
-          <div className="proj-header-left">
-            <span className="section-label">03 — Proyek Pilihan</span>
-            <h2 className="section-title" style={{ marginBottom: 0 }}>
-              Hasil kerja &amp;<br />proyek pilihan.
-            </h2>
-          </div>
-
-          <div className="proj-carousel-controls">
-            <span className="proj-controls-hint">
-              <span className="proj-pulse-dot" /> Auto-glide aktif • Hover untuk jeda
-            </span>
-            <div className="proj-nav-btns">
-              <button
-                type="button"
-                className="proj-nav-btn"
-                onClick={scrollLeft}
-                aria-label="Geser ke kiri"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M15 18l-6-6 6-6"/>
-                </svg>
-              </button>
-              <button
-                type="button"
-                className="proj-nav-btn"
-                onClick={scrollRight}
-                aria-label="Geser ke kanan"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M9 18l6-6-6-6"/>
-                </svg>
-              </button>
-            </div>
+        {/* Section Header with Centered Title & Controls */}
+        <div className="reveal" style={{ textAlign: 'center', marginBottom: '44px' }}>
+          <span className="section-label">03 — Proyek Pilihan</span>
+          <h2 className="section-title">Hasil kerja &amp; proyek pilihan.</h2>
+          <div className="proj-nav-center">
+            <button
+              type="button"
+              className="proj-nav-btn"
+              onClick={scrollLeft}
+              aria-label="Geser ke kiri"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M15 18l-6-6 6-6"/>
+              </svg>
+            </button>
+            <button
+              type="button"
+              className="proj-nav-btn"
+              onClick={scrollRight}
+              aria-label="Geser ke kanan"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </button>
           </div>
         </div>
 
