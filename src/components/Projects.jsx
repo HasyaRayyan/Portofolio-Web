@@ -290,13 +290,13 @@ export default function Projects() {
   // Double the list to enable true 100% seamless infinite looping ("muter terus")
   const displayProjects = [...projects, ...projects];
 
-  // Infinite seamless auto-scroll (smooth, steady, no erratic transforms)
+  // Infinite seamless horizontal roll film auto-scroll
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
 
     let animId;
-    const speed = 0.85; // smooth, steady, visible slow glide
+    const speed = 0.85; // smooth, steady horizontal glide
 
     const step = () => {
       if (!isPaused && el) {
@@ -314,6 +314,7 @@ export default function Projects() {
     };
 
     animId = requestAnimationFrame(step);
+
     return () => cancelAnimationFrame(animId);
   }, [isPaused]);
 
