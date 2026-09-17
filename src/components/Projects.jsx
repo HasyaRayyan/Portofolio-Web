@@ -290,36 +290,7 @@ export default function Projects() {
   // Double the list to enable true 100% seamless infinite looping ("muter terus")
   const displayProjects = [...projects, ...projects];
 
-  // Dynamic 35mm Arched Filmstrip Curve calculation (convex arch curve like in film reel reference)
-  const updateArchCurvature = () => {
-    const el = trackRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const radius = rect.width / 2;
-    if (radius <= 0) return;
-
-    const cards = el.querySelectorAll('.proj-card');
-    cards.forEach((card) => {
-      const cRect = card.getBoundingClientRect();
-      const cCenter = cRect.left + cRect.width / 2;
-      // Normalized offset: -1 at left viewport edge, 0 at center, +1 at right edge
-      const norm = (cCenter - centerX) / radius;
-
-      // Parabolic drop: center is 0 (apex), edges drop down smoothly (~56px)
-      const dropY = Math.pow(norm, 2) * 56;
-      // Arc tangent rotation: negative on left, positive on right
-      const rotateZ = norm * 6.2;
-      // 3D perspective rotation: cards facing slightly towards center
-      const rotateY = norm * -4.5;
-      // Peak scale in center (1.0), subtle taper on edges (0.93)
-      const scale = Math.max(0.92, 1 - Math.abs(norm) * 0.05);
-
-      card.style.transform = `translate3d(0, ${dropY.toFixed(2)}px, 0) rotateZ(${rotateZ.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
-    });
-  };
-
-  // Infinite seamless auto-scroll with dynamic film arching
+  // Infinite seamless auto-scroll (steady horizontal glide without vertical dipping)
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
@@ -339,19 +310,11 @@ export default function Projects() {
         // Keep in sync with user manual scroll position
         scrollPosRef.current = el.scrollLeft;
       }
-      updateArchCurvature();
       animId = requestAnimationFrame(step);
     };
 
     animId = requestAnimationFrame(step);
-
-    const onResize = () => updateArchCurvature();
-    window.addEventListener('resize', onResize);
-
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener('resize', onResize);
-    };
+    return () => cancelAnimationFrame(animId);
   }, [isPaused]);
 
   // Handle manual scroll to keep loop seamless
@@ -367,7 +330,6 @@ export default function Projects() {
       }
     }
     scrollPosRef.current = el.scrollLeft;
-    updateArchCurvature();
   };
 
   // Manual button scroll controls
