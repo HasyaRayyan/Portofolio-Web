@@ -20,23 +20,36 @@ function App() {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  // Global scroll reveal — IntersectionObserver on all .reveal elements
+  // Global scroll reveal — IntersectionObserver on all .reveal elements (repeats on scroll)
   useEffect(() => {
     const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-      { threshold: 0.12, rootMargin: '0px 0px -32px 0px' }
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+          } else {
+            // Re-trigger animation when scrolled out of view
+            e.target.classList.remove('visible');
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -24px 0px' }
     );
 
-    const observe = () =>
-      document.querySelectorAll('.reveal:not(.visible)').forEach((el) => io.observe(el));
+    const observe = () => {
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    };
 
     observe();
 
-    // Re-observe on DOM mutations (skills pagination etc.)
+    // Re-observe on dynamic DOM updates
     const mo = new MutationObserver(observe);
     mo.observe(document.body, { childList: true, subtree: true });
 
-    return () => { io.disconnect(); mo.disconnect(); };
+    return () => {
+      io.disconnect();
+      mo.disconnect();
+    };
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 /* ─── 4 Columns Data ─── */
 
@@ -266,6 +266,8 @@ const column4 = [
   },
 ];
 
+const allSkills = [...column1, ...column2, ...column3, ...column4];
+
 function SkillMarqueeCard({ item }) {
   return (
     <div className="skill-marquee-card">
@@ -281,66 +283,103 @@ function SkillMarqueeCard({ item }) {
 }
 
 export default function Skills() {
+  const [viewMode, setViewMode] = useState('motion'); // 'motion' | 'grid'
+
   return (
     <section id="skills" className="section" style={{ borderTop: '1px solid var(--line)' }}>
       <div className="container">
         {/* Centered Header */}
-        <div className="reveal" style={{ textAlign: 'center', marginBottom: '32px' }}>
+        <div className="reveal" style={{ textAlign: 'center', marginBottom: '24px' }}>
           <span className="section-label">02 — Keahlian &amp; Teknologi</span>
           <h2 className="section-title">Teknologi yang<br />saya gunakan.</h2>
-          <p className="section-sub" style={{ marginBottom: '28px' }}>
+          <p className="section-sub" style={{ marginBottom: '24px' }}>
             Ekosistem teknologi modern yang saya gunakan untuk membangun sistem backend tangguh, antarmuka web interaktif, dan aplikasi mobile multiplatform.
           </p>
-          <div className="skills-marquee-hint">
-            <span className="skills-pulse-dot" />
-            <span>Hover kartu untuk jeda animasi • 4-Track Motion Stack</span>
-          </div>
-        </div>
 
-        {/* 4-Column Vertical Marquee Motion Showcase */}
-        <div className="skills-marquee-wrapper">
-          {/* Top & Bottom Gradient Masks */}
-          <div className="skills-marquee-mask-top" />
-          <div className="skills-marquee-mask-bottom" />
-
-          <div className="skills-marquee-grid">
-            {/* Column 1: DOWNWARDS (ke bawah) */}
-            <div className="skills-marquee-col col-1">
-              <div className="skills-marquee-track track-down">
-                {[...column1, ...column1].map((item, idx) => (
-                  <SkillMarqueeCard key={`col1-${item.name}-${idx}`} item={item} />
-                ))}
-              </div>
-            </div>
-
-            {/* Column 2: UPWARDS (ke atas) */}
-            <div className="skills-marquee-col col-2">
-              <div className="skills-marquee-track track-up">
-                {[...column2, ...column2].map((item, idx) => (
-                  <SkillMarqueeCard key={`col2-${item.name}-${idx}`} item={item} />
-                ))}
-              </div>
-            </div>
-
-            {/* Column 3: DOWNWARDS (ke bawah) */}
-            <div className="skills-marquee-col col-3">
-              <div className="skills-marquee-track track-down">
-                {[...column3, ...column3].map((item, idx) => (
-                  <SkillMarqueeCard key={`col3-${item.name}-${idx}`} item={item} />
-                ))}
-              </div>
-            </div>
-
-            {/* Column 4: UPWARDS (ke atas) */}
-            <div className="skills-marquee-col col-4">
-              <div className="skills-marquee-track track-up">
-                {[...column4, ...column4].map((item, idx) => (
-                  <SkillMarqueeCard key={`col4-${item.name}-${idx}`} item={item} />
-                ))}
-              </div>
+          {/* Mode Switcher: Motion vs Static Card */}
+          <div className="skills-view-switcher-row">
+            <div className="skills-view-switcher">
+              <button
+                type="button"
+                className={`skills-switch-btn ${viewMode === 'motion' ? 'active' : ''}`}
+                onClick={() => setViewMode('motion')}
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                </svg>
+                <span>Animasi Motion</span>
+              </button>
+              <button
+                type="button"
+                className={`skills-switch-btn ${viewMode === 'grid' ? 'active' : ''}`}
+                onClick={() => setViewMode('grid')}
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <rect x="3" y="3" width="7" height="7" rx="1" />
+                  <rect x="14" y="3" width="7" height="7" rx="1" />
+                  <rect x="14" y="14" width="7" height="7" rx="1" />
+                  <rect x="3" y="14" width="7" height="7" rx="1" />
+                </svg>
+                <span>Tampilan Kartu</span>
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Conditional View: 4-Track Motion vs Static Cards Grid */}
+        {viewMode === 'motion' ? (
+          /* 4-Column Vertical Marquee Motion Showcase */
+          <div className="skills-marquee-wrapper">
+            {/* Top & Bottom Gradient Masks */}
+            <div className="skills-marquee-mask-top" />
+            <div className="skills-marquee-mask-bottom" />
+
+            <div className="skills-marquee-grid">
+              {/* Column 1: DOWNWARDS (ke bawah) */}
+              <div className="skills-marquee-col col-1">
+                <div className="skills-marquee-track track-down">
+                  {[...column1, ...column1].map((item, idx) => (
+                    <SkillMarqueeCard key={`col1-${item.name}-${idx}`} item={item} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 2: UPWARDS (ke atas) */}
+              <div className="skills-marquee-col col-2">
+                <div className="skills-marquee-track track-up">
+                  {[...column2, ...column2].map((item, idx) => (
+                    <SkillMarqueeCard key={`col2-${item.name}-${idx}`} item={item} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 3: DOWNWARDS (ke bawah) */}
+              <div className="skills-marquee-col col-3">
+                <div className="skills-marquee-track track-down">
+                  {[...column3, ...column3].map((item, idx) => (
+                    <SkillMarqueeCard key={`col3-${item.name}-${idx}`} item={item} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 4: UPWARDS (ke atas) */}
+              <div className="skills-marquee-col col-4">
+                <div className="skills-marquee-track track-up">
+                  {[...column4, ...column4].map((item, idx) => (
+                    <SkillMarqueeCard key={`col4-${item.name}-${idx}`} item={item} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* Static Card Grid View */
+          <div className="skills-static-grid">
+            {allSkills.map((item) => (
+              <SkillMarqueeCard key={`static-${item.name}`} item={item} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
