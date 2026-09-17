@@ -290,7 +290,7 @@ export default function Projects() {
   // Double the list to enable true 100% seamless infinite looping ("muter terus")
   const displayProjects = [...projects, ...projects];
 
-  // Infinite seamless auto-scroll (steady horizontal glide without vertical dipping)
+  // Infinite seamless auto-scroll (smooth, steady, no erratic transforms)
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
