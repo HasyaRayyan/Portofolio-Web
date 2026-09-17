@@ -8,8 +8,28 @@ import educonnectMockup from '../assets/educonnect_mockup.png';
 import fintrackMockup from '../assets/fintrack_mockup.png';
 
 function ProjectCard({ project, index, onOpenGallery }) {
+  const frameNum = index < 9 ? `0${index + 1}` : `${index + 1}`;
+
   return (
     <div className="proj-card">
+      {/* 35mm Filmstrip Top Sprockets Header */}
+      <div className="card-film-sprockets top">
+        <div className="sprocket-holes-row">
+          <span className="sprocket-hole" />
+          <span className="sprocket-hole" />
+          <span className="sprocket-hole" />
+          <span className="sprocket-hole" />
+          <span className="sprocket-hole" />
+          <span className="sprocket-hole" />
+          <span className="sprocket-hole" />
+          <span className="sprocket-hole" />
+        </div>
+        <div className="film-edge-meta">
+          <span className="film-brand">KODAK 5052 TMX</span>
+          <span className="film-frame-mark">▶ {frameNum}A</span>
+        </div>
+      </div>
+
       {/* 3-Image Stack Stage */}
       <div
         className="proj-card-stage"
@@ -44,7 +64,7 @@ function ProjectCard({ project, index, onOpenGallery }) {
       {/* Card Content Body */}
       <div className="proj-card-body">
         <div className="proj-card-topmeta">
-          <span className="proj-card-num">{index < 9 ? `0${index + 1}` : index + 1}</span>
+          <span className="proj-card-num">{frameNum}</span>
           <span className="proj-card-category">{project.category}</span>
         </div>
 
@@ -110,6 +130,24 @@ function ProjectCard({ project, index, onOpenGallery }) {
               </a>
             )}
           </div>
+        </div>
+      </div>
+
+      {/* 35mm Filmstrip Bottom Sprockets Footer */}
+      <div className="card-film-sprockets bottom">
+        <div className="film-edge-meta">
+          <span className="film-brand">35MM CELLULOID</span>
+          <span className="film-frame-mark">SAFETY FILM • {frameNum}</span>
+        </div>
+        <div className="sprocket-holes-row">
+          <span className="sprocket-hole" />
+          <span className="sprocket-hole" />
+          <span className="sprocket-hole" />
+          <span className="sprocket-hole" />
+          <span className="sprocket-hole" />
+          <span className="sprocket-hole" />
+          <span className="sprocket-hole" />
+          <span className="sprocket-hole" />
         </div>
       </div>
     </div>
@@ -252,7 +290,36 @@ export default function Projects() {
   // Double the list to enable true 100% seamless infinite looping ("muter terus")
   const displayProjects = [...projects, ...projects];
 
-  // Infinite seamless auto-scroll
+  // Dynamic 35mm Arched Filmstrip Curve calculation (convex arch curve like in film reel reference)
+  const updateArchCurvature = () => {
+    const el = trackRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const radius = rect.width / 2;
+    if (radius <= 0) return;
+
+    const cards = el.querySelectorAll('.proj-card');
+    cards.forEach((card) => {
+      const cRect = card.getBoundingClientRect();
+      const cCenter = cRect.left + cRect.width / 2;
+      // Normalized offset: -1 at left viewport edge, 0 at center, +1 at right edge
+      const norm = (cCenter - centerX) / radius;
+
+      // Parabolic drop: center is 0 (apex), edges drop down smoothly (~56px)
+      const dropY = Math.pow(norm, 2) * 56;
+      // Arc tangent rotation: negative on left, positive on right
+      const rotateZ = norm * 6.2;
+      // 3D perspective rotation: cards facing slightly towards center
+      const rotateY = norm * -4.5;
+      // Peak scale in center (1.0), subtle taper on edges (0.93)
+      const scale = Math.max(0.92, 1 - Math.abs(norm) * 0.05);
+
+      card.style.transform = `translate3d(0, ${dropY.toFixed(2)}px, 0) rotateZ(${rotateZ.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+    });
+  };
+
+  // Infinite seamless auto-scroll with dynamic film arching
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
@@ -272,11 +339,19 @@ export default function Projects() {
         // Keep in sync with user manual scroll position
         scrollPosRef.current = el.scrollLeft;
       }
+      updateArchCurvature();
       animId = requestAnimationFrame(step);
     };
 
     animId = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(animId);
+
+    const onResize = () => updateArchCurvature();
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', onResize);
+    };
   }, [isPaused]);
 
   // Handle manual scroll to keep loop seamless
@@ -292,6 +367,7 @@ export default function Projects() {
       }
     }
     scrollPosRef.current = el.scrollLeft;
+    updateArchCurvature();
   };
 
   // Manual button scroll controls
