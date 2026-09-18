@@ -12,16 +12,16 @@
   --font-heading: 'Outfit', system-ui, sans-serif;
   --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
 
-  /* Light mode — strictly monochrome black & white */
+  /* Light mode — strictly Joshua Vides 2D Comic Manga monochrome */
   --bg:            #ffffff;
-  --bg-card:       #f7f7f7;
-  --bg-card-hover: #eeeeee;
-  --text:          #080808;
-  --text-sub:      #333333;   /* High contrast neutral charcoal */
-  --text-ghost:    #666666;   /* Visible neutral gray */
-  --line:          #e0e0e0;
-  --accent:        #080808;   /* Strictly monochrome black accent */
-  --accent-bg:     rgba(8, 8, 8, 0.08);
+  --bg-card:       #ffffff;
+  --bg-card-hover: #ffffff;
+  --text:          #000000;
+  --text-sub:      #141414;   /* High contrast black ink */
+  --text-ghost:    #383838;   /* Comic marker charcoal */
+  --line:          #000000;   /* Stark black comic contour line */
+  --accent:        #000000;   /* Strictly monochrome black accent */
+  --accent-bg:     rgba(0, 0, 0, 0.08);
   --accent-on:     #ffffff;
 
   --r-sm:  6px;
@@ -218,12 +218,53 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(-2px);
 }
 
+/* Joshua Vides Comic Mode — Buttons */
+[data-theme="light"] .btn {
+  font-weight: 800;
+  border: 2.5px solid #000000;
+  border-radius: 10px;
+  transition: transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease), background var(--fast) var(--ease), color var(--fast) var(--ease);
+}
+[data-theme="light"] .btn-primary {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  box-shadow: 4px 4px 0px #000000;
+}
+[data-theme="light"] .btn-primary:hover {
+  background: #000000;
+  color: #ffffff;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #000000;
+}
+[data-theme="light"] .btn-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000000;
+}
+[data-theme="light"] .btn-outline {
+  background: #ffffff;
+  color: #000000;
+  border-color: #000000;
+  box-shadow: 4px 4px 0px #000000;
+}
+[data-theme="light"] .btn-outline:hover {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #000000;
+}
+[data-theme="light"] .btn-outline:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000000;
+}
+
 /* ============================================================
    CARD
    ============================================================ */
 .card {
   background: var(--bg-card);
-  border: 1px solid var(--line);
+  border: 1.5px solid var(--line);
   border-radius: var(--r-md);
   transition: border-color var(--fast) var(--ease),
               transform var(--mid) var(--ease),
@@ -235,19 +276,16 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 16px 48px -8px rgba(0,0,0,0.12);
 }
 
-/* Light mode depth definition */
-.card, .exp-item, .skill-icon-box, .clr-icon, .hero-photo-inner, .page-btn, .footer-status, .footer-social-btn {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.035);
+/* Joshua Vides Comic Mode — Cards */
+[data-theme="light"] .card {
+  background: #ffffff;
+  border: 2.5px solid #000000;
+  box-shadow: 5px 5px 0px #000000;
 }
-[data-theme="dark"] .card,
-[data-theme="dark"] .exp-item,
-[data-theme="dark"] .skill-icon-box,
-[data-theme="dark"] .clr-icon,
-[data-theme="dark"] .hero-photo-inner,
-[data-theme="dark"] .page-btn,
-[data-theme="dark"] .footer-status,
-[data-theme="dark"] .footer-social-btn {
-  box-shadow: none;
+[data-theme="light"] .card:hover {
+  border-color: #000000;
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px #000000;
 }
 
 /* ============================================================
@@ -302,8 +340,17 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.35);
 }
 [data-theme="light"] .navbar.scrolled {
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.06);
+  background: #ffffff;
+  border-bottom: 2.5px solid #000000;
+  box-shadow: 0 4px 0px #000000;
+}
+[data-theme="light"] .nav-link {
+  color: #000000;
+  font-weight: 700;
+}
+[data-theme="light"] .nav-link::after {
+  background: #000000;
+  height: 2.5px;
 }
 
 .nav-container {
@@ -321,6 +368,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 .nav-logo .dot {
   color: var(--accent);
+}
+[data-theme="light"] .nav-logo {
+  color: #000000;
+}
+[data-theme="light"] .nav-logo .dot {
+  color: #000000;
 }
 
 .nav-links {
@@ -377,6 +430,23 @@ h1, h2, h3, h4, h5, h6 {
 .theme-toggle:hover {
   border-color: var(--text);
   color: var(--text);
+}
+[data-theme="light"] .theme-toggle {
+  background: #ffffff;
+  border: 2px solid #000000;
+  color: #000000;
+  box-shadow: 3px 3px 0px #000000;
+}
+[data-theme="light"] .theme-toggle:hover {
+  background: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px #000000;
+}
+[data-theme="light"] .theme-toggle:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #000000;
 }
 
 .mobile-menu-toggle {
@@ -523,132 +593,182 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ============================================================
-   SIMPLE REALISTIC LANYARD ID BADGE
+   3D REALISTIC LANYARD ID BADGE & 360° DRAG
    ============================================================ */
 .hero-photo-wrap {
   position: relative;
-  width: 290px;
+  width: 300px;
   flex-shrink: 0;
   margin: 0 auto;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.simple-lanyard {
+.lanyard-interactive-wrap {
   position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transform-origin: 50% 0%;
-  transition: transform 0.12s ease-out;
+  touch-action: none;
+  cursor: grab;
+}
+.lanyard-interactive-wrap:active {
+  cursor: grabbing;
 }
 
-/* Minimalist Hanging Ribbon Strap */
-.simple-lanyard-strap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* 3D Curved Ribbon Strap SVG */
+.lanyard-svg-stage {
   width: 100%;
-  height: 52px;
-}
-
-.strap-line {
-  width: 32px;
-  height: 42px;
-  background: #18181c;
-  border-left: 1.5px solid rgba(255, 255, 255, 0.15);
-  border-right: 1.5px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  border-radius: 2px 2px 0 0;
-}
-[data-theme="light"] .strap-line {
-  background: #080808;
-  border-left: 1.5px solid rgba(255, 255, 255, 0.4);
-  border-right: 1.5px solid rgba(255, 255, 255, 0.4);
-}
-
-.strap-metal-clip {
-  width: 20px;
-  height: 12px;
-  background: linear-gradient(180deg, #d4d4dc 0%, #888894 60%, #52525e 100%);
-  border-radius: 3px;
-  border: 1px solid #33333e;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
+  height: 200px;
+  overflow: visible;
+  pointer-events: none;
+  margin-bottom: -32px;
   z-index: 2;
-  margin-top: -2px;
+}
+
+/* Ribbon Strap Colors (Dark Mode) */
+.lanyard-strap-bg {
+  stroke: #101017;
+  opacity: 0.9;
+}
+.lanyard-stripe-bg {
+  stroke: rgba(59, 130, 246, 0.45);
+}
+.lanyard-strap-main {
+  stroke: #141420;
+}
+.lanyard-strap-stripe {
+  stroke: #3b82f6;
+}
+.lanyard-metal-band,
+.lanyard-metal-ring,
+.lanyard-metal-hook {
+  fill: url(#metalChrome);
+  stroke: #383848;
+  stroke-width: 1;
+}
+.lanyard-metal-latch {
+  stroke: #404050;
+}
+.lanyard-hook-tip {
+  fill: #9999aa;
+}
+
+/* Light Mode — Joshua Vides 2D Comic Manga Inked Lanyard */
+[data-theme="light"] .lanyard-strap-bg {
+  stroke: #000000;
+  opacity: 1;
+}
+[data-theme="light"] .lanyard-stripe-bg {
+  stroke: #ffffff;
+}
+[data-theme="light"] .lanyard-strap-main {
+  stroke: #000000;
+}
+[data-theme="light"] .lanyard-strap-stripe {
+  stroke: #ffffff;
+  stroke-width: 4;
+}
+[data-theme="light"] .lanyard-metal-band {
+  fill: #ffffff;
+  stroke: #000000;
+  stroke-width: 2.5;
+}
+[data-theme="light"] .lanyard-metal-ring,
+[data-theme="light"] .lanyard-metal-hook {
+  fill: #ffffff;
+  stroke: #000000;
+  stroke-width: 2.5;
+}
+[data-theme="light"] .lanyard-metal-latch {
+  stroke: #000000;
+  stroke-width: 2.5;
+}
+[data-theme="light"] .lanyard-hook-tip {
+  fill: #000000;
 }
 
 /* ID Card Badge */
-.simple-lanyard-card {
+.lanyard-card {
   position: relative;
   width: 100%;
   background: var(--bg-card);
   border: 1.5px solid var(--line);
   border-radius: 20px;
-  padding: 14px 16px 18px;
-  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.35);
-  margin-top: -4px;
-  touch-action: none;
-  cursor: grab;
-  user-select: none;
-  -webkit-user-select: none;
+  padding: 18px 16px 16px;
+  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.45);
   will-change: transform;
-  transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  transform-origin: 50% 0%;
+  z-index: 5;
+  transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
-.simple-lanyard-card:active {
-  cursor: grabbing;
-}
-.simple-lanyard:hover .simple-lanyard-card {
+.lanyard-card:hover {
   border-color: var(--accent);
-  box-shadow: 0 28px 56px -10px rgba(0, 0, 0, 0.45);
-}
-[data-theme="light"] .simple-lanyard-card {
-  background: #ffffff;
-  border: 1.5px solid #080808;
-  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.12);
-}
-[data-theme="light"] .simple-lanyard:hover .simple-lanyard-card {
-  border-color: #080808;
-  box-shadow: 0 20px 44px -8px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 28px 56px -10px rgba(0, 0, 0, 0.55);
 }
 
-/* Punch Slot Cutout */
-.badge-slot-cutout {
-  width: 38px;
-  height: 7px;
-  background: var(--bg);
-  border: 1.5px solid var(--line);
-  border-radius: 6px;
-  margin: 0 auto 12px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+/* Light Mode — Comic Joshua Vides ID Card */
+[data-theme="light"] .lanyard-card {
+  background: #ffffff;
+  border: 3.5px solid #000000;
+  border-radius: 18px;
+  box-shadow: 7px 7px 0px #000000;
 }
-[data-theme="light"] .badge-slot-cutout {
-  background: #f4f4f6;
-  border-color: #080808;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+[data-theme="light"] .lanyard-card:hover {
+  border-color: #000000;
+  box-shadow: 10px 10px 0px #000000;
+}
+
+/* Metallic Eyelet Hole at Top Center */
+.badge-eyelet-ring {
+  width: 28px;
+  height: 16px;
+  border-radius: 8px;
+  border: 2px solid #555566;
+  background: linear-gradient(180deg, #d8d8e4 0%, #8c8c9a 100%);
+  margin: -8px auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+.badge-eyelet-hole {
+  width: 12px;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--bg);
+  box-shadow: inset 0 1.5px 3px rgba(0, 0, 0, 0.6);
+}
+[data-theme="light"] .badge-eyelet-ring {
+  border: 2.5px solid #000000;
+  background: #ffffff;
+  box-shadow: 2px 2px 0 #000000;
+}
+[data-theme="light"] .badge-eyelet-hole {
+  background: #000000;
+  box-shadow: none;
 }
 
 /* Photo Wrapper */
 .badge-photo-wrapper {
   width: 100%;
-  aspect-ratio: 1 / 1.08;
+  aspect-ratio: 1 / 1.05;
   border-radius: 14px;
   overflow: hidden;
   border: 1px solid var(--line);
   background: var(--bg);
-}
-[data-theme="light"] .badge-photo-wrapper {
-  border-color: #e4e4e7;
 }
 .badge-photo-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top center;
-  transition: transform 0.4s var(--ease);
   pointer-events: none;
 }
-.simple-lanyard:hover .badge-photo-wrapper img {
-  transform: scale(1.03);
+[data-theme="light"] .badge-photo-wrapper {
+  border: 2.5px solid #000000;
+  border-radius: 12px;
 }
 
 /* Badge Details */
@@ -678,18 +798,72 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   letter-spacing: 0.04em;
   color: var(--text-ghost);
-  padding: 3px 9px;
+  padding: 3px 10px;
   border-radius: 20px;
   background: var(--bg);
   border: 1px solid var(--line);
 }
+[data-theme="light"] .badge-name {
+  color: #000000;
+  font-weight: 900;
+}
+[data-theme="light"] .badge-role {
+  color: #111111;
+  font-weight: 700;
+}
 [data-theme="light"] .badge-location {
-  background: #f4f4f5;
-  border-color: #e4e4e7;
-  color: #52525b;
+  background: #ffffff;
+  border: 2px solid #000000;
+  color: #000000;
+  box-shadow: 2px 2px 0 #000000;
+  font-weight: 800;
 }
 
-/* Lanyard Drag Hint */
+/* Barcode Footer */
+.badge-barcode {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.barcode-bars {
+  width: 110px;
+  height: 18px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--text) 0,
+    var(--text) 2px,
+    transparent 2px,
+    transparent 4px,
+    var(--text) 4px,
+    var(--text) 7px,
+    transparent 7px,
+    transparent 9px
+  );
+  opacity: 0.7;
+}
+.barcode-text {
+  font-family: var(--font-heading);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--text-ghost);
+}
+[data-theme="light"] .badge-barcode {
+  border-top: 2px solid #000000;
+}
+[data-theme="light"] .barcode-bars {
+  opacity: 1;
+}
+[data-theme="light"] .barcode-text {
+  color: #000000;
+  font-weight: 900;
+}
+
+/* Drag Hint */
 .lanyard-drag-hint {
   margin-top: 10px;
   display: flex;
@@ -710,13 +884,15 @@ h1, h2, h3, h4, h5, h6 {
   animation: pulseLanyardHint 2.4s infinite ease-in-out;
 }
 [data-theme="light"] .lanyard-drag-hint span {
-  color: #080808;
-  background: rgba(8, 8, 8, 0.06);
-  border-color: #080808;
+  color: #000000;
+  background: #ffffff;
+  border: 2px dashed #000000;
+  box-shadow: 2px 2px 0px #000000;
+  font-weight: 900;
 }
 @keyframes pulseLanyardHint {
-  0%, 100% { opacity: 0.65; transform: translateY(0); }
-  50% { opacity: 1; transform: translateY(3px); }
+  0%, 100% { opacity: 0.7; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(2px); }
 }
 
 /* ============================================================
@@ -808,45 +984,64 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 28px;
 }
 
+.skills-tab-bar,
 .skills-view-switcher {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px;
+  gap: 6px;
+  padding: 5px;
   background: var(--bg-card);
   border: 1.5px solid var(--line);
   border-radius: 40px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
+.skills-tab-btn,
 .skills-switch-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
   font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-size: 0.84rem;
   font-weight: 700;
-  padding: 8px 18px;
+  padding: 8px 24px;
   border-radius: 30px;
-  border: 1px solid transparent;
+  border: 1.5px solid transparent;
   background: transparent;
   color: var(--text-sub);
   cursor: pointer;
   transition: all var(--fast) var(--ease);
+  letter-spacing: 0.02em;
 }
+.skills-tab-btn:hover,
 .skills-switch-btn:hover {
   color: var(--text);
 }
+.skills-tab-btn.active,
 .skills-switch-btn.active {
   background: var(--accent);
   color: var(--accent-on);
   border-color: var(--accent);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
+[data-theme="light"] .skills-tab-bar,
+[data-theme="light"] .skills-view-switcher {
+  background: #ffffff;
+  border: 2.5px solid #000000;
+  border-radius: 40px;
+  box-shadow: 4px 4px 0px #000000;
+}
+[data-theme="light"] .skills-tab-btn,
+[data-theme="light"] .skills-switch-btn {
+  color: #000000;
+  font-weight: 800;
+}
+[data-theme="light"] .skills-tab-btn.active,
 [data-theme="light"] .skills-switch-btn.active {
-  background: #080808;
+  background: #000000;
   color: #ffffff;
-  border-color: #080808;
+  border-color: #000000;
+  box-shadow: 2px 2px 0px #000000;
 }
 
 /* Horizontally Scrollable 2-Row Shelf (Max 12 Visible Initially) */

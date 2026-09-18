@@ -304,31 +304,22 @@ export default function Skills() {
             Ekosistem teknologi modern yang saya gunakan untuk membangun sistem backend tangguh, antarmuka web interaktif, dan aplikasi mobile multiplatform.
           </p>
 
-          {/* Mode Switcher: Motion vs Static Card */}
+          {/* Mode Switcher: Clean Tabs without logos (Motion vs Card) */}
           <div className="skills-view-switcher-row">
-            <div className="skills-view-switcher">
+            <div className="skills-tab-bar">
               <button
                 type="button"
-                className={`skills-switch-btn ${viewMode === 'motion' ? 'active' : ''}`}
+                className={`skills-tab-btn ${viewMode === 'motion' ? 'active' : ''}`}
                 onClick={() => setViewMode('motion')}
               >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                </svg>
-                <span>Animasi Motion</span>
+                Motion
               </button>
               <button
                 type="button"
-                className={`skills-switch-btn ${viewMode === 'grid' ? 'active' : ''}`}
+                className={`skills-tab-btn ${viewMode === 'grid' ? 'active' : ''}`}
                 onClick={() => setViewMode('grid')}
               >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                  <rect x="3" y="3" width="7" height="7" rx="1" />
-                  <rect x="14" y="3" width="7" height="7" rx="1" />
-                  <rect x="14" y="14" width="7" height="7" rx="1" />
-                  <rect x="3" y="14" width="7" height="7" rx="1" />
-                </svg>
-                <span>Tampilan Kartu</span>
+                Card
               </button>
             </div>
           </div>
@@ -381,13 +372,9 @@ export default function Skills() {
             </div>
           </div>
         ) : (
-          /* Horizontally Scrollable 2-Row Shelf (Max 12 Visible at First, Scrollable Sideways) */
+          /* Horizontally Scrollable 2-Row Shelf */
           <div className="skills-shelf-container">
             <div className="skills-shelf-header">
-              <div className="skills-shelf-badge">
-                <span className="skills-shelf-dot" />
-                <span>12 kartu pertama tampak • Geser ke samping untuk melihat teknologi lainnya (20 total)</span>
-              </div>
               <div className="skills-shelf-nav">
                 <button
                   type="button"
