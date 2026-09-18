@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import hasyaRayyanPhoto from '../assets/hasya_rayyan.jpg';
 
-function useSimpleLanyardTilt(ref) {
+function useLanyardPhysics(ref) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -9,31 +9,34 @@ function useSimpleLanyardTilt(ref) {
 
     const onMove = (e) => {
       const r = el.getBoundingClientRect();
+      // Relative offset from center: -1 (left) to 1 (right)
       const nx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      // Relative offset from top (0) to bottom (1)
       const ny = (e.clientY - r.top) / r.height;
 
-      const swayZ = nx * 3.5;
-      const tiltY = nx * 7;
-      const tiltX = -ny * 4;
+      // Realistic hanging pendulum physics pivoted from top-center
+      const swayZ = nx * 8;      // Natural swing angle
+      const tiltY = nx * 14;     // 3D rotation facing mouse
+      const tiltX = -ny * 7;     // Slight tilt backwards when mouse moves down
 
-      el.style.transform = `perspective(800px) rotateZ(${swayZ}deg) rotateY(${tiltY}deg) rotateX(${tiltX}deg)`;
+      el.style.transform = `perspective(1000px) rotateZ(${swayZ}deg) rotateY(${tiltY}deg) rotateX(${tiltX}deg)`;
     };
 
     const onEnter = () => {
       isHovering = true;
       el.style.animation = 'none';
-      el.style.transition = 'transform 0.15s ease-out';
+      el.style.transition = 'transform 0.12s ease-out';
     };
 
     const onLeave = () => {
       isHovering = false;
-      el.style.transition = 'transform 0.7s cubic-bezier(0.2, 1, 0.3, 1)';
-      el.style.transform = 'perspective(800px) rotateZ(0deg) rotateY(0deg) rotateX(0deg)';
+      el.style.transition = 'transform 0.9s cubic-bezier(0.25, 1, 0.5, 1)';
+      el.style.transform = 'perspective(1000px) rotateZ(0deg) rotateY(0deg) rotateX(0deg)';
       setTimeout(() => {
         if (!isHovering && el) {
-          el.style.animation = 'lanyardSimpleSway 6s ease-in-out infinite alternate';
+          el.style.animation = 'lanyardIdleSway 6s ease-in-out infinite alternate';
         }
-      }, 700);
+      }, 900);
     };
 
     el.addEventListener('mousemove', onMove);
@@ -49,7 +52,7 @@ function useSimpleLanyardTilt(ref) {
 
 export default function Hero() {
   const lanyardRef = useRef(null);
-  useSimpleLanyardTilt(lanyardRef);
+  useLanyardPhysics(lanyardRef);
 
   const goto = (id) => {
     const el = document.getElementById(id);
@@ -137,39 +140,122 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* ── Kanan: Foto Lanyard ID Card Simpel & Elegan ── */}
+          {/* ── Kanan: Foto Developer Lanyard ID Badge ── */}
           <div className="hero-photo-wrap reveal from-right d2">
-            <div className="lanyard-wrapper">
-              <div className="lanyard-card-assembly" ref={lanyardRef}>
+            <div className="lanyard-scene-wrapper">
+              <div className="lanyard-scene" ref={lanyardRef}>
 
-                {/* Tali Lanyard Minimalis */}
-                <div className="lanyard-strap" />
-
-                {/* Pengait Logam Sederhana */}
-                <div className="lanyard-clip">
-                  <div className="lanyard-clip-ring" />
-                  <div className="lanyard-clip-hook" />
+                {/* Tali Lanyard (Strap Ribbon) */}
+                <div className="lanyard-strap-top">
+                  <div className="lanyard-ribbon-left" />
+                  <div className="lanyard-ribbon-right" />
+                  <div className="lanyard-ribbon-center">
+                    <span className="ribbon-text">HASYA RAYYAN ✦ DEV PASS 2026</span>
+                  </div>
                 </div>
 
-                {/* Kartu ID Badge */}
-                <div className="lanyard-id-card">
-                  {/* Lubang Slot Gantungan */}
-                  <div className="lanyard-card-slot" />
+                {/* Hardware Gantungan: Metal Ferrule + Swivel Clasp */}
+                <div className="lanyard-hardware">
+                  <div className="lanyard-ferrule" />
+                  <div className="lanyard-swivel-ring" />
+                  <div className="lanyard-metal-clasp">
+                    <svg width="22" height="32" viewBox="0 0 24 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="7" y="1" width="10" height="4" rx="2" fill="currentColor" opacity="0.8" />
+                      <circle cx="12" cy="9" r="4.5" stroke="currentColor" strokeWidth="2.5" />
+                      <path d="M9 13V24C9 27 15 27 15 24V17" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                      <circle cx="12" cy="27" r="2" fill="currentColor" />
+                    </svg>
+                  </div>
+                </div>
 
-                  {/* Foto Profil */}
-                  <div className="lanyard-photo-box">
+                {/* ID Card Holder Badge */}
+                <div className="lanyard-badge-card">
+
+                  {/* Lubang Gantungan (Punch Slot Hole) */}
+                  <div className="badge-slot-punch">
+                    <div className="badge-slot-opening" />
+                    <div className="badge-slot-metal-clip" />
+                  </div>
+
+                  {/* Header Badge */}
+                  <div className="badge-header-row">
+                    <div className="badge-chip-icon" title="NFC / RFID Chip">
+                      <span className="chip-gold-plate" />
+                      <span className="chip-trace-h" />
+                      <span className="chip-trace-v" />
+                    </div>
+                    <div className="badge-status-pill">
+                      <span className="badge-live-dot" />
+                      <span className="badge-status-title">DEV ACCESS // LVL 01</span>
+                    </div>
+                    <div className="badge-nfc-symbol">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M2 12a10 10 0 0 1 10-10" />
+                        <path d="M5 12a7 7 0 0 1 7-7" />
+                        <path d="M8 12a4 4 0 0 1 4-4" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Foto Hasya Rayyan dalam Badge */}
+                  <div className="badge-photo-frame">
                     <img src={hasyaRayyanPhoto} alt="Hasya Rayyan Bahaudin Mahardika" />
+                    <div className="badge-photo-badge-label">
+                      <span>VERIFIED ENGINEER</span>
+                    </div>
                   </div>
 
-                  {/* Info Pengembang */}
-                  <div className="lanyard-info">
-                    <h3 className="lanyard-name">Hasya Rayyan</h3>
-                    <span className="lanyard-sub">Bahaudin Mahardika</span>
-                    <div className="lanyard-tag">Full-Stack &amp; Mobile Developer</div>
-                    <span className="lanyard-loc">Kota Batu, Jawa Timur</span>
+                  {/* Identitas Pengembang */}
+                  <div className="badge-identity">
+                    <h3 className="badge-name">HASYA RAYYAN</h3>
+                    <div className="badge-subname">BAHAUDIN MAHARDIKA</div>
+                    <div className="badge-role-tag">FULL-STACK &amp; MOBILE CRAFTSMAN</div>
                   </div>
+
+                  {/* Meta Specs */}
+                  <div className="badge-meta-grid">
+                    <div className="badge-meta-cell">
+                      <span className="meta-lbl">DEPT</span>
+                      <span className="meta-val">ENG &amp; ARCH</span>
+                    </div>
+                    <div className="badge-meta-cell">
+                      <span className="meta-lbl">LOCATION</span>
+                      <span className="meta-val">BATU, ID</span>
+                    </div>
+                    <div className="badge-meta-cell">
+                      <span className="meta-lbl">PASS ID</span>
+                      <span className="meta-val">HR-2026-DEV</span>
+                    </div>
+                  </div>
+
+                  {/* Holographic Security Strip & Barcode Footer */}
+                  <div className="badge-security-footer">
+                    <div className="badge-hologram-strip" />
+                    <div className="badge-barcode-wrap">
+                      <div className="badge-barcode-bars">
+                        <span style={{ width: '2px' }} />
+                        <span style={{ width: '4px' }} />
+                        <span style={{ width: '1px' }} />
+                        <span style={{ width: '3px' }} />
+                        <span style={{ width: '5px' }} />
+                        <span style={{ width: '2px' }} />
+                        <span style={{ width: '1px' }} />
+                        <span style={{ width: '4px' }} />
+                        <span style={{ width: '2px' }} />
+                        <span style={{ width: '3px' }} />
+                        <span style={{ width: '6px' }} />
+                        <span style={{ width: '1px' }} />
+                        <span style={{ width: '3px' }} />
+                        <span style={{ width: '2px' }} />
+                        <span style={{ width: '4px' }} />
+                        <span style={{ width: '1px' }} />
+                        <span style={{ width: '3px' }} />
+                      </div>
+                      <span className="badge-barcode-serial">HR • 99042026 • PASS</span>
+                    </div>
+                  </div>
+
                 </div>
-
               </div>
             </div>
           </div>
