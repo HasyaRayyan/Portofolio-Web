@@ -12,24 +12,6 @@ function ProjectCard({ project, index, onOpenGallery }) {
 
   return (
     <div className="proj-card">
-      {/* 35mm Filmstrip Top Sprockets Header */}
-      <div className="card-film-sprockets top">
-        <div className="sprocket-holes-row">
-          <span className="sprocket-hole" />
-          <span className="sprocket-hole" />
-          <span className="sprocket-hole" />
-          <span className="sprocket-hole" />
-          <span className="sprocket-hole" />
-          <span className="sprocket-hole" />
-          <span className="sprocket-hole" />
-          <span className="sprocket-hole" />
-        </div>
-        <div className="film-edge-meta">
-          <span className="film-brand">KODAK 5052 TMX</span>
-          <span className="film-frame-mark">▶ {frameNum}A</span>
-        </div>
-      </div>
-
       {/* 3-Image Stack Stage */}
       <div
         className="proj-card-stage"
@@ -130,24 +112,6 @@ function ProjectCard({ project, index, onOpenGallery }) {
               </a>
             )}
           </div>
-        </div>
-      </div>
-
-      {/* 35mm Filmstrip Bottom Sprockets Footer */}
-      <div className="card-film-sprockets bottom">
-        <div className="film-edge-meta">
-          <span className="film-brand">35MM CELLULOID</span>
-          <span className="film-frame-mark">SAFETY FILM • {frameNum}</span>
-        </div>
-        <div className="sprocket-holes-row">
-          <span className="sprocket-hole" />
-          <span className="sprocket-hole" />
-          <span className="sprocket-hole" />
-          <span className="sprocket-hole" />
-          <span className="sprocket-hole" />
-          <span className="sprocket-hole" />
-          <span className="sprocket-hole" />
-          <span className="sprocket-hole" />
         </div>
       </div>
     </div>
@@ -290,7 +254,35 @@ export default function Projects() {
   // Double the list to enable true 100% seamless infinite looping ("muter terus")
   const displayProjects = [...projects, ...projects];
 
-  // Infinite seamless auto-scroll (horizontal roll film glide)
+  // Dynamic curve scale: kecil di kanan -> membesar di tengah -> mengecil di kiri
+  const updateCurveScale = () => {
+    const el = trackRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const radius = rect.width / 2;
+    if (radius <= 0) return;
+
+    const cards = el.querySelectorAll('.proj-card');
+    cards.forEach((card) => {
+      const cRect = card.getBoundingClientRect();
+      const cCenter = cRect.left + cRect.width / 2;
+      // Rasio jarak dari tengah: 0 di tengah, 1 di pinggir
+      const distRatio = Math.min(Math.abs(cCenter - centerX) / radius, 1.5);
+
+      // Kurva skala: kartu tengah membesar (1.05), pinggir kanan & kiri mengecil (0.80)
+      const scale = Math.max(0.80, 1.05 - Math.pow(distRatio, 1.35) * 0.25);
+      // Opasitas fokus: tengah 1.0, pinggir 0.65
+      const opacity = Math.max(0.65, 1 - (distRatio * 0.32));
+      // Sedikit terangkat saat berada di tengah
+      const translateY = -((1 - Math.min(distRatio, 1)) * 10);
+
+      card.style.transform = `scale(${scale.toFixed(3)}) translateY(${translateY.toFixed(1)}px)`;
+      card.style.opacity = opacity.toFixed(2);
+    });
+  };
+
+  // Infinite seamless auto-scroll with dynamic curve scale
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
@@ -310,11 +302,19 @@ export default function Projects() {
         // Keep in sync with user manual scroll position
         scrollPosRef.current = el.scrollLeft;
       }
+      updateCurveScale();
       animId = requestAnimationFrame(step);
     };
 
     animId = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(animId);
+
+    const onResize = () => updateCurveScale();
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', onResize);
+    };
   }, [isPaused]);
 
   // Handle manual scroll to keep loop seamless
@@ -330,6 +330,7 @@ export default function Projects() {
       }
     }
     scrollPosRef.current = el.scrollLeft;
+    updateCurveScale();
   };
 
   // Manual button scroll controls

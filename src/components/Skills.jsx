@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 /* ─── 4 Columns Data ─── */
 
@@ -284,6 +284,14 @@ function SkillMarqueeCard({ item }) {
 
 export default function Skills() {
   const [viewMode, setViewMode] = useState('motion'); // 'motion' | 'grid'
+  const shelfRef = useRef(null);
+
+  const scrollShelf = (direction) => {
+    if (shelfRef.current) {
+      const scrollAmount = direction === 'left' ? -380 : 380;
+      shelfRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
 
   return (
     <section id="skills" className="section" style={{ borderTop: '1px solid var(--line)' }}>
@@ -326,11 +334,11 @@ export default function Skills() {
           </div>
         </div>
 
-        {/* Conditional View: 4-Track Motion vs Static Cards Grid */}
+        {/* Conditional View: 4-Track Motion vs Horizontally Scrollable 2-Row Shelf */}
         {viewMode === 'motion' ? (
-          /* 4-Column Vertical Marquee Motion Showcase */
+          /* 4-Column Vertical Marquee Motion Showcase (Borderless Floating Directly on Page) */
           <div className="skills-marquee-wrapper">
-            {/* Top & Bottom Gradient Masks */}
+            {/* Top & Bottom Soft Blurred Gradient Masks */}
             <div className="skills-marquee-mask-top" />
             <div className="skills-marquee-mask-bottom" />
 
@@ -373,11 +381,46 @@ export default function Skills() {
             </div>
           </div>
         ) : (
-          /* Static Card Grid View */
-          <div className="skills-static-grid">
-            {allSkills.map((item) => (
-              <SkillMarqueeCard key={`static-${item.name}`} item={item} />
-            ))}
+          /* Horizontally Scrollable 2-Row Shelf (Max 12 Visible at First, Scrollable Sideways) */
+          <div className="skills-shelf-container">
+            <div className="skills-shelf-header">
+              <div className="skills-shelf-badge">
+                <span className="skills-shelf-dot" />
+                <span>12 kartu pertama tampak • Geser ke samping untuk melihat teknologi lainnya (20 total)</span>
+              </div>
+              <div className="skills-shelf-nav">
+                <button
+                  type="button"
+                  className="skills-shelf-nav-btn"
+                  onClick={() => scrollShelf('left')}
+                  aria-label="Geser ke kiri"
+                  title="Geser ke kiri"
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  className="skills-shelf-nav-btn"
+                  onClick={() => scrollShelf('right')}
+                  aria-label="Geser ke kanan"
+                  title="Geser ke kanan"
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div className="skills-shelf-wrapper">
+              <div className="skills-shelf-track" ref={shelfRef}>
+                {allSkills.map((item) => (
+                  <SkillMarqueeCard key={`static-${item.name}`} item={item} />
+                ))}
+              </div>
+            </div>
           </div>
         )}
       </div>
