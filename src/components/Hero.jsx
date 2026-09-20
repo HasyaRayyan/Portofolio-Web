@@ -1,7 +1,9 @@
 import React from 'react';
 import hasyaRayyanPhoto from '../assets/hasya_rayyan.jpg';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Hero() {
+  const { t } = useLanguage();
 
   const goto = (id) => {
     const el = document.getElementById(id);
@@ -19,32 +21,31 @@ export default function Hero() {
             {/* Eyebrow minimalis */}
             <div className="hero-eyebrow reveal">
               <div className="hero-eyebrow-line" />
-              <span className="hero-eyebrow-text">Full-Stack &amp; Mobile Developer</span>
+              <span className="hero-eyebrow-text">{t.hero.eyebrow}</span>
             </div>
 
             {/* Nama lengkap */}
             <h1 className="hero-name reveal d1">
-              Hasya Rayyan
-              <span className="line2">Bahaudin Mahardika.</span>
+              {t.hero.namePart1}
+              <span className="line2">{t.hero.namePart2}</span>
             </h1>
 
             {/* Deskripsi ringkas berkarakter */}
             <p className="hero-desc reveal d2">
-              Merancang sistem dari baris kode pertama hingga performa skala produksi.
-              Menggabungkan arsitektur backend yang solid dengan antarmuka web &amp; mobile yang responsif, terukur, dan memanjakan pengguna.
+              {t.hero.desc}
             </p>
 
             {/* CTA Buttons & Socials (GitHub & LinkedIn) */}
             <div className="hero-actions-row reveal d3">
               <div className="hero-cta-btns">
                 <button className="btn btn-primary" onClick={() => goto('projects')}>
-                  Lihat Proyek
+                  {t.hero.ctaProjects}
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
                   </svg>
                 </button>
                 <button className="btn btn-outline" onClick={() => goto('contact')}>
-                  Hubungi Saya
+                  {t.hero.ctaContact}
                 </button>
               </div>
 
@@ -80,27 +81,18 @@ export default function Hero() {
 
             {/* Stats */}
             <div className="hero-stats reveal d4">
-              {[['3+', 'Tahun Eksplorasi'], ['12+', 'Proyek Selesai'], ['15+', 'Modern Stack']].map(([n, l]) => (
-                <div key={l} className="hero-stat">
-                  <div className="hero-stat-num">{n}</div>
-                  <div className="hero-stat-label">{l}</div>
+              {t.hero.stats.map(({ num, label }) => (
+                <div key={label} className="hero-stat">
+                  <div className="hero-stat-num">{num}</div>
+                  <div className="hero-stat-label">{label}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* ── Kanan: Profil Card Biasa & Elegan (Clean, Modern, Tanpa Tarik-Tarik) ── */}
+          {/* ── Kanan: Profil Card Biasa & Elegan ── */}
           <div className="hero-photo-wrap reveal from-right d2">
             <div className="hero-profile-card">
-              {/* Card Header: Live Status & Location */}
-              <div className="hero-card-header">
-                <div className="hero-card-status">
-                  <span className="hero-status-dot" />
-                  <span className="hero-status-text">Available for projects</span>
-                </div>
-                <span className="hero-card-loc">Kota Batu, ID</span>
-              </div>
-
               {/* Photo Frame */}
               <div className="hero-card-photo-wrap">
                 <img src={hasyaRayyanPhoto} alt="Hasya Rayyan Bahaudin Mahardika" />
@@ -108,11 +100,8 @@ export default function Hero() {
 
               {/* Card Body: Identity & Role */}
               <div className="hero-card-body">
-                <div className="hero-card-name-row">
-                  <h3 className="hero-card-name">Hasya Rayyan</h3>
-                  <span className="hero-card-badge">Full-Stack</span>
-                </div>
-                <p className="hero-card-role">Full-Stack &amp; Mobile Developer</p>
+                <h3 className="hero-card-name">Hasya Rayyan</h3>
+                <p className="hero-card-role">{t.hero.cardRole}</p>
 
                 {/* Tech Chips */}
                 <div className="hero-card-chips">

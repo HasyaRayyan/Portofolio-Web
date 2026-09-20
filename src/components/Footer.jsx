@@ -1,6 +1,8 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLanguage();
   const year = new Date().getFullYear();
 
   const goto = (e, id) => {
@@ -13,6 +15,15 @@ export default function Footer() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const navLinks = [
+    ['home', t.footer.navLinks.home],
+    ['about', t.footer.navLinks.about],
+    ['skills', t.footer.navLinks.skills],
+    ['projects', t.footer.navLinks.projects],
+    ['experience', t.footer.navLinks.experience],
+    ['contact', t.footer.navLinks.contact],
+  ];
+
   return (
     <footer className="footer">
       <div className="container footer-content">
@@ -23,22 +34,15 @@ export default function Footer() {
               Hasya<span className="accent">.</span>
             </a>
             <p className="footer-tagline">
-              Full-Stack Developer &amp; Mobile Software Craftsman berbasis di Kota Batu, Jawa Timur, Indonesia. Membangun produk digital yang cepat, responsif, dan berorientasi performa.
+              {t.footer.tagline}
             </p>
           </div>
 
           {/* Quick Navigation Column */}
           <div className="footer-nav-col">
-            <span className="footer-col-heading">Navigasi</span>
+            <span className="footer-col-heading">{t.footer.navHeading}</span>
             <ul className="footer-nav-list">
-              {[
-                ['home', 'Beranda'],
-                ['about', 'Tentang'],
-                ['skills', 'Keahlian'],
-                ['projects', 'Proyek'],
-                ['experience', 'Pengalaman'],
-                ['contact', 'Kontak'],
-              ].map(([id, label]) => (
+              {navLinks.map(([id, label]) => (
                 <li key={id}>
                   <a href={`#${id}`} className="footer-nav-link" onClick={(e) => goto(e, id)}>
                     {label}
@@ -50,7 +54,7 @@ export default function Footer() {
 
           {/* Connect / Social Column */}
           <div className="footer-connect-col">
-            <span className="footer-col-heading">Terhubung</span>
+            <span className="footer-col-heading">{t.footer.connectHeading}</span>
             <div className="footer-social-links">
               <a
                 href="https://github.com/HasyaRayyan"
@@ -95,11 +99,11 @@ export default function Footer() {
         {/* Bottom Bar: Copyright + Back to Top */}
         <div className="footer-bottom">
           <p className="footer-copy">
-            © {year} <strong>Hasya Rayyan Bahaudin Mahardika</strong>. All rights reserved.
+            © {year} <strong>Hasya Rayyan Bahaudin Mahardika</strong>. {t.footer.copyright}
           </p>
 
-          <button className="footer-back-to-top" onClick={scrollToTop} aria-label="Kembali ke atas">
-            <span>Kembali ke atas</span>
+          <button className="footer-back-to-top" onClick={scrollToTop} aria-label={t.footer.backToTop}>
+            <span>{t.footer.backToTop}</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M18 15l-6-6-6 6"/>
             </svg>

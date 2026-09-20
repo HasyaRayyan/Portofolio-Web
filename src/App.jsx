@@ -7,6 +7,7 @@ import Projects from './components/Projects';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import { LanguageProvider } from './context/LanguageContext';
 
 function App() {
   const [theme, setTheme] = useState(() => {
@@ -53,7 +54,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <LanguageProvider>
       <Navbar theme={theme} toggleTheme={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))} />
       <main style={{ paddingTop: '68px' }}>
         <Hero />
@@ -64,7 +65,7 @@ function App() {
         <Contact />
       </main>
       <Footer />
-    </>
+    </LanguageProvider>
   );
 }
 

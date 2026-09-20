@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 /* ─── 4 Columns Data ─── */
 
@@ -283,6 +284,7 @@ function SkillMarqueeCard({ item }) {
 }
 
 export default function Skills() {
+  const { t } = useLanguage();
   const [viewMode, setViewMode] = useState('motion'); // 'motion' | 'grid'
   const shelfRef = useRef(null);
 
@@ -298,10 +300,17 @@ export default function Skills() {
       <div className="container">
         {/* Centered Header */}
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '24px' }}>
-          <span className="section-label">02 — Keahlian &amp; Teknologi</span>
-          <h2 className="section-title">Teknologi yang<br />saya gunakan.</h2>
+          <span className="section-label">{t.skills.label}</span>
+          <h2 className="section-title">
+            {t.skills.title.split('\n').map((line, idx) => (
+              <React.Fragment key={idx}>
+                {line}
+                {idx === 0 && <br />}
+              </React.Fragment>
+            ))}
+          </h2>
           <p className="section-sub" style={{ marginBottom: '24px' }}>
-            Ekosistem teknologi modern yang saya gunakan untuk membangun sistem backend tangguh, antarmuka web interaktif, dan aplikasi mobile multiplatform.
+            {t.skills.sub}
           </p>
 
           {/* Mode Switcher: Clean Tabs without logos (Motion vs Card) */}
@@ -312,14 +321,14 @@ export default function Skills() {
                 className={`skills-tab-btn ${viewMode === 'motion' ? 'active' : ''}`}
                 onClick={() => setViewMode('motion')}
               >
-                Motion
+                {t.skills.tabMotion}
               </button>
               <button
                 type="button"
                 className={`skills-tab-btn ${viewMode === 'grid' ? 'active' : ''}`}
                 onClick={() => setViewMode('grid')}
               >
-                Card
+                {t.skills.tabCard}
               </button>
             </div>
           </div>
@@ -380,8 +389,8 @@ export default function Skills() {
                   type="button"
                   className="skills-shelf-nav-btn"
                   onClick={() => scrollShelf('left')}
-                  aria-label="Geser ke kiri"
-                  title="Geser ke kiri"
+                  aria-label={t.skills.scrollLeft}
+                  title={t.skills.scrollLeft}
                 >
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <polyline points="15 18 9 12 15 6" />
@@ -391,8 +400,8 @@ export default function Skills() {
                   type="button"
                   className="skills-shelf-nav-btn"
                   onClick={() => scrollShelf('right')}
-                  aria-label="Geser ke kanan"
-                  title="Geser ke kanan"
+                  aria-label={t.skills.scrollRight}
+                  title={t.skills.scrollRight}
                 >
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <polyline points="9 18 15 12 9 6" />

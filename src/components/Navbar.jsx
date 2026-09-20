@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
-
-const links = [
-  { id: 'home',       label: 'Home' },
-  { id: 'about',      label: 'Tentang' },
-  { id: 'skills',     label: 'Keahlian' },
-  { id: 'projects',   label: 'Proyek' },
-  { id: 'experience', label: 'Perjalanan' },
-  { id: 'contact',    label: 'Kontak' },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Navbar({ theme, toggleTheme }) {
+  const { lang, toggleLang, t } = useLanguage();
   const [menuOpen, setMenuOpen]   = useState(false);
   const [scrolled, setScrolled]   = useState(false);
   const [active, setActive]       = useState('home');
+
+  const links = [
+    { id: 'home',       label: t.nav.home },
+    { id: 'about',      label: t.nav.about },
+    { id: 'skills',     label: t.nav.skills },
+    { id: 'projects',   label: t.nav.projects },
+    { id: 'experience', label: t.nav.experience },
+    { id: 'contact',    label: t.nav.contact },
+  ];
 
   useEffect(() => {
     const onScroll = () => {
@@ -63,12 +65,24 @@ export default function Navbar({ theme, toggleTheme }) {
         </ul>
 
         <div className="nav-actions">
+          {/* Language toggle */}
+          <button
+            className="lang-toggle"
+            onClick={toggleLang}
+            aria-label={t.nav.switchLang}
+            title={t.nav.switchLang}
+          >
+            <span className={`lang-opt ${lang === 'id' ? 'active' : ''}`}>ID</span>
+            <span className="lang-sep">/</span>
+            <span className={`lang-opt ${lang === 'en' ? 'active' : ''}`}>EN</span>
+          </button>
+
           {/* Theme toggle */}
           <button
             className="theme-toggle"
             onClick={toggleTheme}
-            aria-label={theme === 'dark' ? 'Mode Terang' : 'Mode Gelap'}
-            title={theme === 'dark' ? 'Mode Terang' : 'Mode Gelap'}
+            aria-label={theme === 'dark' ? t.nav.themeLight : t.nav.themeDark}
+            title={theme === 'dark' ? t.nav.themeLight : t.nav.themeDark}
           >
             {theme === 'dark' ? (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

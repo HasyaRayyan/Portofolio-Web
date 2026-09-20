@@ -1,71 +1,18 @@
 import React from 'react';
+import { useLanguage } from '../context/LanguageContext';
 import logo44Thrift from '../assets/logo_44thrift.png';
 import logoPringapus from '../assets/logo_pringapus.jpg';
 import logoSMK from '../assets/logo_smk_pgri.jpg';
 import logoUIN from '../assets/logo_uin_malang.png';
 
-/* ─── Data ─── */
-
-const careerData = [
-  {
-    date: 'Jan 2025 — Des 2025',
-    title: 'Full-Stack Developer Intern',
-    org: 'PT Pringapus Digital Teknologi',
-    desc: 'Pengembangan dan pemeliharaan aplikasi web & sistem informasi berbasis enterprise.',
-    highlights: [
-      'Membangun modul frontend responsif menggunakan Ionic Angular & antarmuka modern.',
-      'Merancang RESTful API dan integrasi backend menggunakan PHP CodeIgniter.',
-      'Mengoptimasi skema database SQL untuk transaksi data yang cepat dan aman.',
-    ],
-    logo: logoPringapus,
-    alt: 'Logo PT Pringapus Digital Teknologi',
-    type: 'Magang Industri',
-  },
-  {
-    date: 'Des 2024 — Sekarang',
-    title: 'Owner & Digital Strategist',
-    org: 'FourtyFourThrift',
-    desc: 'Membangun dan mengembangkan brand e-commerce pakaian vintage berkualitas.',
-    highlights: [
-      'Membangun sistem katalog digital dan manajemen inventaris berbasis web.',
-      'Menjalankan strategi pemasaran performa dan branding digital omnichannel.',
-      'Mengelola alur operasional, kepuasan pelanggan, dan analitik penjualan.',
-    ],
-    logo: logo44Thrift,
-    alt: 'Logo FourtyFourThrift',
-    type: 'Wirausaha Digital',
-  },
+const careerLogos = [
+  { logo: logoPringapus, alt: 'Logo PT Pringapus Digital Teknologi' },
+  { logo: logo44Thrift, alt: 'Logo FourtyFourThrift' },
 ];
 
-const educationData = [
-  {
-    date: 'Agt 2026 — Sekarang',
-    title: 'S1 Teknik Informatika',
-    org: 'UIN Maulana Malik Ibrahim Malang',
-    desc: 'Fokus pada Software Engineering, Algoritma Lanjut, dan Sistem Terdistribusi.',
-    highlights: [
-      'Memperdalam arsitektur sistem enterprise, struktur data, dan rekayasa perangkat lunak.',
-      'Eksplorasi kecerdasan buatan (AI), data modeling, dan cloud deployment.',
-      'Kolaborasi riset akademik dan pembuatan prototipe solusi komputasi cerdas.',
-    ],
-    logo: logoUIN,
-    alt: 'Logo UIN Maulana Malik Ibrahim Malang',
-    type: 'Pendidikan Tinggi (S1)',
-  },
-  {
-    date: 'Jun 2023 — Mei 2026',
-    title: 'Rekayasa Perangkat Lunak (RPL)',
-    org: 'SMK PGRI 03 Malang (Skariga)',
-    desc: 'Pendidikan vokasi teknologi informasi intensif berorientasi industri.',
-    highlights: [
-      'Penguasaan fundamental algoritma pemrograman, web full-stack, & mobile app.',
-      'Praktek perancangan database relasional MySQL dan pemodelan sistem UML.',
-      'Pengalaman kepemimpinan tim dalam pengerjaan proyek software riil.',
-    ],
-    logo: logoSMK,
-    alt: 'Logo SMK PGRI 03 Malang (Skariga)',
-    type: 'Vokasi Kejuruan',
-  },
+const eduLogos = [
+  { logo: logoUIN, alt: 'Logo UIN Maulana Malik Ibrahim Malang' },
+  { logo: logoSMK, alt: 'Logo SMK PGRI 03 Malang (Skariga)' },
 ];
 
 /* ─── Sub components ─── */
@@ -79,7 +26,7 @@ function ColHeader({ label, title }) {
   );
 }
 
-function ExpItem({ item, delay }) {
+function ExpItem({ item, delay, highlightsHeader }) {
   return (
     <div className={`exp-card-bespoke reveal d${delay}`}>
       {/* Top Header Row */}
@@ -110,7 +57,7 @@ function ExpItem({ item, delay }) {
 
       {/* Key Highlights / Poin Kontribusi */}
       <div className="exp-highlights-wrap">
-        <span className="exp-highlights-title">Kontribusi &amp; Fokus Utama:</span>
+        <span className="exp-highlights-title">{highlightsHeader}</span>
         <ul className="exp-highlights-list">
           {item.highlights.map((h, idx) => (
             <li key={idx} className="exp-highlight-item">
@@ -127,18 +74,32 @@ function ExpItem({ item, delay }) {
 /* ─── Main component ─── */
 
 export default function Experience() {
+  const { t } = useLanguage();
+
+  const careerList = t.experience.career.map((c, i) => ({
+    ...c,
+    logo: careerLogos[i].logo,
+    alt: careerLogos[i].alt,
+  }));
+
+  const eduList = t.experience.education.map((e, i) => ({
+    ...e,
+    logo: eduLogos[i].logo,
+    alt: eduLogos[i].alt,
+  }));
+
   return (
     <section id="experience" className="section" style={{ borderTop: '1px solid var(--line)' }}>
       <div className="container">
 
         {/* Section Header */}
         <div className="reveal" style={{ textAlign: 'center', marginBottom: '56px' }}>
-          <span className="section-label">04 — Track Record</span>
+          <span className="section-label">{t.experience.label}</span>
           <h2 className="section-title">
-            Pengalaman &amp; Pendidikan
+            {t.experience.title}
           </h2>
           <p className="section-sub" style={{ marginBottom: 0 }}>
-            Perjalanan profesional, rekayasa software industri, serta fondasi akademis yang membentuk kapabilitas teknis saya.
+            {t.experience.sub}
           </p>
         </div>
 
@@ -148,10 +109,15 @@ export default function Experience() {
 
             {/* Left — Karier */}
             <div className="exp-col">
-              <ColHeader label="Karier" title="Pengalaman Kerja" />
+              <ColHeader label={t.experience.careerLabel} title={t.experience.careerTitle} />
               <div className="exp-col-list">
-                {careerData.map((item, i) => (
-                  <ExpItem key={item.title} item={item} delay={i + 1} />
+                {careerList.map((item, i) => (
+                  <ExpItem
+                    key={item.title + '-' + i}
+                    item={item}
+                    delay={i + 1}
+                    highlightsHeader={t.experience.highlightsHeader}
+                  />
                 ))}
               </div>
             </div>
@@ -161,10 +127,15 @@ export default function Experience() {
 
             {/* Right — Pendidikan */}
             <div className="exp-col">
-              <ColHeader label="Pendidikan" title="Riwayat Studi" />
+              <ColHeader label={t.experience.eduLabel} title={t.experience.eduTitle} />
               <div className="exp-col-list">
-                {educationData.map((item, i) => (
-                  <ExpItem key={item.title} item={item} delay={i + 1} />
+                {eduList.map((item, i) => (
+                  <ExpItem
+                    key={item.title + '-' + i}
+                    item={item}
+                    delay={i + 1}
+                    highlightsHeader={t.experience.highlightsHeader}
+                  />
                 ))}
               </div>
             </div>
