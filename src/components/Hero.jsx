@@ -1,189 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import hasyaRayyanPhoto from '../assets/hasya_rayyan.jpg';
 
-/* ─── 3D Looping Lanyard SVG with Dynamic Bending & 360° Drag ─── */
-function LanyardStrapSVG({ x, y }) {
-  // Displaced clasp anchor coordinates
-  const cx = 140 + x * 0.7;
-  const cy = 158 + y * 0.7;
-
-  // Dynamic bezier control points that bow & stretch towards the pull direction
-  const leftCpX = 85 + x * 0.35;
-  const leftCpY = 85 + y * 0.35;
-  const rightCpX = 195 + x * 0.35;
-  const rightCpY = 85 + y * 0.35;
-
-  const leftStrap = `M 85 0 C 85 45, ${leftCpX} ${leftCpY}, ${cx - 10} ${cy - 20}`;
-  const rightStrap = `M 195 0 C 195 45, ${rightCpX} ${rightCpY}, ${cx + 10} ${cy - 20}`;
-  const backLoop = `M 85 0 C 85 70, 195 70, 195 0`;
-
-  return (
-    <svg className="lanyard-svg-stage" viewBox="0 0 280 215" fill="none">
-      <defs>
-        {/* Metallic Chrome Gradient for Hardware */}
-        <linearGradient id="metalChrome" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#f5f5fa" />
-          <stop offset="35%" stopColor="#b8b8c8" />
-          <stop offset="70%" stopColor="#e2e2ec" />
-          <stop offset="100%" stopColor="#7a7a8a" />
-        </linearGradient>
-      </defs>
-
-      {/* 3D Back Loop (Ribbon in background perspective) */}
-      <path d={backLoop} className="lanyard-strap-bg" strokeWidth="24" strokeLinecap="round" />
-      <path d={backLoop} className="lanyard-stripe-bg" strokeWidth="3" />
-
-      {/* Front Left Ribbon */}
-      <path d={leftStrap} className="lanyard-strap-main" strokeWidth="22" strokeLinecap="round" />
-      <path d={leftStrap} className="lanyard-strap-stripe" strokeWidth="3.5" />
-
-      {/* Front Right Ribbon */}
-      <path d={rightStrap} className="lanyard-strap-main" strokeWidth="22" strokeLinecap="round" />
-      <path d={rightStrap} className="lanyard-strap-stripe" strokeWidth="3.5" />
-
-      {/* Metal Crimp Band (gathering both straps) */}
-      <g transform={`translate(${cx}, ${cy - 16})`}>
-        <rect
-          x="-15"
-          y="-6"
-          width="30"
-          height="12"
-          rx="3"
-          className="lanyard-metal-band"
-        />
-        <line x1="-12" y1="0" x2="12" y2="0" stroke="rgba(0,0,0,0.3)" strokeWidth="1.5" />
-      </g>
-
-      {/* Metal Swivel Ring & Lobster Claw Carabiner Clip */}
-      <g transform={`translate(${cx}, ${cy})`}>
-        {/* Swivel Ring */}
-        <ellipse cx="0" cy="-5" rx="7.5" ry="4" className="lanyard-metal-ring" />
-        {/* Carabiner Hook Body */}
-        <path
-          d="M -7 -4 C -12 11, -7 24, 0 31 C 7 24, 12 11, 7 -4 C 4 -1, -4 -1, -7 -4 Z"
-          className="lanyard-metal-hook"
-        />
-        {/* Spring Trigger Latch */}
-        <line x1="-3" y1="3" x2="4" y2="15" className="lanyard-metal-latch" strokeWidth="2.5" strokeLinecap="round" />
-        {/* Hook tip entering card hole */}
-        <circle cx="0" cy="29" r="3" className="lanyard-hook-tip" />
-      </g>
-    </svg>
-  );
-}
-
 export default function Hero() {
-  const [pos, setPos] = useState({ x: 0, y: 0, rotZ: 0, rotX: 0, rotY: 0 });
-  const containerRef = useRef(null);
-  const animRef = useRef(null);
-  const isDraggingRef = useRef(false);
-  const startPosRef = useRef({ x: 0, y: 0 });
-  const currentPosRef = useRef({ x: 0, y: 0 });
-
-  // 360-Degree Free Drag & Damped Spring Physics
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    const onPointerDown = (e) => {
-      if (e.button && e.button !== 0) return;
-      isDraggingRef.current = true;
-      if (animRef.current) cancelAnimationFrame(animRef.current);
-      startPosRef.current = { x: e.clientX, y: e.clientY };
-      try { el.setPointerCapture(e.pointerId); } catch (_) {}
-    };
-
-    const onPointerMove = (e) => {
-      if (!isDraggingRef.current) {
-        // Subtle 3D tilt on hover
-        const r = el.getBoundingClientRect();
-        const nx = ((e.clientX - r.left) / r.width - 0.5) * 2;
-        const ny = ((e.clientY - r.top) / r.height - 0.5) * 2;
-        setPos((prev) => ({
-          ...prev,
-          rotZ: nx * 3,
-          rotX: -ny * 5,
-          rotY: nx * 6,
-        }));
-        return;
-      }
-
-      // Calculate 360-degree free displacement
-      const rawDx = e.clientX - startPosRef.current.x;
-      const rawDy = e.clientY - startPosRef.current.y;
-      const dist = Math.hypot(rawDx, rawDy);
-      // Smooth rubber-band spring dampening across any angle
-      const damping = 1 / (1 + dist * 0.0035);
-      const x = rawDx * damping;
-      const y = rawDy * damping;
-      currentPosRef.current = { x, y };
-
-      const rotZ = x * 0.18 + y * 0.03;
-      const rotX = -y * 0.12;
-      const rotY = x * 0.14;
-
-      setPos({ x, y, rotZ, rotX, rotY });
-    };
-
-    const onPointerUp = (e) => {
-      if (!isDraggingRef.current) return;
-      isDraggingRef.current = false;
-      try { el.releasePointerCapture(e.pointerId); } catch (_) {}
-
-      // Coupled 2D Harmonic Spring with damping in X and Y
-      let x = currentPosRef.current.x;
-      let y = currentPosRef.current.y;
-      let vx = 0;
-      let vy = 0;
-      const k = 0.14; // stiffness
-      const d = 0.77; // friction damping
-
-      const step = () => {
-        const fx = -k * x;
-        vx = (vx + fx) * d;
-        x += vx;
-
-        const fy = -k * y;
-        vy = (vy + fy) * d;
-        y += vy;
-
-        const rotZ = (x * 0.18) + (vx * 0.28) - (vy * 0.1);
-        const rotX = -(y * 0.12) - (vy * 0.25);
-        const rotY = (x * 0.14) + (vx * 0.2);
-
-        setPos({ x, y, rotZ, rotX, rotY });
-
-        if (Math.abs(x) > 0.2 || Math.abs(y) > 0.2 || Math.abs(vx) > 0.2 || Math.abs(vy) > 0.2) {
-          animRef.current = requestAnimationFrame(step);
-        } else {
-          setPos({ x: 0, y: 0, rotZ: 0, rotX: 0, rotY: 0 });
-          currentPosRef.current = { x: 0, y: 0 };
-        }
-      };
-
-      animRef.current = requestAnimationFrame(step);
-    };
-
-    const onMouseLeave = () => {
-      if (isDraggingRef.current) return;
-      setPos({ x: 0, y: 0, rotZ: 0, rotX: 0, rotY: 0 });
-    };
-
-    el.addEventListener('pointerdown', onPointerDown);
-    el.addEventListener('pointermove', onPointerMove);
-    el.addEventListener('pointerup', onPointerUp);
-    el.addEventListener('pointercancel', onPointerUp);
-    el.addEventListener('mouseleave', onMouseLeave);
-
-    return () => {
-      if (animRef.current) cancelAnimationFrame(animRef.current);
-      el.removeEventListener('pointerdown', onPointerDown);
-      el.removeEventListener('pointermove', onPointerMove);
-      el.removeEventListener('pointerup', onPointerUp);
-      el.removeEventListener('pointercancel', onPointerUp);
-      el.removeEventListener('mouseleave', onMouseLeave);
-    };
-  }, []);
 
   const goto = (id) => {
     const el = document.getElementById(id);
@@ -271,55 +89,37 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* ── Kanan: Foto Lanyard ID Badge 3D yang Bisa Ditarik 360° ke Mana Saja ── */}
+          {/* ── Kanan: Profil Card Biasa & Elegan (Clean, Modern, Tanpa Tarik-Tarik) ── */}
           <div className="hero-photo-wrap reveal from-right d2">
-            <div
-              className="lanyard-interactive-wrap"
-              ref={containerRef}
-              title="Tarik tali atau kartu ke mana saja dan lepas untuk membal!"
-            >
-              {/* 3D Curved Ribbon Strap & Lobster Hook */}
-              <LanyardStrapSVG x={pos.x} y={pos.y} />
-
-              {/* ID Card Badge */}
-              <div
-                className="lanyard-card"
-                style={{
-                  transform: `perspective(1000px) translate3d(${pos.x.toFixed(1)}px, ${pos.y.toFixed(1)}px, 0) rotateZ(${pos.rotZ.toFixed(1)}deg) rotateX(${pos.rotX.toFixed(1)}deg) rotateY(${pos.rotY.toFixed(1)}deg)`,
-                }}
-              >
-                {/* Round Eyelet Grommet Ring Hole at Top */}
-                <div className="badge-eyelet-ring">
-                  <div className="badge-eyelet-hole" />
+            <div className="hero-profile-card">
+              {/* Card Header: Live Status & Location */}
+              <div className="hero-card-header">
+                <div className="hero-card-status">
+                  <span className="hero-status-dot" />
+                  <span className="hero-status-text">Available for projects</span>
                 </div>
+                <span className="hero-card-loc">Kota Batu, ID</span>
+              </div>
 
-                {/* Photo */}
-                <div className="badge-photo-wrapper">
-                  <img src={hasyaRayyanPhoto} alt="Hasya Rayyan Bahaudin Mahardika" />
+              {/* Photo Frame */}
+              <div className="hero-card-photo-wrap">
+                <img src={hasyaRayyanPhoto} alt="Hasya Rayyan Bahaudin Mahardika" />
+              </div>
+
+              {/* Card Body: Identity & Role */}
+              <div className="hero-card-body">
+                <div className="hero-card-name-row">
+                  <h3 className="hero-card-name">Hasya Rayyan</h3>
+                  <span className="hero-card-badge">Full-Stack</span>
                 </div>
+                <p className="hero-card-role">Full-Stack &amp; Mobile Developer</p>
 
-                {/* Details */}
-                <div className="badge-details">
-                  <h3 className="badge-name">Hasya Rayyan</h3>
-                  <p className="badge-role">Full-Stack &amp; Mobile Developer</p>
-                  <span className="badge-location">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                      <circle cx="12" cy="10" r="3" />
-                    </svg>
-                    Kota Batu, Indonesia
-                  </span>
-                </div>
-
-                {/* Barcode & ID Footer */}
-                <div className="badge-barcode">
-                  <div className="barcode-bars" />
-                  <span className="barcode-text">HR • DEV • 2026</span>
-                </div>
-
-                {/* Drag Hint */}
-                <div className="lanyard-drag-hint">
-                  <span>✦ Tarik kemana saja</span>
+                {/* Tech Chips */}
+                <div className="hero-card-chips">
+                  <span className="hero-chip">React</span>
+                  <span className="hero-chip">Laravel</span>
+                  <span className="hero-chip">Ionic</span>
+                  <span className="hero-chip">TypeScript</span>
                 </div>
               </div>
             </div>
