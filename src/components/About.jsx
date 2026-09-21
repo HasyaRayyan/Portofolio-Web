@@ -70,13 +70,13 @@ export default function About() {
             </div>
 
             {/* Mini stats */}
-            <div style={{ display: 'flex', gap: '32px', marginTop: '40px', paddingTop: '32px', borderTop: '1px solid var(--line)' }}>
+            <div className="about-stats-row">
               {t.about.stats.map(({ num, label }) => (
-                <div key={label}>
-                  <div style={{ fontFamily: 'var(--font-heading)', fontSize: '2rem', fontWeight: 900, lineHeight: 1, marginBottom: '4px' }}>
+                <div key={label} className="about-stat-item">
+                  <div className="about-stat-num">
                     <Counter target={num} />
                   </div>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-ghost)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{label}</div>
+                  <div className="about-stat-label">{label}</div>
                 </div>
               ))}
             </div>
@@ -84,7 +84,7 @@ export default function About() {
 
           {/* Right — capabilities */}
           <div className="reveal from-right">
-            <p style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-ghost)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '20px' }}>
+            <p className="about-cap-heading">
               {t.about.capLabel}
             </p>
             <div className="cap-list">

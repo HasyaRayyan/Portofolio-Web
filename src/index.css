@@ -72,6 +72,33 @@ body {
   transition: background var(--mid) var(--ease), color var(--mid) var(--ease);
 }
 
+/* Light mode — authentic Manga Screentone Paper background texture */
+[data-theme="light"] body {
+  background-color: #fafafc;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.08) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  background-attachment: fixed;
+}
+
+[data-theme="light"] ::selection {
+  background: #000000;
+  color: #ffffff;
+}
+
+/* Custom scrollbar in light comic mode */
+[data-theme="light"] ::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #fafafc;
+  border-left: 2px solid #000000;
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #000000;
+  border: 1.5px solid #ffffff;
+}
+
 /* Subtle noise texture overlay — adds premium feel */
 body::after {
   content: '';
@@ -302,10 +329,30 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 16px;
 }
 
+[data-theme="light"] .section-label {
+  background: #000000;
+  color: #ffffff;
+  padding: 5px 14px;
+  border-radius: 4px;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  box-shadow: 3px 3px 0px #000000;
+  border: 1.5px solid #000000;
+  display: inline-block;
+  margin-bottom: 18px;
+  font-size: 0.74rem;
+}
+
 .section-title {
   font-size: clamp(2.2rem, 4.5vw, 3.2rem);
   font-weight: 800;
   margin-bottom: 16px;
+}
+
+[data-theme="light"] .section-title {
+  color: #000000;
+  font-weight: 900;
+  letter-spacing: -0.035em;
 }
 
 .section-sub {
@@ -315,6 +362,15 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 auto 64px;
   text-align: center;
   line-height: 1.75;
+}
+
+[data-theme="light"] .section-sub {
+  color: #242424;
+  font-weight: 500;
+}
+
+[data-theme="light"] section.section {
+  border-top: 3px solid #000000 !important;
 }
 
 /* ============================================================
