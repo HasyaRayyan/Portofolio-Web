@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import logo44Thrift from '../assets/logo_44thrift.png';
 import logoPringapus from '../assets/logo_pringapus.jpg';
@@ -15,199 +15,164 @@ const eduLogos = [
   { logo: logoSMK, alt: 'Logo SMK PGRI 03 Malang (Skariga)' },
 ];
 
-/* ─── Sub components ─── */
-
-function ColHeader({ label, title, count, icon }) {
-  return (
-    <div className="exp-col-header">
-      <div className="exp-col-header-top">
-        <div className="exp-col-badge">
-          <span className="exp-col-icon">{icon}</span>
-          <span className="exp-col-label">{label}</span>
-        </div>
-        {count && <span className="exp-col-count">{count}</span>}
-      </div>
-      <h3 className="exp-col-title">{title}</h3>
-    </div>
-  );
-}
-
-function ExpItem({ item, delay, highlightsHeader, currentBadge }) {
-  return (
-    <div className={`exp-card-bespoke reveal d${delay}`}>
-      {/* Top Header Row */}
-      <div className="exp-card-top">
-        <div className="exp-logo-frame">
-          <img src={item.logo} alt={item.alt} loading="lazy" />
-        </div>
-        <div className="exp-card-header-info">
-          <div className="exp-card-pill-row">
-            <span className="exp-type-pill">{item.type}</span>
-            {item.isCurrent && (
-              <span className="exp-live-badge">
-                <span className="exp-pulse-dot" />
-                {currentBadge}
-              </span>
-            )}
-            <span className="exp-period-pill">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                <line x1="16" y1="2" x2="16" y2="6" />
-                <line x1="8" y1="2" x2="8" y2="6" />
-                <line x1="3" y1="10" x2="21" y2="10" />
-              </svg>
-              {item.date}
-            </span>
-          </div>
-          <h4 className="exp-card-title">{item.title}</h4>
-          <div className="exp-card-org-row">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 21h18M5 21V7l8-4v18M13 10h3M13 14h3M13 18h3M9 10H7M9 14H7M9 18H7" />
-            </svg>
-            <span className="exp-card-org">{item.org}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Summary */}
-      <p className="exp-card-summary">{item.desc}</p>
-
-      {/* Key Highlights / Poin Kontribusi */}
-      {item.highlights && item.highlights.length > 0 && (
-        <div className="exp-highlights-wrap">
-          <div className="exp-highlights-head">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 11 12 14 22 4" />
-              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-            </svg>
-            <span className="exp-highlights-title">{highlightsHeader}</span>
-          </div>
-          <ul className="exp-highlights-list">
-            {item.highlights.map((h, idx) => (
-              <li key={idx} className="exp-highlight-item">
-                <span className="exp-highlight-bullet">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                </span>
-                <span>{h}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      {/* Tech / Competency Tags */}
-      {item.tags && item.tags.length > 0 && (
-        <div className="exp-tags-wrap">
-          <div className="exp-card-tags">
-            {item.tags.map((tag, idx) => (
-              <span key={idx} className="exp-tag-pill">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ─── Main component ─── */
-
 export default function Experience() {
   const { t } = useLanguage();
+  const [activeTab, setActiveTab] = useState('all'); // 'all' | 'career' | 'edu'
 
-  const careerList = t.experience.career.map((c, i) => ({
+  const careerItems = t.experience.career.map((c, i) => ({
     ...c,
+    category: 'career',
+    categoryLabel: t.experience.careerLabel,
     logo: careerLogos[i].logo,
     alt: careerLogos[i].alt,
   }));
 
-  const eduList = t.experience.education.map((e, i) => ({
+  const eduItems = t.experience.education.map((e, i) => ({
     ...e,
+    category: 'edu',
+    categoryLabel: t.experience.eduLabel,
     logo: eduLogos[i].logo,
     alt: eduLogos[i].alt,
   }));
 
+  // Chronological timeline order: Current College -> Magang 2025 -> Business 2024 -> SMK
+  const allItems = [
+    eduItems[0],    // UIN Malang (2026 - Present)
+    careerItems[0], // PT Pringapus (2025)
+    careerItems[1], // FourtyFourThrift (2024 - Present)
+    eduItems[1],    // SMK PGRI 03 (2023 - 2026)
+  ];
+
+  const filteredItems =
+    activeTab === 'all'
+      ? allItems
+      : activeTab === 'career'
+      ? careerItems
+      : eduItems;
+
   return (
-    <section id="experience" className="section" style={{ borderTop: '1px solid var(--line)' }}>
+    <section id="experience" className="section exp-section" style={{ borderTop: '1px solid var(--line)' }}>
       <div className="container">
 
-        {/* Section Header */}
-        <div className="reveal" style={{ textAlign: 'center', marginBottom: '56px' }}>
+        {/* Section Header & Minimalist Tab Bar */}
+        <div className="reveal text-center" style={{ textAlign: 'center', marginBottom: '44px' }}>
           <span className="section-label">{t.experience.label}</span>
-          <h2 className="section-title">
-            {t.experience.title}
-          </h2>
-          <p className="section-sub" style={{ marginBottom: 0 }}>
-            {t.experience.sub}
-          </p>
-        </div>
+          <h2 className="section-title">{t.experience.title}</h2>
+          <p className="section-sub" style={{ marginBottom: '28px' }}>{t.experience.sub}</p>
 
-        {/* Two-column layout centered */}
-        <div className="exp-two-col-container">
-          <div className="exp-two-col">
-
-            {/* Left — Karier */}
-            <div className="exp-col">
-              <ColHeader
-                label={t.experience.careerLabel}
-                title={t.experience.careerTitle}
-                count={t.experience.careerCount}
-                icon={
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                  </svg>
-                }
-              />
-              <div className="exp-col-list">
-                {careerList.map((item, i) => (
-                  <ExpItem
-                    key={item.title + '-' + i}
-                    item={item}
-                    delay={i + 1}
-                    highlightsHeader={t.experience.highlightsHeader}
-                    currentBadge={t.experience.currentBadge}
-                  />
-                ))}
-              </div>
+          {/* Minimalist Switcher Tabs */}
+          <div className="exp-tabs-container">
+            <div className="exp-tabs-bar">
+              <button
+                type="button"
+                className={`exp-tab-btn ${activeTab === 'all' ? 'active' : ''}`}
+                onClick={() => setActiveTab('all')}
+              >
+                {t.experience.filterAll}
+                <span className="exp-tab-count">{allItems.length}</span>
+              </button>
+              <button
+                type="button"
+                className={`exp-tab-btn ${activeTab === 'career' ? 'active' : ''}`}
+                onClick={() => setActiveTab('career')}
+              >
+                {t.experience.filterCareer}
+                <span className="exp-tab-count">{careerItems.length}</span>
+              </button>
+              <button
+                type="button"
+                className={`exp-tab-btn ${activeTab === 'edu' ? 'active' : ''}`}
+                onClick={() => setActiveTab('edu')}
+              >
+                {t.experience.filterEdu}
+                <span className="exp-tab-count">{eduItems.length}</span>
+              </button>
             </div>
-
-            {/* Divider */}
-            <div className="exp-divider">
-              <span className="exp-divider-node" />
-            </div>
-
-            {/* Right — Pendidikan */}
-            <div className="exp-col">
-              <ColHeader
-                label={t.experience.eduLabel}
-                title={t.experience.eduTitle}
-                count={t.experience.eduCount}
-                icon={
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                  </svg>
-                }
-              />
-              <div className="exp-col-list">
-                {eduList.map((item, i) => (
-                  <ExpItem
-                    key={item.title + '-' + i}
-                    item={item}
-                    delay={i + 1}
-                    highlightsHeader={t.experience.highlightsHeader}
-                    currentBadge={t.experience.currentBadge}
-                  />
-                ))}
-              </div>
-            </div>
-
           </div>
         </div>
+
+        {/* Clean Apple/Linear Minimalist Timeline */}
+        <div className="exp-timeline-wrap">
+          <div className="exp-timeline">
+            {filteredItems.map((item, idx) => (
+              <div key={item.title + '-' + idx} className="exp-timeline-item reveal">
+
+                {/* Timeline Track Guide & Node */}
+                <div className="exp-tl-track">
+                  <div className={`exp-tl-node ${item.isCurrent ? 'current' : ''}`}>
+                    {item.isCurrent && <span className="exp-tl-pulse" />}
+                  </div>
+                  <div className="exp-tl-line" />
+                </div>
+
+                {/* Timeline Content Card */}
+                <div className="exp-tl-card">
+                  {/* Top Header Row */}
+                  <div className="exp-card-header">
+                    <div className="exp-card-identity">
+                      <div className="exp-logo-box">
+                        <img src={item.logo} alt={item.alt} loading="lazy" />
+                      </div>
+                      <div className="exp-title-group">
+                        <div className="exp-title-row">
+                          <h3 className="exp-role-title">{item.title}</h3>
+                          {item.isCurrent && (
+                            <span className="exp-status-live">
+                              <span className="exp-status-dot" />
+                              {t.experience.currentBadge}
+                            </span>
+                          )}
+                        </div>
+                        <div className="exp-org-row">
+                          <span className="exp-org-name">{item.org}</span>
+                          <span className="exp-meta-sep">•</span>
+                          <span className="exp-category-tag">{item.type}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="exp-card-period">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                      </svg>
+                      <span>{item.date}</span>
+                    </div>
+                  </div>
+
+                  {/* Summary */}
+                  <p className="exp-desc">{item.desc}</p>
+
+                  {/* Key Highlights */}
+                  {item.highlights && item.highlights.length > 0 && (
+                    <ul className="exp-points">
+                      {item.highlights.map((h, hIdx) => (
+                        <li key={hIdx} className="exp-point-item">
+                          <span className="exp-point-marker" />
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {/* Tech Tags */}
+                  {item.tags && item.tags.length > 0 && (
+                    <div className="exp-chips-row">
+                      {item.tags.map((tag, tIdx) => (
+                        <span key={tIdx} className="exp-chip">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </section>
   );

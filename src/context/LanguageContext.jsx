@@ -188,6 +188,9 @@ export const translations = {
       eduTitle: 'Riwayat Studi',
       eduCount: '2 Institusi',
       currentBadge: 'Aktif',
+      filterAll: 'Semua',
+      filterCareer: 'Karier',
+      filterEdu: 'Pendidikan',
       highlightsHeader: 'Kontribusi & Fokus Utama:',
       tagsLabel: 'Keahlian & Teknologi:',
       career: [
@@ -475,6 +478,9 @@ export const translations = {
       eduTitle: 'Academic History',
       eduCount: '2 Institutions',
       currentBadge: 'Active',
+      filterAll: 'All',
+      filterCareer: 'Career',
+      filterEdu: 'Education',
       highlightsHeader: 'Key Contributions & Focus:',
       tagsLabel: 'Technologies & Focus:',
       career: [
