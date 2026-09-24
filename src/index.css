@@ -110,6 +110,127 @@ body::after {
   opacity: 0.025;
 }
 
+/* ============================================================
+   GLOBAL INTERACTIVE CURSOR BACKGROUND & SPOTLIGHT
+   ============================================================ */
+
+.global-cursor-backdrop {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Subtle tech matrix dot grid across entire viewport */
+.global-grid-matrix {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.055) 1.15px, transparent 1.15px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+[data-theme="light"] .global-grid-matrix {
+  /* Light mode already uses authentic manga screentone dots on body */
+  display: none;
+}
+
+/* Large ambient floating aura following cursor */
+.global-cursor-glow-ambient {
+  position: absolute;
+  width: 780px;
+  height: 780px;
+  top: -390px;
+  left: -390px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at center,
+    rgba(212, 254, 98, 0.08) 0%,
+    rgba(212, 254, 98, 0.028) 40%,
+    transparent 70%
+  );
+  filter: blur(60px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  will-change: transform;
+}
+
+/* Focused luminous center core following cursor */
+.global-cursor-glow-core {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  top: -160px;
+  left: -160px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at center,
+    rgba(212, 254, 98, 0.13) 0%,
+    rgba(212, 254, 98, 0.035) 50%,
+    transparent 75%
+  );
+  filter: blur(28px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  will-change: transform;
+}
+
+/* Light Theme — Soft Apple-style Ambient Spotlight */
+[data-theme="light"] .global-cursor-glow-ambient {
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 0, 0, 0.04) 0%,
+    rgba(0, 0, 0, 0.012) 45%,
+    transparent 70%
+  );
+  filter: blur(48px);
+}
+
+[data-theme="light"] .global-cursor-glow-core {
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 0, 0, 0.055) 0%,
+    rgba(0, 0, 0, 0.015) 50%,
+    transparent 75%
+  );
+  filter: blur(24px);
+}
+
+/* Sleek cursor trailer ring */
+.global-cursor-ring {
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  top: -15px;
+  left: -15px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(212, 254, 98, 0.5);
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+  transition: opacity 0.3s ease, border-color 0.25s ease, background-color 0.25s ease;
+  will-change: transform;
+  box-shadow: 0 0 10px rgba(212, 254, 98, 0.2);
+}
+
+[data-theme="light"] .global-cursor-ring {
+  border: 1.8px solid rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Touch devices: disable cursor follower and spotlight to preserve performance */
+@media (pointer: coarse), (hover: none) {
+  .global-cursor-ring,
+  .global-cursor-glow-ambient,
+  .global-cursor-glow-core {
+    display: none !important;
+  }
+}
+
 img { display: block; max-width: 100%; }
 a { text-decoration: none; color: inherit; }
 

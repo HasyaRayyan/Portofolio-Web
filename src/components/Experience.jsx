@@ -45,18 +45,6 @@ function InteractiveCard({ children, className = '' }) {
 
 export default function Experience() {
   const { t } = useLanguage();
-  const sectionRef = useRef(null);
-  const [sectionMouse, setSectionMouse] = useState({ x: -1000, y: -1000 });
-  const [isSectionHovered, setIsSectionHovered] = useState(false);
-
-  const handleSectionMouseMove = (e) => {
-    if (!sectionRef.current) return;
-    const rect = sectionRef.current.getBoundingClientRect();
-    setSectionMouse({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
 
   // Logos mapped safely by organization name
   const getCareerLogo = (org) => {
@@ -96,24 +84,9 @@ export default function Experience() {
   return (
     <section
       id="experience"
-      ref={sectionRef}
       className="section exp-section"
-      onMouseMove={handleSectionMouseMove}
-      onMouseEnter={() => setIsSectionHovered(true)}
-      onMouseLeave={() => setIsSectionHovered(false)}
       style={{ borderTop: '1px solid var(--line)' }}
     >
-      {/* Interactive Cursor Spotlight Glow for Section */}
-      <div
-        className="exp-interactive-glow"
-        style={{
-          transform: `translate(${sectionMouse.x}px, ${sectionMouse.y}px)`,
-          opacity: isSectionHovered ? 1 : 0,
-        }}
-      />
-      {/* Subtle Matrix Dot Backdrop */}
-      <div className="exp-grid-backdrop" />
-
       <div className="container" style={{ position: 'relative', zIndex: 2 }}>
         {/* Section Header */}
         <div className="reveal text-center" style={{ textAlign: 'center', marginBottom: '48px' }}>
