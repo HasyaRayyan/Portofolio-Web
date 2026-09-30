@@ -31,7 +31,7 @@ function Counter({ target, suffix = '+' }) {
   return <span ref={ref}>{val}{suffix}</span>;
 }
 
-const STACK = ['React', 'TypeScript', 'Tailwind', 'Laravel', 'PHP 8', 'MySQL', 'Angular', 'Ionic', 'Git', 'Vite'];
+const STACK = ['React', 'Vite', 'Tailwind', 'Laravel', 'Code igniter', 'MySQL', 'Angular', 'Git', ];
 
 export default function About() {
   const { t } = useLanguage();

@@ -10,38 +10,82 @@ import fintrackMockup from '../assets/fintrack_mockup.png';
 
 function ProjectCard({ project, index, onOpenGallery }) {
   const { t } = useLanguage();
-  const frameNum = index < 9 ? `0${index + 1}` : `${index + 1}`;
+  const cardRef = useRef(null);
+  const [mousePos, setMousePos] = useState({ x: -500, y: -500 });
+  const [isHovered, setIsHovered] = useState(false);
+  const frameNum = `0${index + 1}`;
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  const hasMultiScreens = project.gallery && project.gallery.length > 1;
 
   return (
-    <div className="proj-card">
-      {/* 3-Image Stack Stage */}
+    <div
+      ref={cardRef}
+      className="proj-card-modern reveal"
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setMousePos({ x: -500, y: -500 });
+      }}
+      style={{
+        '--card-mouse-x': `${mousePos.x}px`,
+        '--card-mouse-y': `${mousePos.y}px`,
+        '--card-hover': isHovered ? 1 : 0,
+      }}
+    >
+      <div className="proj-card-spotlight" />
+
+      {/* Top macOS Window Frame & Stage */}
       <div
         className="proj-card-stage"
         onClick={() => project.gallery && onOpenGallery(project)}
-        style={{ cursor: project.gallery ? 'pointer' : 'default' }}
         title={project.gallery ? t.projects.clickGalleryHint : undefined}
       >
-        <div className="proj-stack">
-          <div className="proj-stack-card stack-left">
-            <img src={project.stack[0]} alt={`${project.title} screen 1`} loading="lazy" />
+        <div className="proj-stage-macbar">
+          <div className="proj-mac-dots">
+            <span className="proj-mac-dot dot-red" />
+            <span className="proj-mac-dot dot-yellow" />
+            <span className="proj-mac-dot dot-green" />
           </div>
-          <div className="proj-stack-card stack-right">
-            <img src={project.stack[1]} alt={`${project.title} screen 2`} loading="lazy" />
-          </div>
-          <div className="proj-stack-card stack-center">
-            <img src={project.stack[2]} alt={`${project.title} screen 3`} loading="lazy" />
+          <span className="proj-stage-category">{project.category}</span>
+        </div>
+
+        <div className="proj-stage-viewport">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="proj-stage-img"
+            loading="lazy"
+          />
+          <div className="proj-stage-overlay">
+            <span className="proj-stage-cta">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <span>{hasMultiScreens ? `${project.gallery.length} ${t.projects.galleryBadge}` : t.projects.galleryBtn}</span>
+            </span>
           </div>
         </div>
 
-        {project.gallery && (
-          <span className="proj-stage-badge">
+        {hasMultiScreens && (
+          <div className="proj-stage-counter">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
               <circle cx="8.5" cy="8.5" r="1.5"/>
               <polyline points="21 15 16 10 5 21"/>
             </svg>
             <span>{project.gallery.length} {t.projects.galleryBadge}</span>
-          </span>
+          </div>
         )}
       </div>
 
@@ -49,7 +93,7 @@ function ProjectCard({ project, index, onOpenGallery }) {
       <div className="proj-card-body">
         <div className="proj-card-topmeta">
           <span className="proj-card-num">{frameNum}</span>
-          <span className="proj-card-category">{project.category}</span>
+          <span className="proj-card-pill">{project.category}</span>
         </div>
 
         <h3 className="proj-card-title">{project.title}</h3>
@@ -63,9 +107,9 @@ function ProjectCard({ project, index, onOpenGallery }) {
           ))}
         </div>
 
-        {/* Card Footer Actions */}
+        {/* Card Actions Footer */}
         <div className="proj-card-actions">
-          {project.gallery ? (
+          {project.gallery && (
             <button
               type="button"
               className="proj-action-btn primary"
@@ -76,10 +120,8 @@ function ProjectCard({ project, index, onOpenGallery }) {
                 <circle cx="8.5" cy="8.5" r="1.5"/>
                 <polyline points="21 15 16 10 5 21"/>
               </svg>
-              <span>{t.projects.galleryBtn}</span>
+              <span>{hasMultiScreens ? `${t.projects.galleryBtn} (${project.gallery.length})` : t.projects.galleryBtn}</span>
             </button>
-          ) : (
-            <span />
           )}
 
           <div className="proj-card-links">
@@ -124,17 +166,11 @@ export default function Projects() {
   const { t } = useLanguage();
   const [activeProject, setActiveProject] = useState(null);
   const [activeImgIndex, setActiveImgIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const trackRef = useRef(null);
-  const scrollPosRef = useRef(0);
-  const isDraggingRef = useRef(false);
-  const startXRef = useRef(0);
-  const scrollStartRef = useRef(0);
 
-  // 9 Total Projects (3 real + 6 realistic dummy projects)
   const baseProjects = [
     {
-      stack: [posDashboard, posMember, posCheckout],
+      id: 'pos',
+      image: posDashboard,
       gallery: [
         { src: posDashboard, title: 'Dashboard Kasir — Omzet, Transaksi & Grafik Mingguan' },
         { src: posCart, title: 'Keranjang Kasir — Input & Verifikasi Nomor Member' },
@@ -142,80 +178,27 @@ export default function Projects() {
         { src: posMember, title: 'Aplikasi Pelanggan — Status Akun & Saldo Poin' },
         { src: posRewards, title: 'Katalog Hadiah — Penukaran Poin Menu Gratis' },
       ],
-      tags: ['Point of Sale', 'Loyalty System', 'Ionic', 'Angular', 'MySQL'],
+      tags: ['Point of Sale', 'Loyalty System', 'Ionic', 'Angular', 'MySQL', 'CodeIgniter'],
       github: 'https://github.com/HasyaRayyan/Aplikasi-Web-Kasir-POS-Member-Loyality',
       live: 'https://github.com/HasyaRayyan/Aplikasi-Web-Kasir-POS-Member-Loyality',
     },
     {
-      stack: [educonnectMockup, educonnectMockup, educonnectMockup],
+      id: 'educonnect',
+      image: educonnectMockup,
       gallery: [
         { src: educonnectMockup, title: 'EduConnect — Dasbor & Manajemen Akademik Sekolah' },
       ],
-      tags: ['Laravel', 'SQL', 'Angular', 'Vite'],
+      tags: ['Laravel', 'Angular', 'SQL', 'Vite', 'REST API'],
       github: 'https://github.com/HasyaRayyan',
       live: null,
     },
     {
-      stack: [fintrackMockup, fintrackMockup, fintrackMockup],
+      id: 'fintrack',
+      image: fintrackMockup,
       gallery: [
         { src: fintrackMockup, title: 'My Finance — Dasbor Keuangan & Visualisasi Data' },
       ],
-      tags: ['React', 'Vite', 'SQL', 'CSS Grid'],
-      github: 'https://github.com/HasyaRayyan',
-      live: null,
-    },
-    {
-      stack: [posRewards, posCart, posMember],
-      gallery: [
-        { src: posRewards, title: 'Katalog Produk & Flash Sale Thrift Store' },
-        { src: posCart, title: 'Keranjang Belanja & Checkout' },
-      ],
-      tags: ['Flutter', 'Firebase', 'Node.js', 'Midtrans'],
-      github: 'https://github.com/HasyaRayyan',
-      live: null,
-    },
-    {
-      stack: [posDashboard, educonnectMockup, fintrackMockup],
-      gallery: [
-        { src: posDashboard, title: 'Monitoring Armada & Tracking GPS Realtime' },
-      ],
-      tags: ['Go', 'WebSockets', 'PostgreSQL', 'Mapbox'],
-      github: 'https://github.com/HasyaRayyan',
-      live: null,
-    },
-    {
-      stack: [posCheckout, posMember, posRewards],
-      gallery: [
-        { src: posCheckout, title: 'Sistem Antrean & E-Resep Klinik' },
-      ],
-      tags: ['Next.js', 'NestJS', 'PostgreSQL', 'Docker'],
-      github: 'https://github.com/HasyaRayyan',
-      live: null,
-    },
-    {
-      stack: [educonnectMockup, posDashboard, fintrackMockup],
-      gallery: [
-        { src: educonnectMockup, title: 'Eksplorasi Karya & Showcase Ilustrator' },
-      ],
-      tags: ['Vue 3', 'Tailwind', 'Supabase', 'Express'],
-      github: 'https://github.com/HasyaRayyan',
-      live: null,
-    },
-    {
-      stack: [fintrackMockup, posCheckout, posDashboard],
-      gallery: [
-        { src: fintrackMockup, title: 'Grafik Sensor Suhu & Kelembaban IoT' },
-      ],
-      tags: ['Python', 'FastAPI', 'MQTT', 'InfluxDB'],
-      github: 'https://github.com/HasyaRayyan',
-      live: null,
-    },
-    {
-      stack: [posMember, posRewards, posCart],
-      gallery: [
-        { src: posMember, title: 'Pemesanan Tiket & Dynamic QR Code Scanner' },
-      ],
-      tags: ['Laravel', 'Redis', 'React Native', 'Tailwind'],
+      tags: ['React', 'TypeScript', 'CSS Grid', 'SQL', 'Analytics'],
       github: 'https://github.com/HasyaRayyan',
       live: null,
     },
@@ -238,165 +221,22 @@ export default function Projects() {
     };
   });
 
-  // Double the list to enable true 100% seamless infinite looping ("muter terus")
-  const displayProjects = [...projects, ...projects];
-
-  // Dynamic 3D Cylindrical Curve Animation:
-  // Kartu pinggir melengkung ke dalam (rotasi 3D Y + kedalaman Z), kartu tengah membesar di depan
-  const updateCurveScale = () => {
-    const el = trackRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const radius = rect.width / 2;
-    if (radius <= 0) return;
-
-    const cards = el.querySelectorAll('.proj-card');
-    cards.forEach((card) => {
-      const cRect = card.getBoundingClientRect();
-      const cCenter = cRect.left + cRect.width / 2;
-      const signedRatio = (cCenter - centerX) / radius;
-      const absRatio = Math.min(Math.abs(signedRatio), 1.5);
-
-      // 1. Skala kurva: tengah membesar (1.06x), pinggir mengecil halus (0.82x)
-      const scale = Math.max(0.80, 1.06 - Math.pow(absRatio, 1.22) * 0.26);
-
-      // 2. Rotasi 3D Cylindrical: kartu kiri menghadap ke kanan, kartu kanan menghadap ke kiri
-      // Efek busur bioskop / curve film roll melengkung
-      const rotY = Math.max(-14, Math.min(14, -signedRatio * 14));
-
-      // 3. Kedalaman 3D (Z-axis pushback): kartu pinggir mundur ke belakang
-      const transZ = -Math.pow(absRatio, 1.15) * 85;
-
-      // 4. Arc lift: kartu tengah sedikit terangkat (-12px)
-      const transY = -((1 - Math.min(absRatio, 1)) * 12);
-
-      // 5. Opacity & Z-Index: kartu tengah selalu di depan tanpa clipping
-      const opacity = Math.max(0.60, 1 - Math.pow(absRatio, 1.1) * 0.40);
-      const zIndex = Math.round(30 - Math.min(absRatio, 1) * 20);
-
-      card.style.transform = `perspective(1200px) translate3d(0px, ${transY.toFixed(1)}px, ${transZ.toFixed(1)}px) rotateY(${rotY.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
-      card.style.opacity = opacity.toFixed(2);
-      card.style.zIndex = zIndex;
-    });
-  };
-
-  // Infinite seamless auto-scroll with dynamic 3D curve scale
-  useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return;
-
-    let animId;
-    const speed = 0.75; // smooth steady glide
-
-    const step = () => {
-      if (!isPaused && el && !isDraggingRef.current) {
-        scrollPosRef.current += speed;
-        const halfWidth = el.scrollWidth / 2;
-        if (halfWidth > 0 && scrollPosRef.current >= halfWidth) {
-          scrollPosRef.current -= halfWidth;
-        }
-        el.scrollLeft = scrollPosRef.current;
-      } else if (el) {
-        scrollPosRef.current = el.scrollLeft;
-      }
-      updateCurveScale();
-      animId = requestAnimationFrame(step);
-    };
-
-    animId = requestAnimationFrame(step);
-
-    const onResize = () => updateCurveScale();
-    window.addEventListener('resize', onResize);
-
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener('resize', onResize);
-    };
-  }, [isPaused]);
-
-  // Handle manual scroll to keep loop seamless
-  const handleTrackScroll = () => {
-    const el = trackRef.current;
-    if (!el) return;
-    const halfWidth = el.scrollWidth / 2;
-    if (halfWidth > 0) {
-      if (el.scrollLeft >= halfWidth) {
-        el.scrollLeft -= halfWidth;
-      } else if (el.scrollLeft <= 0 && isPaused) {
-        el.scrollLeft += halfWidth;
-      }
-    }
-    scrollPosRef.current = el.scrollLeft;
-    updateCurveScale();
-  };
-
-  // Mouse drag-to-scroll interaction
-  const handleMouseDown = (e) => {
-    const el = trackRef.current;
-    if (!el) return;
-    isDraggingRef.current = true;
-    startXRef.current = e.pageX - el.offsetLeft;
-    scrollStartRef.current = el.scrollLeft;
-    setIsPaused(true);
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDraggingRef.current) return;
-    e.preventDefault();
-    const el = trackRef.current;
-    if (!el) return;
-    const x = e.pageX - el.offsetLeft;
-    const walk = (x - startXRef.current) * 1.25;
-    el.scrollLeft = scrollStartRef.current - walk;
-    scrollPosRef.current = el.scrollLeft;
-    updateCurveScale();
-  };
-
-  const handleMouseUpOrLeave = () => {
-    if (isDraggingRef.current) {
-      isDraggingRef.current = false;
-      setTimeout(() => setIsPaused(false), 2000);
-    }
-  };
-
-  // Manual button scroll controls
-  const scrollLeft = () => {
-    const el = trackRef.current;
-    if (!el) return;
-    setIsPaused(true);
-    const cardWidth = el.querySelector('.proj-card')?.offsetWidth || 360;
-    el.scrollBy({ left: -(cardWidth + 28), behavior: 'smooth' });
-    setTimeout(() => setIsPaused(false), 2500);
-  };
-
-  const scrollRight = () => {
-    const el = trackRef.current;
-    if (!el) return;
-    setIsPaused(true);
-    const cardWidth = el.querySelector('.proj-card')?.offsetWidth || 360;
-    el.scrollBy({ left: cardWidth + 28, behavior: 'smooth' });
-    setTimeout(() => setIsPaused(false), 2500);
-  };
-
   const handleOpenGallery = (project) => {
     setActiveProject(project);
     setActiveImgIndex(0);
-    setIsPaused(true);
   };
 
   const handleCloseGallery = () => {
     setActiveProject(null);
-    setIsPaused(false);
   };
 
   const nextImg = () => {
-    if (!activeProject) return;
+    if (!activeProject || !activeProject.gallery) return;
     setActiveImgIndex((prev) => (prev + 1) % activeProject.gallery.length);
   };
 
   const prevImg = () => {
-    if (!activeProject) return;
+    if (!activeProject || !activeProject.gallery) return;
     setActiveImgIndex((prev) => (prev - 1 + activeProject.gallery.length) % activeProject.gallery.length);
   };
 
@@ -414,70 +254,28 @@ export default function Projects() {
   return (
     <section id="projects" className="section" style={{ borderTop: '1px solid var(--line)' }}>
       <div className="container">
-        {/* Section Header with Centered Title & Controls */}
-        <div className="reveal" style={{ textAlign: 'center', marginBottom: '44px' }}>
+        {/* Section Header with Pill Counter */}
+        <div className="reveal" style={{ textAlign: 'center', marginBottom: '48px' }}>
           <span className="section-label">{t.projects.label}</span>
           <h2 className="section-title">{t.projects.title}</h2>
-          <div className="proj-nav-center">
-            <button
-              type="button"
-              className="proj-nav-btn"
-              onClick={scrollLeft}
-              aria-label={t.projects.scrollLeft}
-              title={t.projects.scrollLeft}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M15 18l-6-6 6-6"/>
-              </svg>
-            </button>
-
+          <div className="proj-nav-pill-wrapper">
             <div className="proj-nav-pill">
               <span className="proj-pulse-dot" />
-              <span>{t.projects.projectsCount || `${projects.length} Projects`}</span>
+              <span>{t.projects.projectsCount || `${projects.length} Proyek Pilihan`}</span>
             </div>
-
-            <button
-              type="button"
-              className="proj-nav-btn"
-              onClick={scrollRight}
-              aria-label={t.projects.scrollRight}
-              title={t.projects.scrollRight}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M9 18l6-6-6-6"/>
-              </svg>
-            </button>
           </div>
         </div>
 
-        {/* Carousel Track Container — 3D Cylindrical curved layout */}
-        <div
-          className="proj-carousel-wrapper"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => {
-            if (!isDraggingRef.current) setIsPaused(false);
-          }}
-          onTouchStart={() => setIsPaused(true)}
-          onTouchEnd={() => setTimeout(() => setIsPaused(false), 2000)}
-        >
-          <div
-            className="proj-carousel-track"
-            ref={trackRef}
-            onScroll={handleTrackScroll}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUpOrLeave}
-            onMouseLeave={handleMouseUpOrLeave}
-          >
-            {displayProjects.map((p, i) => (
-              <ProjectCard
-                key={p.title + '-' + i}
-                project={p}
-                index={i % projects.length}
-                onOpenGallery={handleOpenGallery}
-              />
-            ))}
-          </div>
+        {/* 3-Column Showcase Grid */}
+        <div className="proj-grid">
+          {projects.map((p, i) => (
+            <ProjectCard
+              key={p.title + '-' + i}
+              project={p}
+              index={i}
+              onOpenGallery={handleOpenGallery}
+            />
+          ))}
         </div>
       </div>
 

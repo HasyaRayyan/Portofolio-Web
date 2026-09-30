@@ -77,7 +77,7 @@ export const translations = {
     projects: {
       label: '03 — Proyek Pilihan',
       title: 'Hasil kerja & proyek pilihan.',
-      projectsCount: '9 Proyek Pilihan',
+      projectsCount: '3 Proyek Pilihan',
       scrollLeft: 'Geser ke kiri',
       scrollRight: 'Geser ke kanan',
       galleryBadge: 'Layar UI',
@@ -118,61 +118,6 @@ export const translations = {
           desc: 'Dasbor analitik keuangan personal untuk pencatatan dan pengelolaan arus kas. Visualisasi grafik pengeluaran, budgeting pos keuangan, dan laporan peramalan tabungan.',
           galleryTitles: [
             'My Finance — Dasbor Keuangan & Visualisasi Data',
-          ],
-        },
-        {
-          title: 'FourtyFour Thrift Store',
-          subtitle: 'Digital Marketplace & Inventory Management',
-          category: 'E-Commerce Mobile',
-          desc: 'Aplikasi mobile marketplace thrift pakaian vintage dengan katalog produk otomatis, payment gateway online, live stock tracking, dan notifikasi flash sale eksklusif.',
-          galleryTitles: [
-            'Katalog Produk & Flash Sale Thrift Store',
-            'Keranjang Belanja & Checkout',
-          ],
-        },
-        {
-          title: 'FleetTrack Logistics',
-          subtitle: 'Real-time GPS Dispatch & Fleet Monitoring',
-          category: 'Logistics & IoT',
-          desc: 'Sistem monitoring kurir dan armada logistik berbasis peta real-time. Menghitung estimasi rute pengiriman tercepat (routing optimization) dan digital proof-of-delivery.',
-          galleryTitles: [
-            'Monitoring Armada & Tracking GPS Realtime',
-          ],
-        },
-        {
-          title: 'MedikaSync Clinic',
-          subtitle: 'Electronic Health Records & Telemedicine',
-          category: 'Healthcare SaaS',
-          desc: 'Platform rekam medis elektronik (RME) klinik kesehatan terintegrasi. Dilengkapi reservasi dokter online, pencatatan diagnosa medis, resep digital, dan telekonsultasi.',
-          galleryTitles: [
-            'Sistem Antrean & E-Resep Klinik',
-          ],
-        },
-        {
-          title: 'KaryaArt Creative Hub',
-          subtitle: 'Komunitas & Marketplace Aset Desain',
-          category: 'Creative Platform',
-          desc: 'Platform portofolio dan marketplace aset visual bagi kreator desain grafis dan ilustrator lokal. Dilengkapi lisensi digital dan sistem tipping kreator.',
-          galleryTitles: [
-            'Eksplorasi Karya & Showcase Ilustrator',
-          ],
-        },
-        {
-          title: 'AgroSmart Greenhouse',
-          subtitle: 'Automated IoT Sensor & Crop Monitoring',
-          category: 'IoT & Agriculture',
-          desc: 'Dasbor pemantauan sensor kelembaban tanah, suhu lingkungan, dan irigasi otomatis berbasis mikrokontroler ESP32 dengan sistem peringatan dini via WhatsApp API.',
-          galleryTitles: [
-            'Grafik Sensor Suhu & Kelembaban IoT',
-          ],
-        },
-        {
-          title: 'EventHub Ticketing',
-          subtitle: 'Event Management & Dynamic QR Check-in',
-          category: 'Ticketing System',
-          desc: 'Aplikasi penjualan tiket festival konser berskala besar. Mencegah pemalsuan tiket dengan enkripsi dynamic QR code dan queue management antrean transaksi ribuan user.',
-          galleryTitles: [
-            'Pemesanan Tiket & Dynamic QR Code Scanner',
           ],
         },
       ],
@@ -367,7 +312,7 @@ export const translations = {
     projects: {
       label: '03 — Featured Projects',
       title: 'Selected Works & Featured Projects.',
-      projectsCount: '9 Featured Projects',
+      projectsCount: '3 Featured Projects',
       scrollLeft: 'Scroll left',
       scrollRight: 'Scroll right',
       galleryBadge: 'UI Screens',
@@ -408,61 +353,6 @@ export const translations = {
           desc: 'Personal financial analytics dashboard for tracking and optimizing cash flows. Features interactive spending visualizations, budgeting categories, and automated savings forecasting.',
           galleryTitles: [
             'My Finance — Financial Analytics & Data Visualizations',
-          ],
-        },
-        {
-          title: 'FourtyFour Thrift Store',
-          subtitle: 'Digital Marketplace & Inventory Management',
-          category: 'E-Commerce Mobile',
-          desc: 'Vintage apparel thrift mobile marketplace featuring automated product catalogs, online payment gateways, real-time inventory tracking, and exclusive flash sale notifications.',
-          galleryTitles: [
-            'Product Catalog & Exclusive Flash Sale',
-            'Shopping Cart & Checkout',
-          ],
-        },
-        {
-          title: 'FleetTrack Logistics',
-          subtitle: 'Real-time GPS Dispatch & Fleet Monitoring',
-          category: 'Logistics & IoT',
-          desc: 'Real-time GPS dispatch and logistics fleet monitoring platform. Calculates optimal route delivery times and captures digital proof-of-delivery.',
-          galleryTitles: [
-            'Fleet Monitoring & Realtime GPS Tracking',
-          ],
-        },
-        {
-          title: 'MedikaSync Clinic',
-          subtitle: 'Electronic Health Records & Telemedicine',
-          category: 'Healthcare SaaS',
-          desc: 'Integrated Electronic Health Records (EHR) clinic management platform. Features online doctor appointment booking, medical diagnosis records, digital e-prescriptions, and telemedicine.',
-          galleryTitles: [
-            'Queue Management & Clinic E-Prescription',
-          ],
-        },
-        {
-          title: 'KaryaArt Creative Hub',
-          subtitle: 'Design Asset Marketplace & Community',
-          category: 'Creative Platform',
-          desc: 'Portfolio and visual asset marketplace platform for local graphic designers and illustrators, complete with digital licensing and creator tipping.',
-          galleryTitles: [
-            'Creative Asset Showcase & Illustrator Portfolios',
-          ],
-        },
-        {
-          title: 'AgroSmart Greenhouse',
-          subtitle: 'Automated IoT Sensor & Crop Monitoring',
-          category: 'IoT & Agriculture',
-          desc: 'Automated greenhouse monitoring dashboard tracking soil moisture and ambient temperature via ESP32 microcontrollers with WhatsApp alert notifications.',
-          galleryTitles: [
-            'IoT Sensor Graphs — Temperature & Soil Humidity',
-          ],
-        },
-        {
-          title: 'EventHub Ticketing',
-          subtitle: 'Event Management & Dynamic QR Check-in',
-          category: 'Ticketing System',
-          desc: 'High-concurrency concert and festival ticketing application with encrypted dynamic QR codes to prevent counterfeiting and smart queue management.',
-          galleryTitles: [
-            'Ticket Booking & Dynamic QR Code Scanner',
           ],
         },
       ],

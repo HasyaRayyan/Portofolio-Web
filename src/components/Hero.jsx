@@ -1,5 +1,5 @@
 import React from 'react';
-import hasyaRayyanPhoto from '../assets/hasya_rayyan.jpg';
+// import hasyaRayyanPhoto from '../assets/hasya_rayyan.jpg';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function Hero() {
@@ -95,21 +95,13 @@ export default function Hero() {
             <div className="hero-profile-card">
               {/* Photo Frame */}
               <div className="hero-card-photo-wrap">
-                <img src={hasyaRayyanPhoto} alt="Hasya Rayyan Bahaudin Mahardika" />
+                {/* <img src={hasyaRayyanPhoto} alt="Hasya Rayyan Bahaudin Mahardika" /> */}
               </div>
 
               {/* Card Body: Identity & Role */}
               <div className="hero-card-body">
                 <h3 className="hero-card-name">Hasya Rayyan</h3>
                 <p className="hero-card-role">{t.hero.cardRole}</p>
-
-                {/* Tech Chips */}
-                <div className="hero-card-chips">
-                  <span className="hero-chip">React</span>
-                  <span className="hero-chip">Laravel</span>
-                  <span className="hero-chip">Ionic</span>
-                  <span className="hero-chip">TypeScript</span>
-                </div>
               </div>
             </div>
           </div>
