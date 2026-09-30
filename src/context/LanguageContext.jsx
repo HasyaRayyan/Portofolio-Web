@@ -50,18 +50,18 @@ export const translations = {
       capabilities: [
         {
           num: '01',
-          title: 'Frontend Architecture & Reactive UI',
-          desc: 'Menyusun arsitektur Single Page Application (SPA) cepat menggunakan React, Vite, dan TypeScript dengan state management modular.',
+          title: 'Front End',
+          desc: 'Mengembangkan antarmuka web modern, responsif, dan interaktif menggunakan React, Vite, Tailwind CSS, dan TypeScript.',
         },
         {
           num: '02',
-          title: 'Cross-Platform Mobile Engineering',
-          desc: 'Membangun aplikasi mobile multiplatform Android & iOS dari satu basis kode terpadu dengan Ionic Framework dan Capacitor plugins.',
+          title: 'Back End',
+          desc: 'Merancang arsitektur server tangguh, RESTful API terstruktur, dan optimasi database SQL dengan Laravel, PHP, dan MySQL.',
         },
         {
           num: '03',
-          title: 'Backend Systems & Database Design',
-          desc: 'Merancang RESTful API terstruktur dengan Laravel / PHP dan optimasi indexing query database SQL performa tinggi.',
+          title: 'Fullstack',
+          desc: 'Mengintegrasikan sisi frontend dan backend secara menyeluruh untuk membangun aplikasi web end-to-end yang efisien dan siap produksi.',
         },
       ],
     },
@@ -76,8 +76,7 @@ export const translations = {
     },
     projects: {
       label: '03 — Proyek Pilihan',
-      title: 'Hasil kerja & proyek pilihan.',
-      projectsCount: '3 Proyek Pilihan',
+      title: 'Hasil kerja & proyek Saya',
       scrollLeft: 'Geser ke kiri',
       scrollRight: 'Geser ke kanan',
       galleryBadge: 'Layar UI',
@@ -285,18 +284,18 @@ export const translations = {
       capabilities: [
         {
           num: '01',
-          title: 'Frontend Architecture & Reactive UI',
-          desc: 'Structuring lightning-fast Single Page Applications (SPA) with React, Vite, and TypeScript powered by modular state management.',
+          title: 'Front End',
+          desc: 'Building fast, responsive, and interactive user interfaces using React, Vite, Tailwind CSS, and TypeScript.',
         },
         {
           num: '02',
-          title: 'Cross-Platform Mobile Engineering',
-          desc: 'Building unified cross-platform mobile apps for Android & iOS from a single codebase using Ionic Framework and Capacitor plugins.',
+          title: 'Back End',
+          desc: 'Architecting robust server systems, structured RESTful APIs, and relational SQL databases with Laravel, PHP, and MySQL.',
         },
         {
           num: '03',
-          title: 'Backend Systems & Database Design',
-          desc: 'Designing structured RESTful APIs with Laravel / PHP and optimizing relational SQL queries for high-performance data processing.',
+          title: 'Fullstack',
+          desc: 'Seamlessly bridging frontend interfaces and backend architectures to deliver complete, scalable, production-ready web applications.',
         },
       ],
     },
@@ -311,8 +310,7 @@ export const translations = {
     },
     projects: {
       label: '03 — Featured Projects',
-      title: 'Selected Works & Featured Projects.',
-      projectsCount: '3 Featured Projects',
+      title: 'My Works & Projects.',
       scrollLeft: 'Scroll left',
       scrollRight: 'Scroll right',
       galleryBadge: 'UI Screens',

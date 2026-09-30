@@ -10,97 +10,46 @@ import fintrackMockup from '../assets/fintrack_mockup.png';
 
 function ProjectCard({ project, index, onOpenGallery }) {
   const { t } = useLanguage();
-  const cardRef = useRef(null);
-  const [mousePos, setMousePos] = useState({ x: -500, y: -500 });
-  const [isHovered, setIsHovered] = useState(false);
-  const frameNum = `0${index + 1}`;
-
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    setMousePos({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
-
-  const hasMultiScreens = project.gallery && project.gallery.length > 1;
+  const num = `0${(index % 3) + 1}`;
 
   return (
-    <div
-      ref={cardRef}
-      className="proj-card-modern reveal"
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false);
-        setMousePos({ x: -500, y: -500 });
-      }}
-      style={{
-        '--card-mouse-x': `${mousePos.x}px`,
-        '--card-mouse-y': `${mousePos.y}px`,
-        '--card-hover': isHovered ? 1 : 0,
-      }}
-    >
-      <div className="proj-card-spotlight" />
-
-      {/* Top macOS Window Frame & Stage */}
+    <div className="proj-card">
+      {/* Clean, Simple Preview Image (Tanpa macOS dots & Tanpa Aksesori Berlebih) */}
       <div
-        className="proj-card-stage"
+        className="proj-img-wrap"
         onClick={() => project.gallery && onOpenGallery(project)}
+        style={{ cursor: project.gallery ? 'pointer' : 'default' }}
         title={project.gallery ? t.projects.clickGalleryHint : undefined}
       >
-        <div className="proj-stage-macbar">
-          <div className="proj-mac-dots">
-            <span className="proj-mac-dot dot-red" />
-            <span className="proj-mac-dot dot-yellow" />
-            <span className="proj-mac-dot dot-green" />
-          </div>
-          <span className="proj-stage-category">{project.category}</span>
-        </div>
-
-        <div className="proj-stage-viewport">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="proj-stage-img"
-            loading="lazy"
-          />
-          <div className="proj-stage-overlay">
-            <span className="proj-stage-cta">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-              <span>{hasMultiScreens ? `${project.gallery.length} ${t.projects.galleryBadge}` : t.projects.galleryBtn}</span>
-            </span>
-          </div>
-        </div>
-
-        {hasMultiScreens && (
-          <div className="proj-stage-counter">
+        <img
+          src={project.image}
+          alt={project.title}
+          className="proj-img"
+          loading="lazy"
+        />
+        {project.gallery && project.gallery.length > 1 && (
+          <span className="proj-badge">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
               <circle cx="8.5" cy="8.5" r="1.5"/>
               <polyline points="21 15 16 10 5 21"/>
             </svg>
             <span>{project.gallery.length} {t.projects.galleryBadge}</span>
-          </div>
+          </span>
         )}
       </div>
 
-      {/* Card Content Body */}
+      {/* Card Content Body — Sederhana & Bersih */}
       <div className="proj-card-body">
-        <div className="proj-card-topmeta">
-          <span className="proj-card-num">{frameNum}</span>
-          <span className="proj-card-pill">{project.category}</span>
+        <div className="proj-card-meta">
+          <span className="proj-card-num">{num}</span>
+          <span className="proj-card-category">{project.category}</span>
         </div>
 
         <h3 className="proj-card-title">{project.title}</h3>
-        <span className="proj-card-subtitle">{project.subtitle}</span>
         <p className="proj-card-desc">{project.desc}</p>
 
-        {/* Tech Chips */}
+        {/* Tech Stack Chips */}
         <div className="proj-card-tags">
           {project.tags.map((tg) => (
             <span key={tg} className="proj-card-tag">{tg}</span>
@@ -112,7 +61,7 @@ function ProjectCard({ project, index, onOpenGallery }) {
           {project.gallery && (
             <button
               type="button"
-              className="proj-action-btn primary"
+              className="proj-btn-primary"
               onClick={() => onOpenGallery(project)}
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -120,7 +69,7 @@ function ProjectCard({ project, index, onOpenGallery }) {
                 <circle cx="8.5" cy="8.5" r="1.5"/>
                 <polyline points="21 15 16 10 5 21"/>
               </svg>
-              <span>{hasMultiScreens ? `${t.projects.galleryBtn} (${project.gallery.length})` : t.projects.galleryBtn}</span>
+              <span>{t.projects.galleryBtn}</span>
             </button>
           )}
 
@@ -130,7 +79,7 @@ function ProjectCard({ project, index, onOpenGallery }) {
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="proj-action-link"
+                className="proj-btn-link"
                 title={t.projects.viewCode}
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -145,7 +94,7 @@ function ProjectCard({ project, index, onOpenGallery }) {
                 href={project.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="proj-action-link live"
+                className="proj-btn-link live"
                 title={t.projects.openDemo}
               >
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -166,7 +115,15 @@ export default function Projects() {
   const { t } = useLanguage();
   const [activeProject, setActiveProject] = useState(null);
   const [activeImgIndex, setActiveImgIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
+  const trackRef = useRef(null);
+  const scrollPosRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const scrollStartRef = useRef(0);
+
+  // 3 Proyek Asli (Tanpa Proyek Dummy)
   const baseProjects = [
     {
       id: 'pos',
@@ -221,6 +178,82 @@ export default function Projects() {
     };
   });
 
+  // Ulangi 4 kali agar lintasan scroll ke samping mengalir mulus tanpa henti (infinite smooth loop)
+  const displayProjects = [...projects, ...projects, ...projects, ...projects];
+
+  // Animasi otomatis scroll ke samping (Infinite side-scroll glide)
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+
+    let animId;
+    const speed = 0.75; // Kecepatan gerak lembut dan stabil
+
+    const step = () => {
+      if (!isPaused && el && !isDraggingRef.current) {
+        scrollPosRef.current += speed;
+        const halfWidth = el.scrollWidth / 2;
+        if (halfWidth > 0 && scrollPosRef.current >= halfWidth) {
+          scrollPosRef.current -= halfWidth;
+        }
+        el.scrollLeft = scrollPosRef.current;
+      } else if (el) {
+        scrollPosRef.current = el.scrollLeft;
+      }
+      animId = requestAnimationFrame(step);
+    };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
+  }, [isPaused]);
+
+  // Handle Drag Geser Mouse
+  const handleMouseDown = (e) => {
+    const el = trackRef.current;
+    if (!el) return;
+    isDraggingRef.current = true;
+    startXRef.current = e.pageX - el.offsetLeft;
+    scrollStartRef.current = el.scrollLeft;
+    setIsPaused(true);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDraggingRef.current) return;
+    e.preventDefault();
+    const el = trackRef.current;
+    if (!el) return;
+    const x = e.pageX - el.offsetLeft;
+    const walk = (x - startXRef.current) * 1.3;
+    el.scrollLeft = scrollStartRef.current - walk;
+    scrollPosRef.current = el.scrollLeft;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    if (isDraggingRef.current) {
+      isDraggingRef.current = false;
+      setTimeout(() => setIsPaused(false), 2000);
+    }
+  };
+
+  // Tombol Geser Kiri / Kanan
+  const scrollLeft = () => {
+    const el = trackRef.current;
+    if (!el) return;
+    setIsPaused(true);
+    const cardWidth = el.querySelector('.proj-card')?.offsetWidth || 380;
+    el.scrollBy({ left: -(cardWidth + 28), behavior: 'smooth' });
+    setTimeout(() => setIsPaused(false), 2500);
+  };
+
+  const scrollRight = () => {
+    const el = trackRef.current;
+    if (!el) return;
+    setIsPaused(true);
+    const cardWidth = el.querySelector('.proj-card')?.offsetWidth || 380;
+    el.scrollBy({ left: cardWidth + 28, behavior: 'smooth' });
+    setTimeout(() => setIsPaused(false), 2500);
+  };
+
   const handleOpenGallery = (project) => {
     setActiveProject(project);
     setActiveImgIndex(0);
@@ -254,28 +287,65 @@ export default function Projects() {
   return (
     <section id="projects" className="section" style={{ borderTop: '1px solid var(--line)' }}>
       <div className="container">
-        {/* Section Header with Pill Counter */}
-        <div className="reveal" style={{ textAlign: 'center', marginBottom: '48px' }}>
+        {/* Section Header with Navigation Controls */}
+        <div className="reveal" style={{ textAlign: 'center', marginBottom: '36px' }}>
           <span className="section-label">{t.projects.label}</span>
           <h2 className="section-title">{t.projects.title}</h2>
-          <div className="proj-nav-pill-wrapper">
-            <div className="proj-nav-pill">
-              <span className="proj-pulse-dot" />
-              <span>{t.projects.projectsCount || `${projects.length} Proyek Pilihan`}</span>
-            </div>
+
+          <div className="proj-nav-center">
+            <button
+              type="button"
+              className="proj-nav-btn"
+              onClick={scrollLeft}
+              aria-label={t.projects.scrollLeft}
+              title={t.projects.scrollLeft}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M15 18l-6-6 6-6"/>
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              className="proj-nav-btn"
+              onClick={scrollRight}
+              aria-label={t.projects.scrollRight}
+              title={t.projects.scrollRight}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </button>
           </div>
         </div>
 
-        {/* 3-Column Showcase Grid */}
-        <div className="proj-grid">
-          {projects.map((p, i) => (
-            <ProjectCard
-              key={p.title + '-' + i}
-              project={p}
-              index={i}
-              onOpenGallery={handleOpenGallery}
-            />
-          ))}
+        {/* Carousel Track Container — Animasi Scroll ke Samping */}
+        <div
+          className="proj-carousel-wrapper"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => {
+            if (!isDraggingRef.current) setIsPaused(false);
+          }}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setTimeout(() => setIsPaused(false), 2000)}
+        >
+          <div
+            className="proj-carousel-track"
+            ref={trackRef}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUpOrLeave}
+            onMouseLeave={handleMouseUpOrLeave}
+          >
+            {displayProjects.map((p, i) => (
+              <ProjectCard
+                key={p.title + '-' + i}
+                project={p}
+                index={i}
+                onOpenGallery={handleOpenGallery}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
