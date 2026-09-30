@@ -23,9 +23,9 @@ export const translations = {
       ctaProjects: 'Lihat Proyek',
       ctaContact: 'Hubungi Saya',
       stats: [
-        { num: '3+', label: 'Tahun Eksplorasi' },
-        { num: '12+', label: 'Proyek Selesai' },
-        { num: '15+', label: 'Modern Stack' },
+        { num: '2+', label: 'Tahun pengalaman' },
+        { num: '5+', label: 'Proyek Selesai' },
+        { num: '10+', label: 'Modern Stack' },
       ],
       cardStatus: 'Available for projects',
       cardLoc: 'Kota Batu, ID',
@@ -42,9 +42,9 @@ export const translations = {
         'Berbasis di Kota Batu, Jawa Timur, saya terus mengeksplorasi ekosistem teknologi mutakhir untuk menghasilkan aplikasi digital yang cepat dimuat, mudah di-maintain, dan memberikan dampak nyata bagi pengguna.',
       ],
       stats: [
-        { num: 3, label: 'Tahun Eksplorasi' },
-        { num: 12, label: 'Proyek Selesai' },
-        { num: 15, label: 'Teknologi Dikuasai' },
+        { num: 2, label: 'Tahun Eksplorasi' },
+        { num: 5, label: 'Proyek Selesai' },
+        { num: 10, label: 'Teknologi Dikuasai' },
       ],
       capLabel: 'Fokus Rekayasa & Kapabilitas',
       capabilities: [
@@ -94,8 +94,8 @@ export const translations = {
           category: 'Web & Mobile POS',
           desc: 'Sistem POS cerdas terintegrasi program loyalitas pelanggan. Menghitung poin reward otomatis dari transaksi belanja, membership Platinum/Gold, cetak struk, dasbor omzet harian, serta mobile app penukaran poin menu gratis.',
           galleryTitles: [
-            'Dashboard Kasir — Omzet, Transaksi & Grafik Mingguan',
             'Keranjang Kasir — Input & Verifikasi Nomor Member',
+            'Dashboard Kasir — Omzet, Transaksi & Grafik Mingguan',
             'Konfirmasi Bayar — Perhitungan Poin Otomatis (+79 Poin)',
             'Aplikasi Pelanggan — Status Akun & Saldo Poin',
             'Katalog Hadiah — Penukaran Poin Menu Gratis',
@@ -107,7 +107,9 @@ export const translations = {
           category: 'Academic Cloud',
           desc: 'Platform sistem informasi akademik institusi pendidikan. Administrasi kurikulum digital, absensi digital guru & murid, rekapitulasi nilai rapor, serta portal wali murid berbasis cloud.',
           galleryTitles: [
+            'Jadwal Pelajaran — Timetable Mingguan & Ruang Kelas',
             'EduConnect — Dasbor & Manajemen Akademik Sekolah',
+            'Rekap Nilai — Distribusi Prestasi Siswa & Rapor Digital',
           ],
         },
         {
@@ -116,7 +118,9 @@ export const translations = {
           category: 'Financial Analytics',
           desc: 'Dasbor analitik keuangan personal untuk pencatatan dan pengelolaan arus kas. Visualisasi grafik pengeluaran, budgeting pos keuangan, dan laporan peramalan tabungan.',
           galleryTitles: [
+            'Kartu Dompet Digital — Manajemen Saldo & Transaksi',
             'My Finance — Dasbor Keuangan & Visualisasi Data',
+            'Analisis Finansial — Breakdown Pengeluaran & Arus Kas',
           ],
         },
       ],
@@ -257,9 +261,9 @@ export const translations = {
       ctaProjects: 'View Projects',
       ctaContact: 'Get in Touch',
       stats: [
-        { num: '3+', label: 'Years of Experience' },
-        { num: '12+', label: 'Completed Projects' },
-        { num: '15+', label: 'Modern Stack' },
+        { num: '2+', label: 'Years of Experience' },
+        { num: '5+', label: 'Projects' },
+        { num: '10+', label: 'Modern Stack' },
       ],
       cardStatus: 'Available for projects',
       cardLoc: 'Batu City, ID',
@@ -276,9 +280,9 @@ export const translations = {
         'Based in Batu City, East Java, I continuously explore cutting-edge technologies to build fast, maintainable digital products that deliver real value to users.',
       ],
       stats: [
-        { num: 3, label: 'Years of Experience' },
-        { num: 12, label: 'Completed Projects' },
-        { num: 15, label: 'Mastered Tech' },
+        { num: 2, label: 'Years of Experience' },
+        { num: 5, label: 'Completed Projects' },
+        { num: 10, label: 'Mastered Tech' },
       ],
       capLabel: 'Engineering Focus & Capabilities',
       capabilities: [
@@ -328,8 +332,8 @@ export const translations = {
           category: 'Web & Mobile POS',
           desc: 'Smart POS system integrated with customer loyalty programs. Features automatic reward point calculation, Platinum/Gold memberships, receipt printing, daily revenue analytics, and a companion mobile app for redeeming free menu items.',
           galleryTitles: [
-            'Cashier Dashboard — Revenue, Transactions & Weekly Trends',
             'Checkout Cart — Member Number Verification & Input',
+            'Cashier Dashboard — Revenue, Transactions & Weekly Trends',
             'Payment Confirmation — Automated Points Calculation (+79 Points)',
             'Customer Mobile App — Account Status & Points Balance',
             'Rewards Catalog — Free Menu Item Points Redemption',
@@ -341,7 +345,9 @@ export const translations = {
           category: 'Academic Cloud',
           desc: 'Comprehensive academic information platform for educational institutions. Manages digital curriculum, teacher & student attendance tracking, report card grading, and a cloud-based parent portal.',
           galleryTitles: [
+            'Weekly Schedule — Timetable & Classroom Allocation',
             'EduConnect — School Academic Management & Dashboard',
+            'Student Grades — Academic Performance & Report Distribution',
           ],
         },
         {
@@ -350,7 +356,9 @@ export const translations = {
           category: 'Financial Analytics',
           desc: 'Personal financial analytics dashboard for tracking and optimizing cash flows. Features interactive spending visualizations, budgeting categories, and automated savings forecasting.',
           galleryTitles: [
-            'My Finance — Financial Analytics & Data Visualizations',
+            'Digital Wallet Cards — Balance & Card Management',
+            'My Finance — Financial Analytics & Overview Dashboard',
+            'Cash Flow Analytics — Expense Breakdown & Budget Forecast',
           ],
         },
       ],

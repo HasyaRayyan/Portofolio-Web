@@ -6,7 +6,11 @@ import posCheckout from '../assets/member_loyalty_pos_checkout.png';
 import posMember from '../assets/member_loyalty_pos_member.png';
 import posRewards from '../assets/member_loyalty_pos_rewards.png';
 import educonnectMockup from '../assets/educonnect_mockup.png';
+import educonnectSchedule from '../assets/educonnect_schedule.jpg';
+import educonnectGrades from '../assets/educonnect_grades.jpg';
 import fintrackMockup from '../assets/fintrack_mockup.png';
+import fintrackCards from '../assets/fintrack_cards.jpg';
+import fintrackAnalytics from '../assets/fintrack_analytics.jpg';
 
 function ProjectCard({ project, index, onOpenGallery }) {
   const { t } = useLanguage();
@@ -14,29 +18,45 @@ function ProjectCard({ project, index, onOpenGallery }) {
 
   return (
     <div className="proj-card">
-      {/* Clean, Simple Preview Image (Tanpa macOS dots & Tanpa Aksesori Berlebih) */}
+      {/* 3 Photos Stage — Sederhana, Bersih, Tanpa Aksesori macOS */}
       <div
         className="proj-img-wrap"
-        onClick={() => project.gallery && onOpenGallery(project)}
-        style={{ cursor: project.gallery ? 'pointer' : 'default' }}
-        title={project.gallery ? t.projects.clickGalleryHint : undefined}
+        onClick={() => onOpenGallery(project, 1)}
+        title={t.projects.clickGalleryHint}
       >
-        <img
-          src={project.image}
-          alt={project.title}
-          className="proj-img"
-          loading="lazy"
-        />
-        {project.gallery && project.gallery.length > 1 && (
-          <span className="proj-badge">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-              <circle cx="8.5" cy="8.5" r="1.5"/>
-              <polyline points="21 15 16 10 5 21"/>
-            </svg>
-            <span>{project.gallery.length} {t.projects.galleryBadge}</span>
-          </span>
-        )}
+        <div className="proj-photos-stage">
+          {project.photos && project.photos.map((photo, pIdx) => {
+            const slotClass = pIdx === 0 ? 'slot-left' : pIdx === 1 ? 'slot-center' : 'slot-right';
+            return (
+              <div
+                key={pIdx}
+                className={`proj-photo-card ${slotClass}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onOpenGallery(project, pIdx);
+                }}
+                title={photo.alt}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt || project.title}
+                  className="proj-photo-img"
+                  loading="lazy"
+                />
+                <div className="proj-photo-glow" />
+              </div>
+            );
+          })}
+        </div>
+
+        <span className="proj-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <span>3 {t.projects.galleryBadge}</span>
+        </span>
       </div>
 
       {/* Card Content Body — Sederhana & Bersih */}
@@ -58,20 +78,18 @@ function ProjectCard({ project, index, onOpenGallery }) {
 
         {/* Card Actions Footer */}
         <div className="proj-card-actions">
-          {project.gallery && (
-            <button
-              type="button"
-              className="proj-btn-primary"
-              onClick={() => onOpenGallery(project)}
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                <circle cx="8.5" cy="8.5" r="1.5"/>
-                <polyline points="21 15 16 10 5 21"/>
-              </svg>
-              <span>{t.projects.galleryBtn}</span>
-            </button>
-          )}
+          <button
+            type="button"
+            className="proj-btn-primary"
+            onClick={() => onOpenGallery(project, 1)}
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <span>{t.projects.galleryBtn}</span>
+          </button>
 
           <div className="proj-card-links">
             {project.github && (
@@ -123,14 +141,19 @@ export default function Projects() {
   const startXRef = useRef(0);
   const scrollStartRef = useRef(0);
 
-  // 3 Proyek Asli (Tanpa Proyek Dummy)
+  // 3 Proyek Asli — Masing-masing memiliki 3 Foto Showcase (Kiri, Tengah, Kanan)
   const baseProjects = [
     {
       id: 'pos',
       image: posDashboard,
+      photos: [
+        { src: posCart, alt: 'Keranjang Kasir & Input Member' },
+        { src: posDashboard, alt: 'Dasbor Kasir & Grafik Omzet' },
+        { src: posCheckout, alt: 'Konfirmasi Bayar & Poin Reward' },
+      ],
       gallery: [
-        { src: posDashboard, title: 'Dashboard Kasir — Omzet, Transaksi & Grafik Mingguan' },
         { src: posCart, title: 'Keranjang Kasir — Input & Verifikasi Nomor Member' },
+        { src: posDashboard, title: 'Dashboard Kasir — Omzet, Transaksi & Grafik Mingguan' },
         { src: posCheckout, title: 'Konfirmasi Bayar — Perhitungan Poin Otomatis (+79 Poin)' },
         { src: posMember, title: 'Aplikasi Pelanggan — Status Akun & Saldo Poin' },
         { src: posRewards, title: 'Katalog Hadiah — Penukaran Poin Menu Gratis' },
@@ -142,8 +165,15 @@ export default function Projects() {
     {
       id: 'educonnect',
       image: educonnectMockup,
+      photos: [
+        { src: educonnectSchedule, alt: 'Jadwal Pelajaran & Timetable Kelas' },
+        { src: educonnectMockup, alt: 'Dasbor Akademik EduConnect' },
+        { src: educonnectGrades, alt: 'Rekap Nilai Siswa & Rapor Digital' },
+      ],
       gallery: [
+        { src: educonnectSchedule, title: 'EduConnect — Jadwal Pelajaran & Timetable Terpadu' },
         { src: educonnectMockup, title: 'EduConnect — Dasbor & Manajemen Akademik Sekolah' },
+        { src: educonnectGrades, title: 'EduConnect — Rekap Nilai Siswa & Laporan Rapor' },
       ],
       tags: ['Laravel', 'Angular', 'SQL', 'Vite', 'REST API'],
       github: 'https://github.com/HasyaRayyan',
@@ -152,8 +182,15 @@ export default function Projects() {
     {
       id: 'fintrack',
       image: fintrackMockup,
+      photos: [
+        { src: fintrackCards, alt: 'Kartu Dompet Digital & Saldo' },
+        { src: fintrackMockup, alt: 'Dasbor Keuangan My Finance' },
+        { src: fintrackAnalytics, alt: 'Analisis Pengeluaran & Arus Kas' },
+      ],
       gallery: [
+        { src: fintrackCards, title: 'My Finance — Dompet Digital & Transaksi Kartu' },
         { src: fintrackMockup, title: 'My Finance — Dasbor Keuangan & Visualisasi Data' },
+        { src: fintrackAnalytics, title: 'My Finance — Analisis Pengeluaran & Arus Kas' },
       ],
       tags: ['React', 'TypeScript', 'CSS Grid', 'SQL', 'Analytics'],
       github: 'https://github.com/HasyaRayyan',
@@ -254,9 +291,9 @@ export default function Projects() {
     setTimeout(() => setIsPaused(false), 2500);
   };
 
-  const handleOpenGallery = (project) => {
+  const handleOpenGallery = (project, initialIndex = 0) => {
     setActiveProject(project);
-    setActiveImgIndex(0);
+    setActiveImgIndex(initialIndex);
   };
 
   const handleCloseGallery = () => {
