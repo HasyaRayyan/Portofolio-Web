@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import logo44Thrift from '../assets/logo_44thrift.png';
 import logoPringapus from '../assets/logo_pringapus.jpg';
-import logoSMK from '../assets/logo_smk_pgri.jpg';
+import logoSMK from '../assets/logo_smk_pgri.png';
 import logoUIN from '../assets/logo_uin_malang.png';
 
 function InteractiveCard({ children, className = '' }) {
@@ -184,7 +184,7 @@ export default function Experience() {
                   {/* Header Row */}
                   <div className="exp-card-header">
                     <div className="exp-card-identity">
-                      <div className="exp-logo-box">
+                      <div className="exp-logo-plain">
                         <img src={item.logo} alt={item.alt} loading="lazy" />
                       </div>
                       <div className="exp-title-group">
