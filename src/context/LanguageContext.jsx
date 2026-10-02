@@ -188,7 +188,7 @@ export const translations = {
         },
         {
           date: 'Jun 2023 — Mei 2026',
-          title: 'Rekayasa Perangkat Lunak (RPL)',
+          title: 'Rekayasa Perangkat Lunak',
           org: 'SMK PGRI 03 Malang (Skariga)',
           type: 'Vokasi Kejuruan',
           isCurrent: false,
@@ -426,7 +426,7 @@ export const translations = {
         },
         {
           date: 'Jun 2023 — May 2026',
-          title: 'Software Engineering (RPL)',
+          title: 'Rekayasa Perangkat Lunak',
           org: 'SMK PGRI 03 Malang (Skariga)',
           type: 'Vocational High School',
           isCurrent: false,
