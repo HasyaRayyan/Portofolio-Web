@@ -220,28 +220,27 @@ export default function Experience() {
           </div>
         </div>
 
-        {/* Unified Vertical Timeline Container */}
+        {/* Unified Vertical Timeline Container (Kiri Kanan) */}
         <div className="exp-timeline-wrapper" ref={timelineRef}>
-          {/* Vertical Interactive Timeline Rail Track (Menyala saat di-scroll) */}
+          {/* Vertical Interactive Timeline Rail Track (Gerak Bersih Tanpa Cahaya) */}
           <div className="exp-timeline-track">
             <div className="exp-timeline-line-base" />
             <div
               className="exp-timeline-line-fill"
               style={{ height: `${scrollProgress}%` }}
-            >
-              <div className="exp-timeline-spark" />
-            </div>
+            />
           </div>
 
-          {/* Timeline Items List (Jadikan satu ke bawah) */}
+          {/* Timeline Items List (Zig-zag Kiri Kanan) */}
           <div className="exp-timeline-list">
             {filteredItems.map((item, idx) => {
               const isReached = !!activeItems[idx];
+              const isLeft = idx % 2 === 0;
               return (
                 <div
                   key={item.title + '-' + idx}
                   ref={(el) => (itemRefs.current[idx] = el)}
-                  className={`exp-timeline-item ${isReached ? 'reached' : ''}`}
+                  className={`exp-timeline-item ${isLeft ? 'item-left' : 'item-right'} ${isReached ? 'reached' : ''}`}
                 >
                   {/* Glowing Node on Timeline Line */}
                   <div
