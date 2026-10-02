@@ -2904,8 +2904,99 @@ h1, h2, h3, h4, h5, h6 {
 .exp-title-group {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   min-width: 0;
+}
+
+.exp-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.exp-category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.66rem;
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+.exp-category-badge.education {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  color: #34d399;
+}
+.exp-category-badge.career {
+  background: rgba(212, 254, 98, 0.12);
+  border: 1px solid rgba(212, 254, 98, 0.28);
+  color: var(--accent);
+}
+[data-theme="light"] .exp-category-badge.education {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #059669;
+}
+[data-theme="light"] .exp-category-badge.career {
+  background: #f0f9ff;
+  border-color: #bae6fd;
+  color: #0284c7;
+}
+
+.exp-org-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 1px;
+}
+
+.exp-type-tag {
+  font-size: 0.77rem;
+  font-weight: 500;
+  color: var(--text-ghost);
+}
+[data-theme="light"] .exp-type-tag {
+  color: #64748b;
+}
+
+.exp-card-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.exp-badge-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+}
+[data-theme="light"] .exp-badge-active {
+  background: #dcfce7;
+  border: 1px solid #86efac;
+  color: #15803d;
+}
+
+.exp-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulseDot 2s infinite;
 }
 
 .exp-role-title {
